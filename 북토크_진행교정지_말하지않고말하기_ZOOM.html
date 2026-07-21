@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko" class="anim">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>북토크 진행 교정지 — 저는 이 책에게 편집당했습니다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Gaegu:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --ink:#1c1a17;
+    --paper:#f3ede0;
+    --paper2:#ece3d2;
+    --red:#b4341f;
+    --red-soft:#c85a44;
+    --pencil:#3a4a5a;
+    --line:#d8cbb0;
+    --gold:#8a6d3b;
+    --green:#3f5541;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--paper);color:var(--ink)}
+  body{
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.85;
+    padding:48px 20px 96px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{
+    max-width:720px;margin:0 auto;
+  }
+
+  /* 상단 표제 */
+  .masthead{
+    border:2px solid var(--ink);
+    padding:26px 30px;
+    background:
+      repeating-linear-gradient(transparent, transparent 37px, rgba(180,52,31,.05) 37px, rgba(180,52,31,.05) 38px);
+    position:relative;
+    margin-bottom:44px;
+  }
+  .masthead::after{
+    content:"校正";
+    position:absolute;top:-14px;right:24px;
+    background:var(--red);color:var(--paper);
+    font-family:serif;letter-spacing:.15em;
+    font-size:13px;padding:3px 12px;border-radius:1px;
+  }
+  .eyebrow{
+    font-size:12.5px;letter-spacing:.35em;color:var(--gold);
+    text-transform:uppercase;margin-bottom:12px;
+  }
+  .masthead h1{
+    font-size:27px;font-weight:800;line-height:1.5;letter-spacing:-.01em;
+  }
+  .masthead .sub{
+    margin-top:14px;font-size:14.5px;color:var(--pencil);
+    border-top:1px dashed var(--line);padding-top:12px;
+  }
+  .trio{
+    margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;
+    font-size:12.5px;
+  }
+  .trio span{
+    border:1px solid var(--line);padding:3px 10px;border-radius:2px;
+    background:var(--paper2);letter-spacing:.02em;
+  }
+
+  /* 악장 블록 */
+  .mvt{
+    background:var(--paper2);
+    border:1px solid var(--line);
+    border-left:4px solid var(--red);
+    padding:26px 28px 24px;
+    margin-bottom:26px;
+    position:relative;
+    opacity:1;
+  }
+  html.anim .mvt{opacity:0;transform:translateY(16px);transition:opacity .7s ease, transform .7s ease}
+  html.anim .mvt.show{opacity:1;transform:none}
+
+  .mvt-no{
+    font-size:12px;letter-spacing:.3em;color:var(--red);font-weight:700;
+    text-transform:uppercase;
+  }
+  .mvt h2{
+    font-size:20px;font-weight:800;margin:6px 0 4px;letter-spacing:-.01em;
+  }
+  .mvt .tempo{
+    font-style:italic;color:var(--gold);font-size:13.5px;margin-bottom:16px;
+    letter-spacing:.02em;
+  }
+  .mvt p{font-size:15px;margin-bottom:12px}
+  .mvt p.small{font-size:13.5px;color:var(--pencil)}
+
+  /* 진행 멘트 (손글씨 느낌) */
+  .say{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:15px 18px;
+    margin:14px 0;
+    position:relative;
+    font-size:14.5px;
+  }
+  .say::before{
+    content:"진행 멘트";
+    position:absolute;top:-9px;left:14px;
+    background:var(--pencil);color:var(--paper);
+    font-size:10.5px;letter-spacing:.18em;padding:2px 9px;border-radius:1px;
+  }
+  .say q{
+    quotes:"\201C" "\201D";
+    font-family:"Nanum Pen Script",cursive;
+    font-size:19px;line-height:1.6;color:var(--pencil);
+  }
+  .say q::before{content:open-quote}
+  .say q::after{content:close-quote}
+
+  /* 취소선 교정 */
+  .edit{margin:12px 0;font-size:15px}
+  .strike{
+    font-family:"Gaegu",cursive;
+    font-size:19px;
+    text-decoration:line-through;
+    text-decoration-color:var(--red);
+    text-decoration-thickness:2px;
+    color:#8f857a;
+  }
+  .fix{
+    font-family:"Gaegu",cursive;
+    font-size:20px;
+    color:var(--red);font-weight:700;
+    border-bottom:1px solid var(--red-soft);
+  }
+
+  /* 줌 진행 안내 박스 */
+  .zoom{
+    border:1px solid var(--pencil);
+    background:rgba(58,74,90,.06);
+    padding:13px 16px 11px;
+    margin:14px 0;
+    border-radius:3px;
+    position:relative;
+  }
+  .zoom::before{
+    content:"▶ Zoom 진행 노트";
+    display:block;font-size:11px;letter-spacing:.14em;
+    color:var(--pencil);font-weight:700;margin-bottom:6px;
+  }
+  .zoom p{font-size:13.5px;margin-bottom:6px}
+
+  /* 관객 참여 라벨 */
+  .audience{
+    border:1.5px dashed var(--red-soft);
+    background:rgba(180,52,31,.04);
+    padding:14px 18px 13px;
+    margin:16px 0;
+    border-radius:3px;
+    position:relative;
+  }
+  .audience::before{
+    content:"⟡ 관객이 함께 연주하는 자리";
+    display:block;
+    font-size:11.5px;letter-spacing:.14em;color:var(--red);
+    font-weight:700;margin-bottom:7px;
+  }
+  .audience p{font-size:14px;margin-bottom:6px;color:var(--ink)}
+
+  /* 一二三 교정 순서 */
+  .steps{margin:14px 0;padding-left:2px}
+  .steps li{
+    list-style:none;font-size:14.5px;margin-bottom:9px;padding-left:34px;position:relative;
+  }
+  .steps li .n{
+    position:absolute;left:0;top:0;
+    color:var(--red);font-weight:800;font-size:16px;
+    font-family:serif;
+  }
+
+  /* 코다 */
+  .coda{
+    border:2px solid var(--ink);
+    padding:28px 30px;
+    margin-top:38px;
+    background:
+      repeating-linear-gradient(transparent, transparent 37px, rgba(63,85,65,.05) 37px, rgba(63,85,65,.05) 38px);
+    position:relative;
+  }
+  .coda::after{
+    content:"da capo";
+    position:absolute;top:-13px;right:22px;
+    background:var(--green);color:var(--paper);
+    font-style:italic;font-size:12px;padding:3px 12px;
+  }
+  .coda h2{font-size:19px;font-weight:800;margin-bottom:12px}
+  .coda p{font-size:15px;margin-bottom:12px}
+
+  /* 서명란 */
+  .sign{
+    margin-top:34px;border-top:1px solid var(--ink);
+    padding-top:16px;display:flex;justify-content:space-between;
+    align-items:flex-end;flex-wrap:wrap;gap:14px;
+  }
+  .sign .who{font-size:13px;color:var(--pencil)}
+  .sign .name{
+    font-family:"Nanum Pen Script",cursive;
+    font-size:32px;font-weight:400;letter-spacing:.02em;
+    border-bottom:2px solid var(--red);padding-bottom:2px;
+    color:var(--ink);
+  }
+
+  /* 최종 자막 */
+  .finale{
+    margin-top:30px;
+    padding:26px 24px;
+    text-align:center;
+    font-size:16px;line-height:2.1;
+    color:var(--green);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    background:rgba(63,85,65,.05);
+    letter-spacing:.01em;
+  }
+  .finale strong{
+    font-family:"Gaegu",cursive;
+    color:var(--red);font-size:22px;
+    display:inline-block;margin-top:4px;
+  }
+
+  /* 여는 문장 강조 */
+  .opener{
+    font-family:"Nanum Pen Script",cursive;
+    font-size:21px;line-height:1.75;color:var(--ink);
+    border-left:3px solid var(--gold);
+    padding:6px 0 6px 18px;margin:10px 0;
+  }
+
+  @media (max-width:520px){
+    body{padding:32px 14px 72px}
+    .masthead h1{font-size:22px}
+    .mvt{padding:22px 20px}
+  }
+
+  @media print{
+    html,body{background:#fff}
+    body{padding:0}
+    .mvt,.masthead,.coda,.say,.audience,.zoom,.finale{
+      break-inside:avoid;
+      -webkit-print-color-adjust:exact;
+      print-color-adjust:exact;
+    }
+    html.anim .mvt{opacity:1 !important;transform:none !important}
+    @page{margin:16mm}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="eyebrow">Book Talk · 편집학 교정지 외전</div>
+    <h1>저는 이 책을 읽은 게 아니라,<br>이 책에게 편집당했습니다</h1>
+    <div class="sub">『말하지 않고 말하기』 북 리더 진행 대본 (Zoom) — 게 카논(Crab Canon)의 구조로 여는 삼중주</div>
+    <div class="trio">
+      <span>♪ 바흐 · 게 카논</span>
+      <span>▦ 김정운 · 편집학 3부작</span>
+      <span>✎ 야간비행 · 고백</span>
+    </div>
+  </div>
+
+  <!-- 1악장 -->
+  <section class="mvt">
+    <div class="mvt-no">1악장 · 주제 제시</div>
+    <h2>먼저, 귀로 구조를 만난다</h2>
+    <div class="tempo">Andante — 서두르지 않고</div>
+    <p>말보다 소리를 먼저 놓습니다. 게 카논 30초. 한 선율이 앞으로 가고, 같은 선율이 뒤에서 거꾸로 되짚어 옵니다. 두 성부가 서로의 꼬리를 뭅니다 — 뫼비우스 띠처럼, 안과 밖이 하나로 이어진 채.</p>
+    <div class="zoom">
+      <p><strong>Zoom 진행</strong> 화면 공유로 게 카논 영상을 함께 봅니다 — <em>Jos Leys의 뫼비우스 띠 시각화</em> (youtu.be/xUHQ2ybTejU). <em>공유 시 하단 "컴퓨터 소리 공유" 체크 필수.</em></p>
+      <p class="small">감상 포인트: ① 선율이 앞으로 흐르고 → ② 곡이 스스로 역행해 반대 방향으로 되짚어 오고 → ③ 앞으로와 거꾸로가 동시에 겹쳐지고 → ④ 마지막에 그 띠가 한 바퀴 돌아 같은 지점으로 돌아옵니다. 이 네 번째 순간이 오늘 우리가 할 일의 그림입니다.</p>
+      <p class="small">링크는 채팅창에도 함께 올려, 소리가 끊기는 참가자는 각자 재생할 수 있게 합니다.</p>
+    </div>
+    <div class="say"><q>이 30초가 오늘 우리가 할 일의 전부입니다. 한 사람의 이야기가 앞으로 흐르고, 같은 이야기가 거꾸로 되돌아와 그를 다시 읽습니다. 김정운이 자기 책으로 자기 책을 인용하며 도는 것도, 오늘 제가 저를 다시 읽게 된 것도, 전부 이 구조입니다.</q></div>
+    <div class="audience">
+      <p><strong>장치 ① — 채팅창 초고</strong></p>
+      <p>지금 <em>채팅창</em>에 한 줄 적어 주세요. "나는 ____한 사람이다."</p>
+      <p class="small">전체 공개가 부담되면 진행자에게만 보내셔도 됩니다. 지금은 고치지 않습니다 — 3악장에서 이 문장으로 돌아옵니다. (미리 채팅창에 예시 한 줄을 띄워두면 첫 입력이 수월합니다.)</p>
+    </div>
+  </section>
+
+  <!-- 2악장 -->
+  <section class="mvt">
+    <div class="mvt-no">2악장 · 응답</div>
+    <h2>제 초고에 취소선을 긋습니다</h2>
+    <div class="tempo">Confessione — 고백하듯</div>
+    <p class="small">여는 문장으로 시작합니다.</p>
+    <div class="opener">"오늘 저는 서귀포 숲 터널을 지나왔습니다. 얼마 전까지 헐벗은 숲이었는데, 어느새 초록이 깊어져 있더군요. 저는 오늘, 제가 헐벗었다고 믿어온 초고에 취소선을 긋는 이야기를 하려고 합니다."</div>
+    <div class="edit"><span class="strike">나는 밖으로만 떠도는 애정결핍의 사람이다.</span></div>
+    <div class="edit">→ <span class="fix">헐벗음을 기억하기에 지금 이 초록의 깊이를 알아보는 사람이다.</span></div>
+    <p class="small">겨울을 통과한 사람만이 초록을 사건으로 봅니다. 초록만 보고 온 사람에게 그것은 그저 풍경입니다.</p>
+    <div class="say"><q>저는 늘 밖에서 손을 찾았습니다. 나를 붙들어 방향을 정해줄 손을. 그런데 편집학을 하며 알았습니다. 밖을 향하던 것을 관찰자 시점으로 끌어올려 다시 읽는 이 작업이, 제가 그토록 찾던 그 손을 제 안에서 만드는 일이었다는 걸.</q></div>
+  </section>
+
+  <!-- 3악장 -->
+  <section class="mvt">
+    <div class="mvt-no">3악장 · 전개</div>
+    <h2>세 권이 서로의 꼬리를 문다</h2>
+    <div class="tempo">Fugato — 쫓고 쫓기며</div>
+    <p>이제 책으로 들어갑니다. 다만 요약하지 않습니다. 세 권이 어떻게 카논을 이루는지 실연합니다.</p>
+    <ul class="steps">
+      <li><span class="n">一</span><strong>에디톨로지</strong> — 창조는 새로 만드는 게 아니라 자기 데이터베이스를 다시 편집하는 것.</li>
+      <li><span class="n">二</span><strong>창조적 시선</strong> — 그 편집을 가능하게 하는 건 남들과 다른 각도로 보는 눈.</li>
+      <li><span class="n">三</span><strong>말하지 않고 말하기</strong> — 그 시선은 결국 나 혼자의 것이 아니라 주체들 사이에서 조율된다(상호주관성).</li>
+    </ul>
+    <p class="small">세 권이 서로를 인용하며 도는 것은 순환이 아니라 <em>시연</em>입니다. 편집이 무엇인지, 책이 책의 형식으로 몸소 보여주는 것이지요.</p>
+    <div class="audience">
+      <p><strong>장치 ② — 되돌아가기 (게 카논의 심장)</strong></p>
+      <p>"자, 지금부터 우리는 처음으로 되돌아갑니다."</p>
+      <p>채팅창을 위로 스크롤해, 1악장에서 당신이 친 그 문장을 다시 봅니다. 방금 세 권을 통과한 지금, 같은 문장이 다르게 읽힌다면 — 그것이 편집이 일어났다는 증거입니다.</p>
+      <p class="small">다시 읽힌 문장을 채팅창에 한 번 더, 이번엔 "→ 사실은 ___" 형태로 적어 주세요. 취소선을 마음으로 긋는 겁니다.</p>
+    </div>
+  </section>
+
+  <!-- 4악장 -->
+  <section class="mvt">
+    <div class="mvt-no">4악장 · 변주</div>
+    <h2>옆 사람의 초고를 편집해준다</h2>
+    <div class="tempo">Insieme — 함께</div>
+    <p>편집은 관찰자의 자리에서 일어납니다. 그런데 내 문장 앞에서 나는 좀처럼 관찰자가 되지 못합니다. 그래서 서로 바꿉니다.</p>
+    <div class="audience">
+      <p><strong>장치 ③ — 소회의실 or 채팅 재해석</strong></p>
+      <p><em>인원이 적을 때:</em> 채팅창에 올라온 초고 중 한 사람의 문장을 화면에 띄우고, 다같이 "이렇게도 읽힙니다"를 채팅으로 달아줍니다. 판단이 아니라 재해석으로.</p>
+      <p><em>인원이 많을 때:</em> 소회의실(브레이크아웃) 2~3인 조로 나눠, 서로의 초고를 한 줄씩 재해석해주고 돌아옵니다.</p>
+      <p class="small">내가 갇힌 문장을, 남은 바깥에서 봅니다. 그것이 카논의 두 번째 성부입니다.</p>
+    </div>
+    <div class="say"><q>제 남편과의 단 하나의 관계 앞에서만은, 저는 밖으로 떠돌지 않고 안으로 내려갔습니다. 화장을 지우고, 능력을 증명할 필요 없이, 그저 곁에 있음으로 도움이 되는 자리. 제가 밖에서 그토록 찾아 헤매던 것을, 저는 이미 가지고 있었기에 몰랐던 겁니다.</q></div>
+  </section>
+
+  <!-- 코다 -->
+  <section class="coda">
+    <h2>코다 — 끝나지 않고 다시 돈다</h2>
+    <p>마지막으로 두 장면을 나란히 띄웁니다. 초등학생도 알아듣는 피아노 학원용 카논 그림 한 장과, 김정운의 상호주관성 한 구절.</p>
+    <p><strong>가장 쉬운 설명과 가장 깊은 이론이 같은 구조라는 것</strong> — 이것이 오늘의 종지(終止)입니다. 다만 게 카논이 그렇듯, 이 종지는 끝이 아니라 다시 처음으로 돌아가는 문입니다.</p>
+    <div class="audience">
+      <p>마지막으로 채팅창에 각자 <em>가져갈 한 물음</em>을 남기고 나갑니다:</p>
+      <p><em>나는 여전히 밖에서 그 손을 찾고 있는가, 아니면 이미 그 손이 되어가고 있는가?</em></p>
+      <p class="small">(원하시면 이 교정지 링크를 채팅창에 올려 각자 저장하게 할 수 있습니다.)</p>
+    </div>
+
+    <div class="sign">
+      <div class="who">진행 · 북 리더<br>『말하지 않고 말하기』</div>
+      <div class="name">야간비행</div>
+    </div>
+
+    <div class="finale">절대적 위치에 있던 것들이 상대화될 때<br>우리는 메타적 시선을 얻고,<br>그 시선으로 무엇을 다시 절대의 자리에 세울지 고를 때<br><strong>우리는 비로소 편집자가 된다.</strong></div>
+  </section>
+
+</div>
+
+<script>
+  (function(){
+    var mvts = document.querySelectorAll('.mvt');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+      },{threshold:.15});
+      mvts.forEach(function(m){ io.observe(m); });
+    } else {
+      mvts.forEach(function(m){ m.classList.add('show'); });
+    }
+    // 안전장치: 2.5초 뒤 무조건 전부 노출 (카카오톡 등 JS 제한 뷰어 대응)
+    setTimeout(function(){
+      document.documentElement.classList.remove('anim');
+      mvts.forEach(function(m){ m.classList.add('show'); });
+    },2500);
+  })();
+</script>
+</body>
+</html>
