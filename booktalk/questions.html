@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>함께읽기ON · 북토크 안내 — 말하지 않고 말하기</title>
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:site_name" content="함께읽기ON" />
+<meta property="og:title" content="함께읽기ON 북토크 · 말하지 않고 말하기" />
+<meta property="og:description" content="2026. 7. 28(화) 저녁 8시 · 김정운 『말하지 않고 말하기』 — 미리 품고 올 여섯 가지 나눔 질문" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="함께읽기ON 북토크 · 말하지 않고 말하기" />
+<meta name="twitter:description" content="7. 28(화) 20:00 · 나눔 질문 카드" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F1E7; --paper-deep:#EFE7D8;
+    --ink:#221E18; --ink-soft:#5A5247; --ink-faint:#9A9080;
+    --red:#CC3333; --rule:#D8CFBE;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--paper); color:var(--ink);
+    font-family:"Nanum Myeongjo", serif;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;}
+  body::before{content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    opacity:.5; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");}
+
+  .wrap{position:relative; z-index:1; max-width:44rem; margin:0 auto;
+    padding:3.2rem clamp(1.3rem,5vw,3rem) 4rem;}
+
+  /* ── 헤더 ── */
+  .hero{background:var(--red); color:var(--paper); border-radius:6px;
+    padding:2.6rem clamp(1.3rem,4vw,2.4rem) 2.4rem; text-align:center; margin-bottom:2.2rem;}
+  .brand{font-family:"Nanum Gothic",sans-serif; font-size:.68rem; font-weight:700;
+    letter-spacing:.32em; text-transform:uppercase; opacity:.92;}
+  .hero .when{font-family:"Nanum Gothic",sans-serif; font-size:.74rem; letter-spacing:.16em;
+    margin-top:.9rem; opacity:.9;}
+  .hero h1{font-weight:800; letter-spacing:-.01em; line-height:1.32;
+    font-size:clamp(1.5rem,5.4vw,2.2rem); margin-top:.9rem;}
+  .hero h1 .em{text-decoration:underline; text-underline-offset:.18em; text-decoration-thickness:2px;}
+  .hero .latin{font-family:"Cormorant Garamond",serif; font-style:italic;
+    font-size:clamp(.9rem,2.4vw,1.08rem); margin-top:.9rem; opacity:.8;}
+
+  /* ── 공통 ── */
+  .kicker{font-family:"Nanum Gothic",sans-serif; font-size:.66rem; font-weight:700;
+    letter-spacing:.28em; text-transform:uppercase; color:var(--red); text-align:center;}
+  h2{font-weight:800; font-size:clamp(1.2rem,4vw,1.55rem); line-height:1.4;
+    text-align:center; margin:.55rem 0 1.1rem;}
+  .lead{font-size:clamp(.98rem,2.6vw,1.12rem); line-height:1.95; color:var(--ink);
+    max-width:38rem; margin:0 auto;}
+  .lead p{margin:0 0 1rem;}
+  .lead .strong{font-weight:700; color:var(--red);}
+  section{margin-bottom:2.6rem;}
+  .rule{height:1px; background:var(--rule); max-width:10rem; margin:0 auto 2.6rem;}
+
+  /* ── 질문 카드 ── */
+  .qcard{border:1px solid var(--rule); border-left:3px solid var(--red); border-radius:4px;
+    background:rgba(255,255,255,.5); padding:1.15rem 1.25rem 1.2rem; margin-bottom:.85rem;}
+  .qcard .nm{font-weight:800; color:var(--red); font-size:clamp(1rem,2.8vw,1.14rem);}
+  .qcard .nm .h{font-family:"Nanum Gothic",sans-serif; font-size:.58em; color:var(--ink-faint);
+    font-weight:400; letter-spacing:.14em; margin-left:.45rem;}
+  .qcard .ct{font-size:clamp(.88rem,2.4vw,.98rem); line-height:1.8; color:var(--ink-soft);
+    margin-top:.45rem;}
+  .qcard .qq{font-size:clamp(.95rem,2.6vw,1.06rem); line-height:1.8; font-weight:700;
+    color:var(--ink); margin-top:.6rem;}
+  .qcard .qq::before{content:"나눔 · "; color:var(--red); font-family:"Nanum Gothic",sans-serif;
+    font-size:.72em; letter-spacing:.14em; font-weight:700;}
+
+  /* ── 준비 안내 ── */
+  .prep{border:1px solid var(--rule); border-radius:4px; background:rgba(255,255,255,.5);
+    padding:1.2rem 1.3rem;}
+  .prep .lab{display:block; font-family:"Nanum Gothic",sans-serif; font-size:.62rem; font-weight:700;
+    letter-spacing:.25em; text-transform:uppercase; color:var(--red); margin-bottom:.6rem;}
+  .prep ul{list-style:none;}
+  .prep li{font-size:clamp(.9rem,2.5vw,1.02rem); line-height:1.75; color:var(--ink-soft);
+    padding-left:.9rem; position:relative; margin-bottom:.4rem;}
+  .prep li::before{content:"—"; position:absolute; left:0; color:var(--ink-faint);}
+
+  /* ── 닫기 ── */
+  .outro{background:var(--red); color:var(--paper); border-radius:6px;
+    padding:2.2rem 1.6rem; text-align:center;}
+  .outro .final{font-weight:800; font-size:clamp(1.05rem,3.4vw,1.3rem); line-height:1.7;}
+  .outro .latin{font-family:"Cormorant Garamond",serif; font-style:italic;
+    font-size:clamp(.86rem,2.3vw,1rem); margin-top:1rem; opacity:.8;}
+
+  .foot{margin-top:2.2rem; text-align:center; font-family:"Nanum Gothic",sans-serif;
+    font-size:.66rem; letter-spacing:.18em; color:var(--ink-faint);}
+
+  /* ── 스크롤 등장: 기본은 보임, JS 정상 작동 시에만 애니메이션 ── */
+  .rv{opacity:1; transform:none;}
+  html.anim .rv{opacity:0; transform:translateY(16px);
+    transition:opacity .7s ease, transform .7s cubic-bezier(.22,.61,.36,1);}
+  html.anim .rv.on{opacity:1; transform:none;}
+
+  /* ── 인쇄 최적화 ── */
+  @media print{
+    @page{margin:13mm;}
+    html,body{print-color-adjust:exact; -webkit-print-color-adjust:exact;}
+    body::before{display:none;}
+    .wrap{max-width:none; padding:0;}
+    .hero,.outro{background:var(--red) !important; color:var(--paper) !important;}
+    section,.qcard,.prep,.hero,.outro{break-inside:avoid;}
+    .rv{opacity:1 !important; transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<main class="wrap">
+
+  <!-- 헤더 -->
+  <header class="hero rv">
+    <div class="brand">함께읽기 O N</div>
+    <div class="when">2026. 7. 28 화요일 · 저녁 8시 · 스물두 사람</div>
+    <h1>말하지 않아도,<br><span class="em">이미 말하고 있다</span></h1>
+    <p class="latin">김정운, 『말하지 않고 말하기』 — 마음을 움직이는 소통의 심리학</p>
+  </header>
+
+  <!-- 여는 글 -->
+  <section class="rv">
+    <p class="kicker">모임 전, 미리 건네는 글</p>
+    <h2>93%를 이야기하는 밤</h2>
+    <div class="lead">
+      <p>책은 말한다 — 소통에서 말이 차지하는 몫은 7%뿐이라고. 나머지 93%는 터치, 눈맞춤, 표정, 침묵, 호흡의 리듬이 채운다고. 이번 함께읽기ON에서 우리가 나눌 것은 바로 그 93%다.</p>
+      <p>아래 여섯 개의 문은 책의 여섯 파트를 따라간다. 다 답하려 하지 않아도 된다. <span class="strong">한두 개의 질문만 마음에 품고 와도 충분하다.</span></p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- 준비 안내 -->
+  <section class="rv">
+    <p class="kicker">준비해 올 것</p>
+    <div class="prep">
+      <span class="lab">두 가지면 됩니다</span>
+      <ul>
+        <li>마음에 남은 <b>문장 하나</b> — 밑줄 그은 자리 그대로.</li>
+        <li>아래 여섯 질문 중 <b>이야기하고 싶은 것 하나</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 여섯 질문 -->
+  <section class="rv">
+    <p class="kicker">여섯 개의 문 · 나눔 질문</p>
+    <h2>말 이전에 오는 것들</h2>
+
+    <div class="qcard rv">
+      <div class="nm">① 터치<span class="h">TOUCH</span></div>
+      <p class="ct">우리는 매일 스마트폰을 터치하지만, 그 유리 위에는 서로의 체온이 없다.</p>
+      <p class="qq">말보다 오래 남았던 손길이, 내게도 있었던가.</p>
+    </div>
+
+    <div class="qcard rv">
+      <div class="nm">② 눈맞춤<span class="h">EYE CONTACT</span></div>
+      <p class="ct">인간의 눈만 흰자위가 크다 — 시선을 들키는 쪽으로 진화한 동물. 눈맞춤은 바라봄이 아니라 승인이다.</p>
+      <p class="qq">요즘 나는 누구와 눈을 맞추고, 누구의 시선을 피하고 있나.</p>
+    </div>
+
+    <div class="qcard rv">
+      <div class="nm">③ 정서 조율<span class="h">AFFECT ATTUNEMENT</span></div>
+      <p class="ct">내용이 물이라면 정서는 수도관 — 관에 구멍이 나면 물은 닿기 전에 다 샌다.</p>
+      <p class="qq">내가 속한 공동체의 수도관은, 지금 어떤 상태인가.</p>
+    </div>
+
+    <div class="qcard rv">
+      <div class="nm">④ 순서 바꾸기<span class="h">TURN TAKING</span></div>
+      <p class="ct">대화의 순서 교대는 평균 0.2초. 오바마의 연설을 특별하게 만든 건 노래 앞의 6초 침묵이었다.</p>
+      <p class="qq">내 대화에서 침묵은 사고인가, 또 하나의 말인가.</p>
+    </div>
+
+    <div class="qcard rv">
+      <div class="nm">⑤ 함께 보기<span class="h">JOINT ATTENTION</span></div>
+      <p class="ct">다섯 명이 하늘을 올려다보면 거리의 모두가 따라 본다. 문명은 같은 곳을 함께 바라보는 능력 위에 세워졌다.</p>
+      <p class="qq">가장 가까운 사람과 '같은 것'을 마지막으로 함께 바라본 건, 언제 무엇이었나 — 각자의 화면 말고.</p>
+    </div>
+
+    <div class="qcard rv">
+      <div class="nm">⑥ 관점 바꾸기<span class="h">PERSPECTIVE TAKING</span></div>
+      <p class="ct">피해자가 되는 순간 마음은 편안해진다 — 다만 그 안도감이 대화의 문을 닫는다. 바꿀 관점이 먼저 있어야 한다.</p>
+      <p class="qq">나는 어떤 장면에서, 피해자의 자리에 머물고 싶어지나.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- 그날의 흐름 -->
+  <section class="rv">
+    <p class="kicker">그날의 흐름</p>
+    <div class="prep">
+      <span class="lab">저녁 8시부터, 아흔 분</span>
+      <ul>
+        <li><b>20:00 – 20:10</b> · 함께 열기 — 책과 만난 사연, 밑줄 문장 나누기</li>
+        <li><b>20:10 – 21:05</b> · 여섯 개의 문 — 문마다 나눔 질문에 두세 사람의 목소리를 듣고 다음 문으로</li>
+        <li><b>21:05 – 21:30</b> · 보론과 세 물음, 그리고 마지막 순서의 발표로 매듭</li>
+        <li>말이 어려운 날엔, 채팅 한 줄로 건네도 똑같은 목소리다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 닫기 -->
+  <section class="outro rv">
+    <p class="final">그날 우리가 나눌 눈빛과 끄덕임과 침묵도,<br>이미 하나의 말이었기를.</p>
+    <p class="latin">우리는 소통하기에, 존재한다 — 비고츠키</p>
+  </section>
+
+  <p class="foot">함께읽기 ON · 2026. 7. 28</p>
+
+</main>
+
+<script>
+  // JS가 정상 작동할 때만 애니메이션 활성화 (카톡 등 미작동 뷰어에선 기본 노출)
+  try{
+    document.documentElement.classList.add('anim');
+    var els = document.querySelectorAll('.rv');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+        });
+      },{threshold:.12});
+      els.forEach(function(el){ io.observe(el); });
+    }else{
+      els.forEach(function(el){ el.classList.add('on'); });
+    }
+    // 안전장치: 2.5초 후 전부 노출
+    setTimeout(function(){ els.forEach(function(el){ el.classList.add('on'); }); }, 2500);
+  }catch(e){
+    document.documentElement.classList.remove('anim');
+  }
+</script>
+</body>
+</html>

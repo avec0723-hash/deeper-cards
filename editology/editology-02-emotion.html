@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<!-- saved from url=(0190)file:///C:/Users/avec0/OneDrive/%EB%AC%B8%EC%84%9C/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1%20%EB%B0%9B%EC%9D%80%20%ED%8C%8C%EC%9D%BC/%EA%B0%90%EC%A0%95%EC%9D%98-%ED%8E%B8%EC%A7%91%ED%95%99.html -->
+<html lang="ko" class="anim"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>감정의 편집학 — 초고는 발행하지 않는다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./감정의 편집학 — 초고는 발행하지 않는다_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F7F3;
+    --card:#FDFDFB;
+    --ink:#23231F;
+    --graphite:#6F6F66;
+    --proof:#C0392B;      /* 교정 빨강 */
+    --grid:#C9D6C9;       /* 원고지 초록 괘선 */
+    --grid-soft:#E4EBE4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans KR',sans-serif;
+    font-weight:300;
+    line-height:1.85;
+    letter-spacing:-0.01em;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+    background-image:
+      linear-gradient(var(--grid-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-soft) 1px, transparent 1px);
+    background-size:28px 28px;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:56px 20px 80px;}
+
+  /* ── 카드 공통: 교정지 + 재단선 ── */
+  .card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--grid);
+    padding:44px 40px;
+    margin-bottom:40px;
+    break-inside:avoid;
+  }
+  .card::before,.card::after,
+  .card .crop-b::before,.card .crop-b::after{
+    content:"";position:absolute;width:14px;height:14px;
+    border-color:var(--graphite);border-style:solid;
+  }
+  .card::before{top:-7px;left:-7px;border-width:0 0 1px 1px;transform:rotate(90deg);}
+  .card::after{top:-7px;right:-7px;border-width:0 0 1px 1px;}
+  .card .crop-b::before{bottom:-7px;left:-7px;border-width:1px 1px 0 0;transform:rotate(90deg);}
+  .card .crop-b::after{bottom:-7px;right:-7px;border-width:1px 0 0 1px;transform:rotate(90deg);}
+
+  .stamp{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;letter-spacing:0.18em;
+    color:var(--proof);
+    border:1px solid var(--proof);
+    padding:3px 12px;margin-bottom:22px;
+  }
+
+  h1,h2,h3{font-family:'Gowun Batang',serif;font-weight:700;color:var(--ink);}
+  h2{font-size:24px;margin-bottom:8px;line-height:1.5;}
+  .sub{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--graphite);letter-spacing:0.12em;margin-bottom:26px;}
+
+  p{margin-bottom:16px;font-size:16px;}
+  p:last-child{margin-bottom:0;}
+  em{font-style:normal;font-weight:500;color:var(--ink);}
+  .red{color:var(--proof);font-weight:500;}
+  .nb{white-space:nowrap;}
+
+  .strike{
+    text-decoration:line-through;
+    text-decoration-color:var(--proof);
+    text-decoration-thickness:2px;
+    color:var(--graphite);
+  }
+  .fix{
+    font-family:'Gowun Batang',serif;
+    color:var(--proof);font-weight:700;
+    white-space:nowrap;
+  }
+
+  /* ── 히어로 ── */
+  .hero{padding:64px 40px 56px;text-align:left;}
+  .hero .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.22em;color:var(--graphite);margin-bottom:30px;}
+  .hero h1{font-size:clamp(28px,6vw,42px);line-height:1.55;margin-bottom:28px;}
+  .hero .thesis{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(17px,3.4vw,20px);
+    line-height:2.0;color:var(--ink);
+    border-left:3px solid var(--proof);
+    padding-left:20px;
+  }
+
+  /* ── 항목 ── */
+  .item{padding:22px 0;border-bottom:1px dashed var(--grid);break-inside:avoid;}
+  .item:last-of-type{border-bottom:none;padding-bottom:0;}
+  .item h3{font-size:17px;margin-bottom:8px;}
+  .item h3 .mark{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--proof);margin-right:10px;letter-spacing:0.1em;}
+  .item p{font-size:15px;color:#3d3d38;}
+
+  /* ── 유쾌한 정정 목록 (속편: 한 줄 풀이 추가) ── */
+  .wit{list-style:none;margin:8px 0 20px;}
+  .wit li{
+    padding:16px 0;
+    border-bottom:1px dashed var(--grid);
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(15px,3.2vw,17px);
+    line-height:1.9;
+    break-inside:avoid;
+  }
+  .wit li:last-child{border-bottom:none;}
+  .wit .arrow{font-family:'IBM Plex Mono',monospace;color:var(--graphite);font-size:13px;margin:0 6px;}
+  .wit .gloss{
+    display:block;
+    font-family:'Noto Sans KR',sans-serif;
+    font-weight:300;
+    font-size:14px;
+    color:var(--graphite);
+    margin-top:6px;
+    padding-left:14px;
+    border-left:2px solid var(--grid);
+  }
+
+  /* ── 전제(creed) ── */
+  .creed{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(16px,3.2vw,18px);
+    line-height:2.3;
+    border-left:3px solid var(--proof);
+    padding-left:20px;
+    margin:6px 0 24px;
+    break-inside:avoid;
+  }
+
+  /* ── 판본 표기(감정의 3단계) ── */
+  .versions{
+    display:flex;flex-wrap:wrap;gap:10px;
+    margin:6px 0 24px;
+  }
+  .versions .v{
+    flex:1 1 180px;
+    border:1px solid var(--grid);
+    background:var(--paper);
+    padding:18px 16px;
+    break-inside:avoid;
+  }
+  .versions .v .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:0.16em;
+    color:var(--proof);display:block;margin-bottom:8px;
+  }
+  .versions .v .word{
+    font-family:'Gowun Batang',serif;
+    font-size:18px;font-weight:700;display:block;margin-bottom:6px;
+  }
+  .versions .v p{font-size:13.5px;color:#3d3d38;line-height:1.7;margin:0;}
+
+  /* ── 인용 카드 ── */
+  .quote-card{background:var(--ink);color:#EDEDE6;border:none;text-align:center;padding:60px 36px;}
+  .quote-card::before,.quote-card::after,
+  .quote-card .crop-b::before,.quote-card .crop-b::after{border-color:#EDEDE6;}
+  .quote-card blockquote{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(18px,4vw,23px);
+    line-height:2.0;font-weight:700;
+  }
+  .quote-card blockquote .red{color:#E8756A;}
+  .quote-card .who{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.2em;color:#9a9a90;margin-top:24px;}
+
+  /* ── 푸터 ── */
+  .footer{text-align:center;padding-top:8px;}
+  .footer .proof-note{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--graphite);letter-spacing:0.14em;line-height:2.2;
+  }
+  .footer .sig{font-family:'Gowun Batang',serif;font-size:15px;margin-top:14px;color:var(--ink);}
+
+  /* ── 스크롤 리빌: 기본은 항상 보임 ── */
+  .reveal{opacity:1;transform:none;}
+  html.anim .reveal{
+    opacity:0;transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  html.anim .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    html.anim .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+  }
+
+  /* ── 인쇄 최적화 ── */
+  @media print{
+    @page{margin:14mm;}
+    body{background:#fff;background-image:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .wrap{max-width:100%;padding:0;}
+    .card{break-inside:avoid;page-break-inside:avoid;margin-bottom:20px;box-shadow:none;}
+    .item,.wit li,.versions .v{break-inside:avoid;page-break-inside:avoid;}
+    html.anim .reveal{opacity:1 !important;transform:none !important;}
+    .quote-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 히어로 -->
+  <section class="card hero reveal in">
+    <div class="crop-b"></div>
+    <div class="eyebrow">EDITOLOGY × 관계론 · 제2편 — 「편집되는 나, 편집하는 나」 續</div>
+    <h1>
+      격한 원망은 감정의<br>
+      <span class="strike">잘못</span> <span class="fix">초고</span>다
+    </h1>
+    <p class="thesis">
+      초고 없이 쓰는 사람은 없다.<br>
+      문제는 초고를 쓴 것이 아니라,<br>
+      퇴고 없이 상대에게 <em>발행</em>한 것이다.
+    </p>
+  </section>
+
+  <!-- 전제 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">전제 · 感情에도 版本이 있다</span>
+    <h2>충동은 초고,<br>간격은 퇴고, 전달은 발행</h2>
+    <div class="sub">PREMISE</div>
+    <div class="versions">
+      <div class="v">
+        <span class="tag">初稿</span>
+        <span class="word">충동</span>
+        <p>몸이 먼저 쓰는 글. 누구에게나, 언제나, 험하게 써진다. 여기까지는 죄가 아니다.</p>
+      </div>
+      <div class="v">
+        <span class="tag">推敲</span>
+        <span class="word">간격</span>
+        <p>충동과 출력 사이의 틈. 이 틈은 인격이 만드는 것이 아니라 훈련이 만든다. 그래서 누구나 넓힐 수 있다.</p>
+      </div>
+      <div class="v">
+        <span class="tag">發行</span>
+        <span class="word">전달</span>
+        <p>상대에게 도착하는 판본. 발행된 말만이 관계에 남는다. 초고는 아무도 못 봤다.</p>
+      </div>
+    </div>
+    <p>
+      감정이 격한 사람과 차분한 사람이 따로 있는 게 아니다.
+      <span class="red">초고를 그대로 발행하는 사람과, 퇴고를 거쳐 발행하는 사람이 있을 뿐이다.</span>
+      그리고 퇴고는 타고나는 것이 아니라 배우는 것이다.
+    </p>
+  </section>
+
+  <!-- 제1부 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">제1부 · 네 개의 관문</span>
+    <h2>감정의 요동이<br>환희가 되는 경로</h2>
+    <div class="sub">FOUR GATES FROM TURBULENCE TO JOY</div>
+    <p>
+      요동은 억누른다고 가라앉지 않는다. 네 개의 관문을 통과시키면,
+      가라앉는 것을 넘어 <em>기쁨의 재료</em>가 된다.
+    </p>
+
+    <div class="item">
+      <h3><span class="mark">관문 ①</span>명명 — 이름을 붙인다</h3>
+      <p>"괴롭다"를 "억울함", "실망", "서운함"으로 쪼개 부르는 순간
+      감정의 온도가 내려간다. 이름 붙은 감정은 나를 삼키지 못한다.
+      정체 모를 것만이 무섭다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">관문 ②</span>유예 — 결정을 미룬다</h3>
+      <p>요동 속에서 내린 결정은 결정이 아니라 반응이다.
+      "일주일 뒤에도 같은 결론인가"를 물으며 미루면,
+      '지금 뭔가 해야 한다'는 거짓 긴급성이 꺼진다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">관문 ③</span>재해석 — 프레임을 바꾼다</h3>
+      <p>같은 사건도 다른 틀에 놓으면 다른 의미가 된다.
+      "그의 태도"가 "그의 편집본"이 되고, "내 몫의 괴로움"이
+      "그의 과제"가 되는 순간, 사건은 그대로인데 무게가 달라진다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">관문 ④</span>산출 — 재료로 만든다</h3>
+      <p>겪은 것을 글로, 자료로, 이야기로 빚어내면 고통의 소화가 끝난다.
+      요동이 환희로 바뀌는 마지막 관문이 여기다.
+      만들어낸 사람에게 그 일은 더 이상 상처가 아니라 재료다.</p>
+    </div>
+  </section>
+
+  <!-- 간주: 이불킥의 재발견 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">간주 · 이불킥의 재발견</span>
+    <h2>이불킥은 수치의 기록이 아니라<br>퇴고의 기록이다</h2>
+    <div class="sub">IN PRAISE OF MIDNIGHT REGRETS</div>
+    <ul class="wit">
+      <li>
+        어젯밤 일로 이불킥을 했다 <span class="arrow">─▶</span> <span class="strike">흑역사가 하나 늘었다</span> <span class="fix">교정지가 도착했다</span>
+        <span class="gloss">이불킥은 오늘의 내가 어제의 나를 퇴고하는 시간이다. 아프다는 건 고칠 눈이 생겼다는 뜻.</span>
+      </li>
+      <li>
+        저 사람은 흔들림 없이 타고난 리더다 <span class="arrow">─▶</span> <span class="strike">재수 없다</span> <span class="fix">개정을 거듭해 초판이 안 보일 뿐이다</span>
+        <span class="gloss">완성형으로 보이는 사람은 원본이 좋은 게 아니라 판본이 높은 것이다. 그의 이불킥을 내가 못 봤을 뿐.</span>
+      </li>
+      <li>
+        나는 옛날에 형편없었다 <span class="arrow">─▶</span> <span class="strike">지우고 싶다</span> <span class="fix">그만큼 많이 고쳐 썼다는 증거다</span>
+        <span class="gloss">초판이 거칠수록 지금 판본까지의 개정 폭이 크다. 부끄러움의 크기가 곧 성장의 크기.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 제2부 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">제2부 · 이미 발행된 초고를 다루는 법</span>
+    <h2>터뜨린 뒤에,<br>손잡아주는 순서</h2>
+    <div class="sub">AFTER THE DRAFT HAS SHIPPED</div>
+
+    <div class="item">
+      <h3><span class="mark">①</span>후회부터 다룬다</h3>
+      <p>후회는 고장의 신호가 아니라 가치관이 살아있다는 증거다.
+      폭발한 사람에게 필요한 첫 문장은 훈계가 아니라
+      "네가 후회한다는 것이 네가 어떤 사람인지 말해준다"이다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">②</span>감정과 발행을 분리한다</h3>
+      <p>억울함은 타당했다. 조정할 것은 발행 방식뿐이다.
+      감정까지 틀렸다고 하면 다음번엔 억누르다 더 크게 터진다.
+      초고를 검열하지 말고, 발행만 늦추게 하라.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">③</span>초고함을 만들어준다</h3>
+      <p>상대에게 보내기 전에 쏟아낼 안전한 곳 — 메모장, 믿는 사람,
+      부치지 않는 편지. 초고함이 있는 사람은 발행을 서두르지 않는다.
+      터뜨릴 곳이 없어서 상대에게 터뜨리는 것이다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">④</span>사과를 개정판으로 가르쳐준다</h3>
+      <p>이미 발행된 초고는 회수할 수 없지만 개정판은 낼 수 있다.
+      사과는 굴복이 아니라 "그 판본은 내 최선이 아니었다"는
+      정정 공지다. 자기혐오는 절판 선언이고, 사과는 개정 작업이다.</p>
+    </div>
+  </section>
+
+  <!-- 바탕 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">바탕 · 완성형 인간은 없다</span>
+    <h2>완성된 사람은 없다,<br>개정 중인 사람이 있을 뿐</h2>
+    <div class="sub">THE PREMISE BENEATH</div>
+    <p class="creed">
+      지금 단단해 보이는 사람의 뒤에는<br>
+      수없는 이불킥의 밤이 쌓여 있다.<br>
+      타고난 평온이 아니라, 거듭된 퇴고.<br>
+      물려받은 지혜가 아니라, 올라간 판본.
+    </p>
+    <p>
+      그러니 "나는 원래 이런 사람"이라는 문장은 조심해서 쓰자.
+      과거의 나에 대한 기억도 하나의 편집본이라서,
+      "형편없던 나"는 실제보다 나쁘게 부풀려진 판본일 수 있고,
+      "타고난 그 사람"의 판본에서는 그가 견딘 퇴고의 밤들이 잘려나가 있을 수 있다.
+      <span class="red">타인에게 개정판을 허락하듯, 나에게도 허락할 것.</span>
+      전편의 결론이 여기서 다시 만난다 — 우리는 나 자신의 편집자이기도 하다.
+    </p>
+  </section>
+
+  <!-- 닫는 인용 -->
+  <section class="card quote-card reveal in">
+    <div class="crop-b"></div>
+    <blockquote>
+      완성된 사람은 없다.<br>
+      개정 중인 사람이 있을 뿐.<br>
+      <span class="red">이불킥의 횟수만큼, 판본은 올라간다.</span>
+    </blockquote>
+    <div class="who">感情의 編輯學 — 初稿는 發行하지 않는다</div>
+  </section>
+
+  <!-- 푸터 -->
+  <div class="footer reveal in">
+    <p class="proof-note">
+      이 원고 역시 초고입니다.<br>
+      살아가며 함께 퇴고할 것입니다.
+    </p>
+    <p class="sig">— 야간비행</p>
+  </div>
+
+</div>
+
+<script>
+  // 애니메이션은 JS가 정상 동작할 때만 활성화 (기본 상태: 모두 보임)
+  document.documentElement.classList.add('anim');
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // 안전장치: 2.5초 후 무조건 전체 표시 (카카오톡 인앱 등 대비)
+  setTimeout(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }, 2500);
+</script>
+
+
+</body></html>

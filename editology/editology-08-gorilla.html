@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>편집학 · 여덟 번째 교정지 — 혼자 웃는 소통</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Nanum+Pen+Script&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f8f4e9;
+    --paper-deep:#f1ebdb;
+    --ink:#2c2721;
+    --ink-soft:#5d564b;
+    --pencil:#8f8779;
+    --red:#b23a2c;
+    --red-soft:#c9584a;
+    --line:#d8cfba;
+    --cell:#e4dcc7;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper-deep);
+    color:var(--ink);
+    font-family:'Noto Serif KR', serif;
+    font-weight:300;
+    line-height:1.95;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    background:var(--paper);
+    min-height:100vh;
+    padding:64px 44px 80px;
+    box-shadow:0 0 40px rgba(60,50,30,.12);
+    position:relative;
+    background-image:
+      repeating-linear-gradient(transparent, transparent 38px, rgba(178,58,44,.045) 38px, rgba(178,58,44,.045) 39px);
+  }
+  /* ── 머리표 ───────────────────────── */
+  .head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom:2px solid var(--red);
+    padding-bottom:10px; margin-bottom:6px;
+  }
+  .head .series{
+    font-size:.82rem; letter-spacing:.35em; color:var(--red); font-weight:600;
+  }
+  .head .no{
+    font-family:'Nanum Pen Script', cursive;
+    font-size:1.5rem; color:var(--red);
+  }
+  .head-sub{
+    display:flex; justify-content:space-between;
+    font-size:.72rem; color:var(--pencil); letter-spacing:.12em;
+    border-bottom:1px solid var(--line);
+    padding:6px 2px 8px; margin-bottom:52px;
+  }
+  h1{
+    font-family:'Gowun Batang', 'Noto Serif KR', serif;
+    font-weight:700; font-size:2.05rem; letter-spacing:.02em;
+    line-height:1.4; margin-bottom:10px;
+  }
+  .subtitle{
+    font-size:.95rem; color:var(--ink-soft); letter-spacing:.06em;
+    margin-bottom:60px;
+  }
+  .subtitle em{font-style:normal; color:var(--red);}
+
+  /* ── 섹션 공통 ─────────────────────── */
+  section{margin-bottom:64px; break-inside:avoid;}
+  .label{
+    display:inline-block;
+    font-size:.75rem; letter-spacing:.3em; font-weight:600;
+    color:var(--red);
+    border:1px solid var(--red);
+    padding:3px 12px 2px 15px;
+    margin-bottom:24px;
+    border-radius:2px;
+  }
+  p{margin-bottom:1.35em; font-size:1.02rem;}
+  .cite{
+    font-size:.8rem; color:var(--pencil); letter-spacing:.05em;
+  }
+
+  /* ── 장면 ─────────────────────────── */
+  .scene p:first-of-type::first-letter{
+    font-family:'Gowun Batang', serif;
+    font-size:2.6em; font-weight:700; float:left;
+    line-height:1; padding:6px 10px 0 0; color:var(--red);
+  }
+  .scene .quote{
+    font-family:'Nanum Pen Script', cursive;
+    font-size:1.55rem; color:var(--ink);
+    padding-left:22px; border-left:3px solid var(--red-soft);
+    margin:28px 0; line-height:1.5;
+  }
+
+  /* ── 초고 · 취소선 · 손글씨 교정 ─────── */
+  .draft-box{
+    background:#fdfaf1;
+    border:1px solid var(--line);
+    padding:56px 34px 34px;
+    position:relative;
+    border-radius:2px;
+  }
+  .draft-line{
+    font-family:'Gowun Batang', serif;
+    font-size:1.32rem; font-weight:400; line-height:2.1;
+    position:relative; display:inline;
+    color:var(--ink-soft);
+  }
+  .strike{
+    position:relative; white-space:nowrap;
+  }
+  .strike::after{
+    content:"";
+    position:absolute; left:-2px; right:-2px; top:52%;
+    height:2px; background:var(--red);
+    transform:rotate(-.6deg);
+  }
+  .strike::before{
+    content:"";
+    position:absolute; left:-1px; right:-3px; top:60%;
+    height:1.4px; background:var(--red-soft); opacity:.7;
+    transform:rotate(.5deg);
+  }
+  .correction{
+    position:absolute; top:14px; left:36px; right:20px;
+    font-family:'Nanum Pen Script', cursive;
+    font-size:1.6rem; color:var(--red);
+    transform:rotate(-1.2deg);
+    line-height:1.3;
+  }
+  .proof-mark{
+    position:absolute; bottom:10px; right:16px;
+    font-family:'Nanum Pen Script', cursive;
+    font-size:1.1rem; color:var(--red-soft);
+  }
+
+  /* ── 교정 一二三 ───────────────────── */
+  .fix{
+    display:flex; gap:22px; margin-bottom:44px; break-inside:avoid;
+  }
+  .fix .num{
+    font-family:'Gowun Batang', serif;
+    font-size:1.7rem; font-weight:700; color:var(--red);
+    flex:0 0 auto; line-height:1.6;
+  }
+  .fix h3{
+    font-family:'Gowun Batang', serif;
+    font-size:1.12rem; font-weight:700; margin-bottom:10px;
+    letter-spacing:.02em;
+  }
+  .fix h3 .pen{
+    font-family:'Nanum Pen Script', cursive;
+    font-weight:400; color:var(--red); font-size:1.25rem; margin-left:8px;
+  }
+
+  /* ── 체크 ─────────────────────────── */
+  .check-item{
+    display:flex; gap:16px; align-items:flex-start;
+    padding:18px 6px; border-bottom:1px dashed var(--line);
+    break-inside:avoid;
+  }
+  .check-item:last-child{border-bottom:none;}
+  .box{
+    flex:0 0 auto; width:22px; height:22px; margin-top:9px;
+    border:1.6px solid var(--ink-soft); border-radius:2px;
+    position:relative;
+  }
+  .check-item p{margin:0; font-size:1rem;}
+
+  /* ── 최종 교정 · 원고지 ─────────────── */
+  .final-note{
+    font-family:'Nanum Pen Script', cursive;
+    font-size:1.35rem; color:var(--red);
+    margin-bottom:18px; transform:rotate(-.8deg);
+  }
+  .grid-line{
+    display:flex; flex-wrap:wrap; gap:0;
+    border-top:1px solid var(--cell); border-left:1px solid var(--cell);
+    background:#fffdf6;
+  }
+  .grid-line span{
+    width:44px; height:44px;
+    border-right:1px solid var(--cell); border-bottom:1px solid var(--cell);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Gowun Batang', serif;
+    font-size:1.15rem; font-weight:700;
+  }
+  .grid-line span.blank{color:transparent;}
+
+  /* ── 서명란 ───────────────────────── */
+  .colophon{
+    margin-top:80px; padding-top:26px;
+    border-top:2px solid var(--red);
+    display:flex; justify-content:space-between; align-items:flex-end;
+    break-inside:avoid;
+  }
+  .colophon .src{
+    font-size:.78rem; color:var(--pencil); line-height:2;
+  }
+  .sign{
+    text-align:right; position:relative;
+  }
+  .sign .who{
+    font-family:'Nanum Pen Script', cursive;
+    font-size:2rem; color:var(--ink);
+  }
+  .stamp{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:52px; height:52px; margin-left:14px;
+    border:2.5px solid var(--red); border-radius:50%;
+    color:var(--red);
+    font-family:'Gowun Batang', serif; font-weight:700; font-size:1.15rem;
+    transform:rotate(-8deg);
+    opacity:.85;
+  }
+
+  /* ── 스크롤 애니메이션: 기본은 항상 보임 ── */
+  .rise{opacity:1; transform:none;}
+  html.anim .rise{
+    opacity:0; transform:translateY(22px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  html.anim .rise.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    html.anim .rise{opacity:1 !important; transform:none !important; transition:none !important;}
+  }
+
+  /* ── 인쇄 최적화 ───────────────────── */
+  @page{margin:18mm 14mm;}
+  @media print{
+    body{background:#fff;}
+    .sheet{box-shadow:none; max-width:100%; padding:0 8mm;}
+    section, .fix, .check-item, .draft-box, .colophon{break-inside:avoid;}
+    .rise{opacity:1 !important; transform:none !important;}
+    *{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  }
+  @media (max-width:600px){
+    .sheet{padding:44px 22px 60px;}
+    h1{font-size:1.6rem;}
+    .correction{font-size:1.3rem; left:24px;}
+    .draft-line{font-size:1.12rem;}
+    .grid-line span{width:36px; height:36px; font-size:.98rem;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="head">
+    <span class="series">編 輯 學 · 校 正 紙</span>
+    <span class="no">여덟 번째</span>
+  </div>
+  <div class="head-sub">
+    <span>원문 — 김정운, 『말하지 않고 말하기』</span>
+    <span>교정 — 야간비행</span>
+  </div>
+
+  <h1 class="rise">혼자 웃는 소통</h1>
+  <p class="subtitle rise">웃음이라는 <em>증거</em>를 다시 교정하다</p>
+
+  <!-- 장면 -->
+  <section class="scene rise">
+    <span class="label">장면</span>
+    <p>로테르담의 동물원, 고릴라 사(舍)의 유리벽 앞. 한 여자가 일주일에 네 번쯤 그 자리에 섰다. 눈을 맞추고, 오래, 웃었다. 유리 저편의 이름은 보키토였다.</p>
+    <div class="quote">"내가 웃으면, 보키토도 웃어요."</div>
+    <p>그녀는 주위 사람들에게 그렇게 말하곤 했다. 고릴라와 자신이 정서적으로 소통한다고 확신했지만, <strong>그건 그저 그녀의 생각이었습니다</strong> — 라고 책은 적는다. <span class="cite">(P65)</span></p>
+    <p>전해지는 이야기는 여기서 한 걸음 더 간다. 2007년 봄, 보키토가 담을 넘던 날, 그 많은 관람객 가운데 그가 곧장 향한 곳은 그녀였다고 한다. 고릴라의 문법에서 정면으로 눈을 맞추고 이빨을 드러내는 일은 인사가 아니라 도전에 가까웠으므로. 그렇다면 몇 해 동안 그녀는 사랑을 보냈고, 같은 몇 해 동안 그는 선전포고를 받아온 셈이다. 같은 유리벽, 같은 웃음 앞에서.</p>
+  </section>
+
+  <!-- 초고 -->
+  <section class="rise">
+    <span class="label">초고</span>
+    <div class="draft-box">
+      <div class="correction">혼자 웃는 소통일 수 있다 — 물어보기 전까지는.</div>
+      <p class="draft-line"><span class="strike">상대가 웃고 있다면, 소통은 이미 이루어지고 있는 것이다.</span></p>
+      <div class="proof-mark">↺ 전면 재고</div>
+    </div>
+  </section>
+
+  <!-- 교정 一二三 -->
+  <section class="rise">
+    <span class="label">교정</span>
+
+    <div class="fix">
+      <div class="num">一</div>
+      <div>
+        <h3>웃음은 증거가 아니라 외국어다<span class="pen">— 번역할 것</span></h3>
+        <p>같은 표정이 두 문법에서 반대로 읽힌다. 그녀의 미소는 그녀의 언어로는 애정이었고, 그의 언어로는 도발이었다. 소통이 무너지는 자리는 신호가 끊긴 곳이 아니라, 신호가 번역 없이 오가는 곳인지도 모른다. 오독은 침묵보다 조용히 자란다 — 양쪽 다 대화가 잘 되고 있다고 믿는 동안에.</p>
+      </div>
+    </div>
+
+    <div class="fix">
+      <div class="num">二</div>
+      <div>
+        <h3>예절을 건너뛰는 것은 권력만이 아니다<span class="pen">— 애정도 건너뛴다</span></h3>
+        <p>'함께 보기'의 신호는 가장 기초적인 예절이고, 돈과 권력은 이 예절을 아주 자주 건너뛴다고 책은 적었다. <span class="cite">(P278)</span> 그런데 유리벽 앞의 그녀에게는 돈도 권력도 없었다. 그녀에게 물음을 면제해 준 것은 확신, 그러니까 애정이었다. 사랑하니까 안 물어도 안다는 문장은, 어쩌면 사랑이 확인을 대신해 준다는 착각의 다른 이름일지도 모른다. 신뢰와 책임이 추적 가능한 150명 <span class="cite">(P283)</span> 안에서도, 물음을 건너뛴 자리에는 조용히 유리 한 장이 선다.</p>
+      </div>
+    </div>
+
+    <div class="fix">
+      <div class="num">三</div>
+      <div>
+        <h3>유리벽은 보호하는 만큼 보존한다<span class="pen">— 무엇을?</span></h3>
+        <p>벽이 없었다면 첫날 알았을 일을, 벽이 있어서 몇 해를 몰랐다. 유리는 그녀를 지켜 준 두께 그대로 오독을 지켜 주었다. 안전한 거리는 관계를 오래 살게 하는 것이 아니라 오해를 오래 살게 하는지도 모른다. 우리 시대의 유리벽이 무엇인지는 각자 셈해 볼 일이다 — 화면일 수도, 직급일 수도, '좋아요' 하나로 대신해 온 안부일 수도.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 체크 -->
+  <section class="rise">
+    <span class="label">교정자의 체크</span>
+    <div class="check-item">
+      <div class="box"></div>
+      <p>내가 웃으면 저 사람도 웃는다고, 확인 없이 확신해 온 관계가 있는가.</p>
+    </div>
+    <div class="check-item">
+      <div class="box"></div>
+      <p>내 웃음이 상대의 문법에서 어떻게 읽히는지, 마지막으로 물어본 것은 언제였는가.</p>
+    </div>
+    <div class="check-item">
+      <div class="box"></div>
+      <p>나는 지금 어떤 유리벽 뒤에서 웃고 있는가 — 그 벽은 나를 보호하고 있는가, 오해를 보존하고 있는가.</p>
+    </div>
+  </section>
+
+  <!-- 최종 교정 -->
+  <section class="rise">
+    <span class="label">최종 교정</span>
+    <p class="final-note">아래와 같이 바로잡습니다.</p>
+    <div class="grid-line">
+      <span>소</span><span>통</span><span>은</span><span class="blank">·</span><span>웃</span><span>는</span><span class="blank">·</span><span>순</span><span>간</span><span>이</span><span class="blank">·</span><span>아</span><span>니</span><span>라</span><span>,</span>
+    </div>
+    <div class="grid-line" style="border-top:none;">
+      <span>웃</span><span>음</span><span>이</span><span class="blank">·</span><span>어</span><span>떻</span><span>게</span><span class="blank">·</span><span>읽</span><span>혔</span><span>는</span><span>지</span>
+    </div>
+    <div class="grid-line" style="border-top:none;">
+      <span>묻</span><span>는</span><span class="blank">·</span><span>순</span><span>간</span><span class="blank">·</span><span>시</span><span>작</span><span>된</span><span>다</span><span>.</span>
+    </div>
+  </section>
+
+  <!-- 서명란 -->
+  <div class="colophon rise">
+    <div class="src">
+      편집학 시리즈 · 여덟 번째 교정지<br>
+      밑줄 카드 — P65 · P278 · P283<br>
+      두 카드를 이은 한 줄에서 시작됨
+    </div>
+    <div class="sign">
+      <span class="who">야간비행</span><span class="stamp">校</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // 애니메이션은 JS가 정상 동작할 때만 활성화 (기본 상태는 항상 보임)
+  document.documentElement.classList.add('anim');
+  var revealed = false;
+  function revealAll(){
+    if(revealed) return; revealed = true;
+    document.querySelectorAll('.rise').forEach(function(el){ el.classList.add('in'); });
+  }
+  try{
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.12});
+    document.querySelectorAll('.rise').forEach(function(el){ io.observe(el); });
+  }catch(err){ revealAll(); }
+  // 카카오톡 인앱 등 JS 제약 환경 대비 안전장치
+  setTimeout(revealAll, 2500);
+</script>
+</body>
+</html>

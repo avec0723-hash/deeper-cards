@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나의 편집학 — 언니는 한탄하고, 나는 판결하고</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600;800&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F4EE;
+    --ink:#22252B;
+    --redpen:#C2402A;
+    --pencil:#8B8A83;
+    --grid:#E4E2D8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Gowun Batang', serif;
+    line-height:1.95;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{
+    max-width:680px;
+    margin:0 auto;
+    padding:0 24px 80px;
+  }
+
+  /* ── 헤더: 교정지 상단 ── */
+  header{
+    padding:72px 0 40px;
+    border-bottom:1px solid var(--ink);
+    position:relative;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:28px 28px;
+    background-position:0 0;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-5px;
+    border-bottom:1px solid var(--ink);
+  }
+  .series-label{
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12px;
+    letter-spacing:0.35em;
+    color:var(--pencil);
+    margin-bottom:20px;
+  }
+  h1{
+    font-family:'Hahmlet', serif;
+    font-weight:800;
+    font-size:clamp(30px, 6vw, 44px);
+    line-height:1.3;
+    letter-spacing:-0.01em;
+  }
+  .subtitle{
+    font-family:'Hahmlet', serif;
+    font-weight:400;
+    font-size:clamp(17px, 3.4vw, 21px);
+    color:var(--ink);
+    margin-top:14px;
+  }
+  .byline{
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:13px;
+    color:var(--pencil);
+    margin-top:26px;
+  }
+  /* 빨간 교정 도장 */
+  .stamp{
+    position:absolute;
+    top:56px; right:8px;
+    width:74px; height:74px;
+    border:2.5px solid var(--redpen);
+    border-radius:50%;
+    color:var(--redpen);
+    font-family:'Noto Sans KR', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.15em;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:rotate(8deg);
+    opacity:0.85;
+  }
+
+  /* ── 본문 섹션 ── */
+  section{
+    padding:44px 0 8px;
+    break-inside:avoid;
+  }
+  .mark{
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.28em;
+    color:var(--redpen);
+    display:inline-block;
+    margin-bottom:16px;
+    padding-bottom:4px;
+    border-bottom:2px solid var(--redpen);
+  }
+  section p{margin-bottom:1.15em;}
+  section p:last-child{margin-bottom:0;}
+
+  /* 인용(구절) */
+  .quote{
+    font-family:'Hahmlet', serif;
+    font-size:19px;
+    line-height:1.85;
+    padding-left:20px;
+    border-left:3px solid var(--ink);
+    margin:8px 0 4px;
+  }
+
+  /* ── 시그니처: 교정 블록 ── */
+  .proof{
+    margin:12px 0 4px;
+    padding:30px 26px;
+    background:#FFFFFF;
+    border:1px solid var(--grid);
+    box-shadow:3px 3px 0 var(--grid);
+  }
+  .proof .was{
+    position:relative;
+    display:inline;
+    color:var(--pencil);
+    text-decoration:line-through;
+    text-decoration-color:var(--redpen);
+    text-decoration-thickness:2px;
+  }
+  .proof .cancel{
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12px;
+    font-weight:700;
+    color:var(--redpen);
+    letter-spacing:0.2em;
+    display:block;
+    margin:14px 0;
+  }
+  .proof .cancel::before{content:"↳ ";}
+  .proof .now{
+    display:block;
+    font-weight:700;
+    color:var(--ink);
+    border-left:3px solid var(--redpen);
+    padding-left:14px;
+  }
+  .proof .gloss{
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:14px;
+    line-height:1.8;
+    color:var(--pencil);
+    margin-top:20px;
+    padding-top:16px;
+    border-top:1px dashed var(--grid);
+  }
+
+  /* 체크 질문 */
+  .check{
+    font-family:'Hahmlet', serif;
+    font-weight:600;
+    font-size:20px;
+    line-height:1.75;
+    text-align:center;
+    padding:34px 20px;
+    margin-top:8px;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+  }
+  .check::before{
+    content:"✓";
+    display:block;
+    color:var(--redpen);
+    font-size:22px;
+    margin-bottom:10px;
+  }
+
+  /* 닫는 문장 */
+  .closing{
+    text-align:center;
+    font-family:'Hahmlet', serif;
+    font-size:19px;
+    padding:52px 0 8px;
+    color:var(--ink);
+  }
+  .closing .fin{
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:11px;
+    letter-spacing:0.4em;
+    color:var(--pencil);
+    display:block;
+    margin-top:28px;
+  }
+
+  footer{
+    margin-top:56px;
+    padding-top:20px;
+    border-top:1px solid var(--grid);
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:12px;
+    color:var(--pencil);
+    line-height:1.8;
+  }
+
+  /* ── 스크롤 애니메이션: 기본은 보임, JS 정상 동작 시에만 적용 ── */
+  .reveal{opacity:1; transform:none;}
+  html.anim .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  html.anim .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    html.anim .reveal{opacity:1 !important; transform:none !important; transition:none !important;}
+  }
+
+  /* ── 인쇄 최적화 ── */
+  @media print{
+    @page{margin:18mm 16mm;}
+    body{background:#fff; font-size:12.5pt;}
+    *{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .sheet{max-width:100%; padding:0;}
+    header{padding-top:10mm;}
+    section, .proof, .check, .closing{break-inside:avoid;}
+    .reveal{opacity:1 !important; transform:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="series-label">편집학 에세이 · 제1교</div>
+    <h1>나의 편집학</h1>
+    <p class="subtitle">— 언니는 한탄하고, 나는 판결하고</p>
+    <p class="byline">글 · 야간비행 | 김정운 『말하지 않고 말하기』를 읽으며</p>
+    <div class="stamp">교정<br>중</div>
+  </header>
+
+  <section class="reveal">
+    <span class="mark">요지</span>
+    <p class="quote">타인은 나를 원본으로 보지 않는다. 자기 재료로 편집한 '편집본'을 본다. 그리고 우리는 통하지 않아서가 아니라, 통했다고 너무 빨리 믿어서 어긋난다.</p>
+    <p>『말하지 않고 말하기』를 읽어나가는 중이다. 지금까지 읽어오면서 나를 붙든 생각이다.</p>
+  </section>
+
+  <section class="reveal">
+    <span class="mark">단상</span>
+    <p>나는 언니를 떠올렸다. 15살 차이 나는 언니는 내게 언니이자 엄마다. 그러니까 언니는 이미 원본이었던 적이 없다. 나는 언니를 '엄마 같은 사람'으로 한 번 편집하고, '나와 다른 뉴스를 보는 사람'으로 또 한 번 편집한다. 편집을 두 번 거친 사람과 정치 얘기가 될 리가.</p>
+  </section>
+
+  <section class="reveal">
+    <span class="mark">나의 장면</span>
+    <p>장면은 매번 비슷하다. 언니가 내가 응원하는 쪽을 슬쩍 비꼬며 자기는 반대쪽이 좋다고 한다. 그러곤 "왜, 이것도 잘못이야?" 하는 한마디를 슬쩍 얹어 나를 건드린다. 나는 그 말이 나오기도 전에 이미 실망할 준비를 마친다. 지레 실망하는 포지션. 정확한 사례가 기억나지 않는 게 오히려 증거다. 이건 사건이 아니라 우리 둘이 매번 다시 찍는 같은 장면이니까.</p>
+  </section>
+
+  <section class="reveal">
+    <span class="mark">정정</span>
+    <div class="proof">
+      <span class="was">그때 나는 '나는 옳고 그름을 말하는데 언니는 세대차로 한탄만 한다'고 믿었다.</span>
+      <span class="cancel">취 소</span>
+      <span class="now">사실 그건 언니가 살아온 시간을 인정해달라는 요구였고, 내 강력한 배제 태도에 대한 서운함이었다.</span>
+      <p class="gloss">언니는 토론에서 이기고 싶었던 게 아니라, 자기 세월이 부정당하지 않기를 바랐던 것이다. 판결문 앞에서 서운함은 늘 뾰족한 말투를 입고 나온다.</p>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <span class="mark">나의 체크체크</span>
+    <p class="check">"지금 나는 이 사람의 말을 듣고 있나,<br>내가 만든 편집본의 대사를 기다리고 있나?"</p>
+  </section>
+
+  <section class="reveal">
+    <p class="closing">
+      요즘 나는 그런 얘기가 나오면 웃어버리려 한다 —<br>
+      항복이 아니라, 편집실 문을 잠깐 닫는 소리다.
+      <span class="fin">끝</span>
+    </p>
+  </section>
+
+  <footer>
+    편집학 에세이 · 김정운 『말하지 않고 말하기』를 읽으며 쓴 개인 에세이입니다. 인용이 아닌, 책의 요지를 필자의 언어로 옮긴 글입니다.
+  </footer>
+
+</div>
+
+<script>
+  // JS가 정상 동작할 때만 애니메이션 모드 켜기 (카톡 인앱뷰어 등 대비)
+  try{
+    document.documentElement.classList.add('anim');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  }catch(err){
+    document.documentElement.classList.remove('anim');
+  }
+  // 안전장치: 2.5초 후 무조건 전부 표시
+  setTimeout(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }, 2500);
+</script>
+</body>
+</html>

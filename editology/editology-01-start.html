@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<!-- saved from url=(0228)file:///C:/Users/avec0/OneDrive/%EB%AC%B8%EC%84%9C/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1%20%EB%B0%9B%EC%9D%80%20%ED%8C%8C%EC%9D%BC/%ED%8E%B8%EC%A7%91%EB%90%98%EB%8A%94-%EB%82%98-%ED%8E%B8%EC%A7%91%ED%95%98%EB%8A%94-%EB%82%98.html -->
+<html lang="ko" class="anim"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>편집되는 나, 편집하는 나 — 에디톨로지로 읽는 관계</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./편집되는 나, 편집하는 나 — 에디톨로지로 읽는 관계_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F7F3;
+    --card:#FDFDFB;
+    --ink:#23231F;
+    --graphite:#6F6F66;
+    --proof:#C0392B;      /* 교정 빨강 */
+    --grid:#C9D6C9;       /* 원고지 초록 괘선 */
+    --grid-soft:#E4EBE4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans KR',sans-serif;
+    font-weight:300;
+    line-height:1.85;
+    letter-spacing:-0.01em;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+    /* 원고지 괘선 배경 */
+    background-image:
+      linear-gradient(var(--grid-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-soft) 1px, transparent 1px);
+    background-size:28px 28px;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:56px 20px 80px;}
+
+  /* ── 카드 공통: 교정지 + 재단선 ── */
+  .card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--grid);
+    padding:44px 40px;
+    margin-bottom:40px;
+    break-inside:avoid;
+  }
+  .card::before,.card::after,
+  .card .crop-b::before,.card .crop-b::after{
+    content:"";position:absolute;width:14px;height:14px;
+    border-color:var(--graphite);border-style:solid;
+  }
+  .card::before{top:-7px;left:-7px;border-width:0 0 1px 1px;transform:rotate(90deg);}
+  .card::after{top:-7px;right:-7px;border-width:0 0 1px 1px;}
+  .card .crop-b::before{bottom:-7px;left:-7px;border-width:1px 1px 0 0;transform:rotate(90deg);}
+  .card .crop-b::after{bottom:-7px;right:-7px;border-width:1px 0 0 1px;transform:rotate(90deg);}
+
+  /* ── 교정 스탬프 라벨 ── */
+  .stamp{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;letter-spacing:0.18em;
+    color:var(--proof);
+    border:1px solid var(--proof);
+    padding:3px 12px;margin-bottom:22px;
+  }
+
+  h1,h2,h3{font-family:'Gowun Batang',serif;font-weight:700;color:var(--ink);}
+  h2{font-size:24px;margin-bottom:8px;line-height:1.5;}
+  .sub{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--graphite);letter-spacing:0.12em;margin-bottom:26px;}
+
+  p{margin-bottom:16px;font-size:16px;}
+  p:last-child{margin-bottom:0;}
+  em{font-style:normal;font-weight:500;color:var(--ink);}
+  .red{color:var(--proof);font-weight:500;}
+  .nb{white-space:nowrap;}
+
+  /* ── 시그니처: 교정 부호 (취소선 → 붉은 정정) ── */
+  .strike{
+    text-decoration:line-through;
+    text-decoration-color:var(--proof);
+    text-decoration-thickness:2px;
+    color:var(--graphite);
+  }
+  .fix{
+    font-family:'Gowun Batang',serif;
+    color:var(--proof);font-weight:700;
+    white-space:nowrap;
+  }
+
+  /* ── 히어로 ── */
+  .hero{padding:64px 40px 56px;text-align:left;}
+  .hero .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.22em;color:var(--graphite);margin-bottom:30px;}
+  .hero h1{font-size:clamp(28px,6vw,42px);line-height:1.55;margin-bottom:28px;}
+  .hero .thesis{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(17px,3.4vw,20px);
+    line-height:2.0;color:var(--ink);
+    border-left:3px solid var(--proof);
+    padding-left:20px;
+  }
+
+  /* ── 유쾌한 정정 목록 ── */
+  .wit{list-style:none;margin:8px 0 20px;}
+  .wit li{
+    padding:14px 0;
+    border-bottom:1px dashed var(--grid);
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(15px,3.2vw,17px);
+    line-height:1.9;
+    break-inside:avoid;
+  }
+  .wit li:last-child{border-bottom:none;}
+  .wit .arrow{font-family:'IBM Plex Mono',monospace;color:var(--graphite);font-size:13px;margin:0 6px;}
+
+  /* ── 전제(creed) ── */
+  .creed{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(16px,3.2vw,18px);
+    line-height:2.3;
+    border-left:3px solid var(--proof);
+    padding-left:20px;
+    margin:6px 0 24px;
+    break-inside:avoid;
+  }
+
+  /* ── 태도/윤리 항목 ── */
+  .item{padding:22px 0;border-bottom:1px dashed var(--grid);break-inside:avoid;}
+  .item:last-of-type{border-bottom:none;padding-bottom:0;}
+  .item h3{font-size:17px;margin-bottom:8px;}
+  .item h3 .mark{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--proof);margin-right:10px;letter-spacing:0.1em;}
+  .item p{font-size:15px;color:#3d3d38;}
+
+  /* ── 인용 카드 ── */
+  .quote-card{background:var(--ink);color:#EDEDE6;border:none;text-align:center;padding:60px 36px;}
+  .quote-card::before,.quote-card::after,
+  .quote-card .crop-b::before,.quote-card .crop-b::after{border-color:#EDEDE6;}
+  .quote-card blockquote{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(18px,4vw,23px);
+    line-height:2.0;font-weight:700;
+  }
+  .quote-card blockquote .red{color:#E8756A;}
+  .quote-card .who{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.2em;color:#9a9a90;margin-top:24px;}
+
+  /* ── 푸터 ── */
+  .footer{text-align:center;padding-top:8px;}
+  .footer .proof-note{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--graphite);letter-spacing:0.14em;line-height:2.2;
+  }
+  .footer .sig{font-family:'Gowun Batang',serif;font-size:15px;margin-top:14px;color:var(--ink);}
+
+  /* ── 스크롤 리빌: 기본은 항상 보임 ── */
+  .reveal{opacity:1;transform:none;}
+  html.anim .reveal{
+    opacity:0;transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  html.anim .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    html.anim .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+  }
+
+  /* ── 인쇄 최적화 ── */
+  @media print{
+    @page{margin:14mm;}
+    body{background:#fff;background-image:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .wrap{max-width:100%;padding:0;}
+    .card{break-inside:avoid;page-break-inside:avoid;margin-bottom:20px;box-shadow:none;}
+    .item{break-inside:avoid;page-break-inside:avoid;}
+    html.anim .reveal{opacity:1 !important;transform:none !important;}
+    .quote-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 히어로 -->
+  <section class="card hero reveal in">
+    <div class="crop-b"></div>
+    <div class="eyebrow">EDITOLOGY × 관계론 · 진행형 원고</div>
+    <h1>
+      나는 <span class="strike">있는 그대로</span> <span class="fix">편집되어</span><br>
+      존재한다
+    </h1>
+    <p class="thesis">
+      창조가 편집이라면, 인식도 편집이다.<br>
+      타인은 나를 원본 그대로 보지 않는다.<br>
+      자신의 재료 — <span class="nb">경험, 감정, 이해관계</span> — 로<br>
+      잘라 붙인 <em>편집본</em>을 본다.
+    </p>
+  </section>
+
+  <!-- 전제 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">전제 · 認識도 編輯이다</span>
+    <h2>내가 없는 자리의 나는,<br>언제나 누군가의 편집본이다</h2>
+    <div class="sub">PREMISE</div>
+    <p>
+      김정운은 완전히 새로운 창조란 없으며 모든 창조는 기존 재료의 편집이라고 말한다.
+      이 명제를 관계로 옮기면 이렇게 된다. <em>타인의 머릿속에 있는 나 역시,
+      그가 가진 재료로 편집된 하나의 작품이다.</em>
+    </p>
+    <p>
+      그 편집에 내 의도는 반영되지 않는다. 불쾌하지만, 막을 방법도 없다.
+      인간의 인지 자체가 편집 — 자르고, 버리고, 이어 붙이는 일 — 이기 때문이다.
+      <span class="red">원본에 대한 소유권은 나에게 있지만, 편집권은 언제나 상대에게 있다.</span>
+    </p>
+    <p>
+      그렇다면 질문은 "어떻게 편집을 막을까"가 아니라 둘로 갈린다.
+      <em>편집당할 때 나는 어떤 태도를 가질 것인가.
+      그리고 내가 편집자일 때, 어떤 윤리를 지킬 것인가.</em>
+    </p>
+  </section>
+
+  <!-- 1부 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">제1부 · 편집당하는 자의 태도</span>
+    <h2>편집은 못 막는다,<br>그러나 재료는 내가 만든다</h2>
+    <div class="sub">WHEN I AM BEING EDITED</div>
+
+    <div class="item">
+      <h3><span class="mark">①</span>원본을 관리한다</h3>
+      <p>편집을 통제할 수는 없지만 편집의 재료 — 나의 언행 — 는 내가 만든다.
+      말과 행동이 일관된 사람은 왜곡 편집이 어렵다. 재료가 단단하면 아무리 잘라 붙여도 원형이 남는다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">②</span>편집본은 편집자의 작품으로 돌려준다</h3>
+      <p>누군가 만든 '나에 대한 이야기'는 그의 재료와 그의 손이 만든 그의 작품이다.
+      그것을 어떻게 만들지는 그의 과제이지 나의 과제가 아니다. 과제분리는 여기서 시작된다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">③</span>정정은 사실이 틀렸을 때만, 담백하게</h3>
+      <p>모든 편집본에 항의하며 살 수는 없다. 감정으로 항의하면 그 항의가 다시 편집 재료가 된다.
+      바로잡을 것은 사실관계뿐이고, 방식은 담백한 확인이면 충분하다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">④</span>여러 편집본의 교집합에서 배운다</h3>
+      <p>한 사람의 편집은 왜곡일 수 있지만, 여러 사람의 편집본이 겹치는 지점은 정보다.
+      내가 몰랐던 나의 단면이 거기에 있다. 편집당하는 일은 때로 공짜 피드백이다.</p>
+    </div>
+  </section>
+
+  <!-- 2부 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">제2부 · 편집하는 자의 윤리</span>
+    <h2>나 또한 누군가를<br>매일 편집하고 있다</h2>
+    <div class="sub">WHEN I AM THE EDITOR</div>
+
+    <div class="item">
+      <h3><span class="mark">①</span>내 편집본을 원본으로 착각하지 않는다</h3>
+      <p>"내가 아는 그 사람"은 그 사람이 아니라 내가 만든 작품이다.
+      이 한 문장을 기억하는 것만으로 관계의 오해 절반이 줄어든다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">②</span>추측으로 빈칸을 메우지 않는다</h3>
+      <p>상대의 의도와 내면은 확인하기 전까지 공란으로 둔다.
+      빈칸을 내 상상으로 채우는 순간, 나는 그 사람의 이야기를 대신 써 내려가는 월권을 시작한다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">③</span>부재자 편집은 절제한다</h3>
+      <p>그 자리에 없는 사람은 반론할 수 없다. 반론 불가능한 상대를 편집하는 일은
+      가장 쉽고 가장 불공정하다. 없는 사람에 대해서는 검증 가능한 것만 말한다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">④</span>편집본을 업데이트한다</h3>
+      <p>사람은 성장하는데 내 머릿속 편집본만 낡아 있으면, 그 낡은 판본이 곧 오해가 된다.
+      좋은 편집자는 개정판을 낸다. 관계에서도 마찬가지다.</p>
+    </div>
+  </section>
+
+  <!-- 간주: 유쾌함 한 스푼 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">간주 · 유쾌함 한 스푼</span>
+    <h2>최고의 편집자는<br>웃으면서 가위질한다</h2>
+    <div class="sub">A SPOONFUL OF WIT</div>
+    <p>
+      『에디톨로지』를 읽으며 가장 크게 배운 건 편집의 기술이 아니었다.
+      그 무거운 관념들을 장난치듯 가볍게 다루는 <em>태도</em>였다.
+      그 유쾌함은 방대한 공부에서도 오지만, 더 깊은 곳에서 온다.
+      <span class="red">자신에 대한 자신감, 그리고 쫄지 않는 열린 시선.</span>
+    </p>
+    <p>
+      관계의 편집도 똑같다. 나에 대한 편집본 앞에서 정색하는 건 쫄았다는 자백이고,
+      웃을 수 있다는 건 원본이 단단하다는 증거다. 그러니 이렇게 고쳐 읽어보자.
+    </p>
+    <ul class="wit">
+      <li>누가 나를 오해한다 <span class="arrow">─▶</span> <span class="strike">해명하러 뛰어가야 한다</span> <span class="fix">그의 작품 활동이다</span></li>
+      <li>내 이야기가 어딘가에서 편집되고 있다 <span class="arrow">─▶</span> <span class="strike">큰일 났다</span> <span class="fix">나 없는 자리에서도 주연이다</span></li>
+      <li>그때의 나와 지금의 나가 다르다 <span class="arrow">─▶</span> <span class="strike">변덕이다</span> <span class="fix">개정판이 나왔다</span></li>
+    </ul>
+    <p>
+      유쾌함은 회피가 아니라 여유다. 원본을 스스로 아는 사람만이
+      편집본 앞에서 웃을 수 있다.
+    </p>
+  </section>
+
+  <!-- 바탕: 전제의 자리 -->
+  <section class="card reveal in">
+    <div class="crop-b"></div>
+    <span class="stamp">바탕 · 이 태도가 서 있는 자리</span>
+    <h2>이 모든 태도의 전제는,<br>우리가 이런 사람이라는 믿음이다</h2>
+    <div class="sub">THE PREMISE BENEATH</div>
+    <p class="creed">
+      스스로와 마주하고, 자기 삶의 주인이 되기 위해 애쓰는 사람.<br>
+      생각은 부단히 성장한다는 걸 믿는 사람.<br>
+      상황이 변해도 직면하고 나아갈 줄 아는 사람.<br>
+      고통의 시간이 더 큰 배움으로 피어나는 걸 믿는 사람.
+    </p>
+    <p>
+      이런 사람이기에, 편집당함을 두려워하지 않고 편집할 때 함부로 하지 않는다.
+      <span class="red">생각은 부단히 성장하므로, 그때는 맞았던 편집본이 지금은 틀릴 수 있다.</span>
+      그래서 우리는 나에 대해서도, 타인에 대해서도 기꺼이 개정판을 낸다.
+    </p>
+  </section>
+
+  <!-- 닫는 인용 -->
+  <section class="card quote-card reveal in">
+    <div class="crop-b"></div>
+    <blockquote>
+      우리는 서로의 편집자다.<br>
+      좋은 편집자는 재료를 왜곡하지 않는다.<br>
+      <span class="red">타인에게도, 나 자신에게도.</span>
+    </blockquote>
+    <div class="who">編輯되는 나, 編輯하는 나</div>
+  </section>
+
+  <!-- 푸터 -->
+  <div class="footer reveal in">
+    <p class="proof-note">
+      이 원고는 1교(校) 상태입니다.<br>
+      생각은 부단히 성장하므로, 편집은 계속됩니다.
+    </p>
+    <p class="sig">— 야간비행</p>
+  </div>
+
+</div>
+
+<script>
+  // 애니메이션은 JS가 정상 동작할 때만 활성화 (기본 상태: 모두 보임)
+  document.documentElement.classList.add('anim');
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // 안전장치: 2.5초 후 무조건 전체 표시 (카카오톡 인앱 등 대비)
+  setTimeout(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }, 2500);
+</script>
+
+
+</body></html>

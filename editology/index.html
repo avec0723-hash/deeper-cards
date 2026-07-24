@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ko" class="anim">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>편집학 — 교정지 서가</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="편집학 — 교정지 서가">
+<meta property="og:description" content="세상을 다시 읽고, 나를 다시 교정하는 카드 에세이 연재 · 야간비행">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Gaegu:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root{
+    --ink:#1c1a17;
+    --paper:#f3ede0;
+    --paper2:#ece3d2;
+    --red:#b4341f;
+    --red-soft:#c85a44;
+    --pencil:#3a4a5a;
+    --line:#d8cbb0;
+    --gold:#8a6d3b;
+    --green:#3f5541;
+    --muted:#9a8f7c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--paper);color:var(--ink)}
+  body{
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.8;
+    padding:48px 20px 96px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{max-width:720px;margin:0 auto}
+
+  /* 표제 */
+  .masthead{
+    border:2px solid var(--ink);
+    padding:30px 32px 26px;
+    background:
+      repeating-linear-gradient(transparent, transparent 37px, rgba(180,52,31,.05) 37px, rgba(180,52,31,.05) 38px);
+    position:relative;
+    margin-bottom:14px;
+  }
+  .masthead::after{
+    content:"編輯學";
+    position:absolute;top:-14px;right:24px;
+    background:var(--red);color:var(--paper);
+    font-family:serif;letter-spacing:.15em;
+    font-size:13px;padding:3px 12px;border-radius:1px;
+  }
+  .eyebrow{
+    font-size:12.5px;letter-spacing:.35em;color:var(--gold);
+    text-transform:uppercase;margin-bottom:12px;
+  }
+  .masthead h1{
+    font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.35;
+  }
+  .masthead .tag{
+    margin-top:14px;font-size:14.5px;color:var(--pencil);
+    border-top:1px dashed var(--line);padding-top:12px;
+    font-family:"Nanum Pen Script",cursive;font-size:19px;line-height:1.5;
+  }
+
+  .note{
+    font-size:12.5px;color:var(--muted);margin:0 4px 26px;
+    text-align:right;letter-spacing:.02em;
+  }
+
+  /* 목록 */
+  ol.shelf{list-style:none;counter-reset:proof}
+  .entry{
+    display:block;
+    background:var(--paper2);
+    border:1px solid var(--line);
+    border-left:4px solid var(--red);
+    padding:16px 20px;
+    margin-bottom:12px;
+    position:relative;
+    text-decoration:none;color:inherit;
+    transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    opacity:1;
+  }
+  html.anim .entry{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
+  html.anim .entry.show{opacity:1;transform:none}
+
+  .entry.live{cursor:pointer}
+  .entry.live:hover{
+    transform:translateX(3px);
+    box-shadow:-3px 3px 0 rgba(180,52,31,.15);
+    border-left-color:var(--red-soft);
+  }
+  .entry.pending{
+    border-left-color:var(--muted);
+    background:transparent;
+    border-style:dashed;
+  }
+
+  .row{display:flex;align-items:baseline;gap:14px}
+  .no{
+    font-family:serif;font-size:15px;color:var(--red);font-weight:700;
+    min-width:52px;letter-spacing:.05em;flex-shrink:0;
+  }
+  .pending .no{color:var(--muted)}
+  .body{flex:1;min-width:0}
+  .ttl{font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.45}
+  .pending .ttl{color:var(--muted);font-weight:600}
+  .sub{
+    font-size:13px;color:var(--pencil);margin-top:3px;
+    font-family:"Nanum Pen Script",cursive;font-size:16px;line-height:1.4;
+  }
+  .flag{
+    flex-shrink:0;font-size:11px;letter-spacing:.08em;
+    padding:2px 9px;border-radius:2px;align-self:center;
+  }
+  .flag.live{background:var(--green);color:var(--paper)}
+  .flag.pending{border:1px solid var(--muted);color:var(--muted)}
+
+  /* 외전 구분선 */
+  .divider{
+    display:flex;align-items:center;gap:12px;
+    margin:26px 4px 16px;color:var(--gold);
+    font-size:12.5px;letter-spacing:.2em;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:var(--line);
+  }
+
+  /* 꼬리말 */
+  .colophon{
+    margin-top:34px;border-top:1px solid var(--ink);padding-top:18px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+    flex-wrap:wrap;gap:12px;
+  }
+  .colophon .desc{font-size:13px;color:var(--pencil);line-height:1.6}
+  .colophon .sign{
+    font-family:"Nanum Pen Script",cursive;font-size:30px;
+    border-bottom:2px solid var(--red);padding-bottom:2px;
+  }
+
+  @media (max-width:520px){
+    body{padding:32px 14px 72px}
+    .masthead h1{font-size:24px}
+    .row{flex-wrap:wrap;gap:6px 12px}
+    .flag{order:3}
+  }
+  @media print{
+    html,body{background:#fff}
+    body{padding:0}
+    .entry,.masthead{break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    html.anim .entry{opacity:1 !important;transform:none !important}
+    @page{margin:16mm}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="eyebrow">Editology · 교정지 서가</div>
+    <h1>편집학</h1>
+    <div class="tag">세상을 다시 읽고, 나를 다시 교정하는 자리 — 통념에 취소선을 긋는 카드 에세이 연재</div>
+  </div>
+
+  <div class="note">✎ 초록 라벨은 지금 읽을 수 있는 교정지, 회색 점선은 서가에 꽂히길 기다리는 원고입니다</div>
+
+  <ol class="shelf">
+
+    <li><div class="entry pending">
+      <div class="row">
+        <span class="no">9편</span>
+        <div class="body">
+          <div class="ttl">누가 더 진지할까</div>
+          <div class="sub">매사 의미를 찾는 사람과, 매사 웃어넘기는 사람 · 초안 숙성 중</div>
+        </div>
+        <span class="flag pending">준비 중</span>
+      </div>
+    </div></li>
+
+    <li><a class='entry live' href='/editology/editology-08-gorilla'>
+      <div class="row">
+        <span class="no">8편</span>
+        <div class="body">
+          <div class="ttl">혼자 웃는 소통</div>
+          <div class="sub">보키토 고릴라 × 함께 보기 · 웃음이라는 증거를 다시 교정하다</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><a class='entry live' href='/editology/editology-lastday'>
+      <div class="row">
+        <span class="no">7교</span>
+        <div class="body">
+          <div class="ttl">오늘이 마지막입니다 — 시절인연을 다시 교정하다</div>
+          <div class="sub">벗들 모임 · 흐르듯 놓는 일과 서둘러 끊는 일은 다르다</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><a class='entry live' href='/editology/editology-dunbar'>
+      <div class="row">
+        <span class="no">6교</span>
+        <div class="body">
+          <div class="ttl">150이라는 방어선 — 던바의 숫자를 다시 교정하다</div>
+          <div class="sub">던바의 숫자 · 함께 보기(질) vs 150(양)</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><a class='entry live' href='/editology/editology-unique'>
+      <div class="row">
+        <span class="no">교정</span>
+        <div class="body">
+          <div class="ttl">복제되지 않는 것 — 유일함을 다시 교정하다</div>
+          <div class="sub">젠슨 황 · 유일함은 찾는 게 아니라 축적된다</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><div class="entry pending">
+      <div class="row">
+        <span class="no">교정</span>
+        <div class="body">
+          <div class="ttl">그는 답을 몰랐다 — 창조를 다시 교정하다</div>
+          <div class="sub">엔비디아 소크라테스식 면접 · 답은 사이에서 태어난다</div>
+        </div>
+        <span class="flag pending">준비 중</span>
+      </div>
+    </div></li>
+
+    <li><div class="entry pending">
+      <div class="row">
+        <span class="no">교정</span>
+        <div class="body">
+          <div class="ttl">식탁의 편집학 — 진리는 조율된다</div>
+          <div class="sub">김정운 상호주관성 · 진리는 마음 맞추기다</div>
+        </div>
+        <span class="flag pending">준비 중</span>
+      </div>
+    </div></li>
+
+    <li><a class='entry live' href='/editology/editology-05-mirror'>
+      <div class="row">
+        <span class="no">5편</span>
+        <div class="body">
+          <div class="ttl">거울의 편집학 — 나를 배제하는 것은 기계가 아니다</div>
+          <div class="sub">편집권을 포기하는 순간 · 발행에는 인간의 서명이 필요하다</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><a class='entry live' href='/editology/editology-04-lostpage'>
+      <div class="row">
+        <span class="no">4편</span>
+        <div class="body">
+          <div class="ttl">낙장의 편집학</div>
+          <div class="sub">잃은 줄도 몰랐던 것을 되찾는 기쁨</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><a class='entry live' href='/editology/editology-03-conviction'>
+      <div class="row">
+        <span class="no">3편</span>
+        <div class="body">
+          <div class="ttl">확신의 편집학 — 통했다는 착각</div>
+          <div class="sub">판본을 덮고, 원본에게 가자</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><a class='entry live' href='/editology/editology-02-emotion'>
+      <div class="row">
+        <span class="no">2편</span>
+        <div class="body">
+          <div class="ttl">감정의 편집학 — 초고는 발행하지 않는다</div>
+          <div class="sub">판본과 개정 · 완성형으로 보이는 사람의 이불킥</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><a class='entry live' href='/editology/editology-01-start'>
+      <div class="row">
+        <span class="no">1편</span>
+        <div class="body">
+          <div class="ttl">편집되는 나, 편집하는 나</div>
+          <div class="sub">시리즈의 출발점 · 우리는 서로의 편집자다</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+  </ol>
+
+  <div class="divider">外傳 · 곁에 꽂힌 교정지</div>
+
+  <ol class="shelf">
+
+    <li><a class='entry live' href='/editology/booktalk'>
+      <div class="row">
+        <span class="no">외전</span>
+        <div class="body">
+          <div class="ttl">저는 이 책에게 편집당했습니다</div>
+          <div class="sub">『말하지 않고 말하기』 북토크 진행 교정지 · 게 카논의 삼중주</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><a class='entry live' href='/editology/editology-sister'>
+      <div class="row">
+        <span class="no">외전</span>
+        <div class="body">
+          <div class="ttl">언니는 한탄하고, 나는 판결하고</div>
+          <div class="sub">세대차라 믿었던 것 · 사실은 서운함이었다</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+    <li><a class='entry live' href='/editology/editology-predator'>
+      <div class="row">
+        <span class="no">외전</span>
+        <div class="body">
+          <div class="ttl">포식자 이후 — 흔들림과 숙성</div>
+          <div class="sub">되새김의 기록 · 안 흔들리는 건 여문 게 아니라 굳은 것</div>
+        </div>
+        <span class="flag live">읽기</span>
+      </div>
+    </a></li>
+
+  </ol>
+
+  <div class="colophon">
+    <div class="desc">편집학 · 카드 에세이 연재<br>세상과 나를 관찰자의 시점으로 다시 읽는 자리</div>
+    <div class="sign">야간비행</div>
+  </div>
+
+</div>
+
+<script>
+  (function(){
+    var items = document.querySelectorAll('.entry');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+      },{threshold:.1});
+      items.forEach(function(m){ io.observe(m); });
+    } else {
+      items.forEach(function(m){ m.classList.add('show'); });
+    }
+    setTimeout(function(){
+      document.documentElement.classList.remove('anim');
+      items.forEach(function(m){ m.classList.add('show'); });
+    },2500);
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>복제되지 않는 것 — 유일함을 다시 교정하다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F2E7;        /* 바랜 원고지 */
+  --paper-deep:#EFEADB;
+  --card:#FCFAF3;
+  --ink:#2B2822;
+  --ink-soft:#57534A;
+  --muted:#8A857A;
+  --line:#E2DCCB;
+  --grid:#E7E0CE;         /* 원고지 칸 */
+  --red:#C23B2B;          /* 교정 빨간펜 */
+  --red-soft:#D96B5B;
+  --red-tint:#F9E9E5;
+  --serif:'Noto Serif KR', serif;
+  --pen:'Nanum Pen Script', cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:16.5px;line-height:1.9;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;
+}
+/* 원고지 결 */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:28px 28px;
+  opacity:.35;
+}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 22px 80px;}
+
+/* 리빌: 기본 보임 */
+.rv{opacity:1;transform:none;}
+html.anim .rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease, transform .7s ease;}
+html.anim .rv.on{opacity:1;transform:none;}
+
+/* 표제부 */
+header{padding:70px 0 42px;text-align:center;}
+.series{
+  display:inline-block;font-size:12.5px;letter-spacing:.3em;color:var(--muted);
+  border:1px solid var(--line);border-radius:2px;padding:6px 16px 6px 19px;
+  background:var(--card);margin-bottom:26px;
+}
+h1{
+  font-weight:900;font-size:clamp(27px,5.6vw,38px);line-height:1.45;letter-spacing:-.01em;
+}
+h1 .sub{
+  display:block;font-size:.52em;font-weight:600;color:var(--ink-soft);
+  letter-spacing:.08em;margin-top:12px;
+}
+.stamp{
+  display:inline-block;margin-top:26px;
+  font-family:var(--pen);font-size:24px;color:var(--red);
+  border:2px solid var(--red);border-radius:6px;padding:2px 16px;
+  transform:rotate(-2.5deg);opacity:.85;
+}
+
+/* 구분 괘선 */
+.rule{display:flex;align-items:center;gap:14px;margin:58px 0 26px;}
+.rule .num{
+  flex:none;font-size:14px;font-weight:700;color:var(--red);
+  border:1.5px solid var(--red);border-radius:50%;
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  background:var(--card);
+}
+.rule h2{font-size:clamp(19px,4vw,23px);font-weight:700;letter-spacing:.02em;}
+.rule::after{content:'';flex:1;height:1px;background:var(--line);}
+
+/* 장면 */
+.scene{
+  background:var(--card);border:1px solid var(--line);border-radius:4px;
+  padding:28px 28px;box-shadow:0 1px 0 var(--line);
+}
+.scene p{margin-bottom:16px;font-size:15.5px;color:var(--ink-soft);}
+.scene p:last-child{margin-bottom:0;}
+.scene strong{color:var(--ink);font-weight:700;}
+
+/* 초고 — 원고지 위 취소선 */
+.draft{
+  background:var(--card);border:1px solid var(--line);border-radius:4px;
+  padding:34px 30px 30px;position:relative;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:26px 26px;
+}
+.draft .label{
+  position:absolute;top:-12px;left:22px;
+  font-size:12px;letter-spacing:.22em;color:var(--muted);
+  background:var(--card);padding:0 10px;border:1px solid var(--line);border-radius:2px;
+}
+.draft .strike{
+  font-size:clamp(18px,4vw,22px);font-weight:700;line-height:2;
+  text-decoration:line-through;
+  text-decoration-color:var(--red);text-decoration-thickness:2.5px;
+  color:var(--ink-soft);
+}
+.draft .fix{
+  display:block;margin-top:14px;
+  font-family:var(--pen);font-size:clamp(26px,6vw,34px);line-height:1.5;
+  color:var(--red);transform:rotate(-1.2deg);
+}
+.draft .gloss{
+  margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);
+  font-size:14.5px;color:var(--muted);
+}
+
+/* 교정 一二三 */
+.proof{
+  background:var(--card);border:1px solid var(--line);border-radius:4px;
+  padding:26px 28px;margin-bottom:18px;position:relative;
+}
+.proof .hanja{
+  position:absolute;top:20px;right:24px;
+  font-size:34px;font-weight:900;color:var(--red-tint);
+  -webkit-text-stroke:1.5px var(--red-soft);
+}
+.proof h3{font-size:18px;font-weight:700;margin-bottom:12px;padding-right:50px;}
+.proof h3 .del{
+  text-decoration:line-through;text-decoration-color:var(--red);
+  text-decoration-thickness:2px;color:var(--ink-soft);font-weight:600;
+}
+.proof h3 .ins{font-family:var(--pen);font-size:1.35em;color:var(--red);margin-left:6px;}
+.proof p{font-size:15px;color:var(--ink-soft);margin-bottom:9px;}
+.proof p:last-child{margin-bottom:0;}
+.proof strong{color:var(--ink);}
+.margin-note{
+  font-family:var(--pen);font-size:21px;color:var(--red);
+  margin-top:12px;transform:rotate(-.8deg);display:block;
+}
+
+/* 교정 확인 — 질문 바꾸기 */
+.check{
+  background:var(--red-tint);border:1px solid #EBCBC3;border-radius:4px;
+  padding:26px 28px;
+}
+.check .before,.check .after{display:flex;align-items:baseline;gap:12px;}
+.check .mark{flex:none;font-size:15px;font-weight:700;color:var(--red);width:20px;}
+.check .before p{
+  font-size:16px;color:var(--ink-soft);
+  text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;
+}
+.check .after{margin-top:14px;}
+.check .after p{font-size:clamp(17px,3.8vw,20px);font-weight:700;color:var(--ink);line-height:1.7;}
+
+/* 최종 교정 · 서명란 */
+.final{
+  background:var(--card);border:1px solid var(--line);border-radius:4px;
+  padding:32px 30px;text-align:center;
+}
+.final .note{font-size:15px;color:var(--ink-soft);margin-bottom:18px;}
+.final .pen-line{
+  font-family:var(--pen);font-size:clamp(28px,6.5vw,36px);line-height:1.55;
+  color:var(--red);transform:rotate(-1deg);display:block;margin:10px 0 22px;
+}
+.final .why{font-size:15px;color:var(--ink-soft);}
+.sign{
+  margin-top:30px;padding-top:20px;border-top:1px dashed var(--line);
+  display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);
+}
+.sign .name{font-family:var(--pen);font-size:22px;color:var(--ink);}
+
+@media (max-width:540px){
+  .wrap{padding:0 18px 60px;}
+  header{padding:52px 0 36px;}
+  .scene,.proof,.draft,.check,.final{padding-left:20px;padding-right:20px;}
+}
+
+/* 인쇄 최적화 */
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  @page{margin:14mm 12mm;}
+  body{background:#fff;font-size:13px;}
+  body::before{display:none;}
+  .wrap{max-width:100%;padding:0;}
+  header{padding:8mm 0 6mm;}
+  .rule{margin:8mm 0 5mm;}
+  .rv,html.anim .rv{opacity:1 !important;transform:none !important;transition:none !important;}
+  .scene,.draft,.proof,.check,.final{break-inside:avoid;page-break-inside:avoid;}
+  h2,h3{break-after:avoid;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="rv">
+  <div class="series">편 집 학 · 교 정 지</div>
+  <h1>복제되지 않는 것
+    <span class="sub">— 유일함을 다시 교정하다</span>
+  </h1>
+  <div class="stamp">校正 少要</div>
+</header>
+
+<div class="rule rv"><span class="num">場</span><h2>장면</h2></div>
+<div class="scene rv">
+  <p>젠슨 황에게는 집착이 하나 있었다. <strong>남도 만들 수 있는 것은 만들지 않는다.</strong> 누구나 뛰어들 수 있는 시장은 결국 가격 싸움이 되니까. 그는 평생 복제될 수 없는 것을 찾아다녔다.</p>
+  <p>그런데 이상하다. 정작 그가 만든 GPU는 복제되었다. AMD도 만들고, 이제는 구글도 만든다. 복제되지 않은 것은 따로 있었다. CUDA 위에 쌓인 20년 — 수백만 개발자의 손에 익은 습관, 축적된 코드, 신뢰의 시간. <strong>결과물은 베낄 수 있었지만, 그것이 쌓여온 시간은 베낄 방법이 없었다.</strong></p>
+  <p>켄터키 시골 학교에서 화장실을 닦던 아홉 살의 시간도 마찬가지다. 그 시간은 누구도, 어떤 기계도 대신 살아줄 수 없다.</p>
+</div>
+
+<div class="rule rv"><span class="num">稿</span><h2>초고</h2></div>
+<div class="draft rv">
+  <span class="label">通念 · 초고</span>
+  <p class="strike">복제될 수 없는 유일한 것은 내 안 어딘가에 숨어 있다. 잘 찾아내면 된다.</p>
+  <span class="fix">유일함은 발견되지 않는다. 축적된다.</span>
+  <p class="gloss">CUDA도 처음엔 유일하지 않았다. 수년간 돈도 되지 않는 것을 반복하는 동안, 유일해졌다.</p>
+</div>
+
+<div class="rule rv"><span class="num">校</span><h2>교정 셋</h2></div>
+
+<div class="proof rv">
+  <span class="hanja">一</span>
+  <h3><span class="del">결과물</span><span class="ins">시간</span></h3>
+  <p>AI가 복제하는 것은 정확히 "표현 가능한 평균"이다. 지식, 문체, 그럴듯한 결과물 — 겉으로 드러나 표준화될 수 있는 것은 전부 복제 대상이 된다.</p>
+  <p>복제되지 않는 것은 결과물이 아니라 <strong>그것이 통과해온 시간</strong>이다. 판단력이 남다른 사람은 지식이 많은 사람이 아니라, 그 판단이 지나온 고유한 이력이 있는 사람인지 모른다.</p>
+  <span class="margin-note">베낄 수 있는 건 답안지뿐.</span>
+</div>
+
+<div class="proof rv">
+  <span class="hanja">二</span>
+  <h3><span class="del">답</span><span class="ins">질문</span></h3>
+  <p>기계는 답을 복제한다. 그러나 "왜 컴퓨터는 동시에 계산하지 못할까"라는 물음 자체는, 물은 사람의 것이다.</p>
+  <p>답은 도착하는 순간 모두의 것이 되지만, <strong>질문은 던진 사람 곁에 남는다.</strong></p>
+  <span class="margin-note">질문에는 지문이 묻는다.</span>
+</div>
+
+<div class="proof rv">
+  <span class="hanja">三</span>
+  <h3><span class="del">발견</span><span class="ins">반복</span></h3>
+  <p>"유일함을 찾는다"고 하면 우리는 내 안에 숨은 보석을 캐내는 그림을 그린다. 그러나 젠슨 황의 사례는 반대를 가리킨다.</p>
+  <p>단순한 원리를 지루할 만큼 오래 반복한 사람에게만 생기는 감각이 있다. <strong>이것은 다운로드되지 않는다.</strong> 유일함은 보석이 아니라 지층에 가깝다.</p>
+  <span class="margin-note">캐는 게 아니라 쌓는 것.</span>
+</div>
+
+<div class="rule rv"><span class="num">問</span><h2>교정 확인</h2></div>
+<div class="check rv">
+  <div class="before">
+    <span class="mark">✕</span>
+    <p>나의 유일함은 무엇인가?</p>
+  </div>
+  <div class="after">
+    <span class="mark">✓</span>
+    <p>나는 무엇을, 유일해질 때까지 반복하고 있는가?</p>
+  </div>
+</div>
+
+<div class="rule rv"><span class="num">終</span><h2>최종 교정</h2></div>
+<div class="final rv">
+  <p class="note">이 교정지는 평소 나의 교정지에 비해 고칠 곳이 적다.<br>문장이 완벽해서가 아니다.</p>
+  <span class="pen-line">고쳐 쓸 문장이 아니라,<br>되풀이해 쓸 문장이어서다.</span>
+  <p class="why">교정이 덜 필요한 교정지도 있는 법이다.<br>어떤 문장은 빨간펜이 아니라, 다만 내일의 반복을 기다린다.</p>
+  <div class="sign">
+    <span>『생각하는 기계』를 읽고</span>
+    <span class="name">야간비행</span>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function(){
+  try{
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!reduce && 'IntersectionObserver' in window){
+      document.documentElement.classList.add('anim');
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+        });
+      },{threshold:0.08, rootMargin:'0px 0px -5% 0px'});
+      document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+      /* 안전장치: 2.5초 후 전체 표시 */
+      setTimeout(function(){
+        document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('on'); });
+      },2500);
+    }
+  }catch(e){
+    document.documentElement.classList.remove('anim');
+  }
+})();
+</script>
+</body>
+</html>

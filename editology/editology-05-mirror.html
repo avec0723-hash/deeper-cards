@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>거울의 편집학 — 나를 배제하는 것은 기계가 아니다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4efe4;      /* 바랜 원고지 */
+    --card:#fffdf6;       /* 카드 지면 */
+    --ink:#2a251c;        /* 본문 먹색 */
+    --red:#a72f26;        /* 교정 빨간펜 */
+    --muted:#8b8272;      /* 낮은 목소리 */
+    --rule:#d9cfba;       /* 가는 괘선 */
+    --grid:#e9e3d4;       /* 원고지 괘선 */
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Gowun Batang',serif;
+    line-height:2.05;
+    font-size:17px;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:28px 28px;
+  }
+
+  .wrap{max-width:680px;margin:0 auto;padding:56px 20px 72px;}
+
+  /* ── 카드 공통: 교정지 + 재단선 ── */
+  .card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--rule);
+    padding:44px 34px 40px;
+    margin-bottom:36px;
+    break-inside:avoid;
+  }
+  .card::before,.card::after{
+    content:"";position:absolute;width:14px;height:14px;
+    border-color:var(--muted);border-style:solid;opacity:.55;
+  }
+  .card::before{top:-7px;left:-7px;border-width:0 0 1px 1px;transform:rotate(90deg);}
+  .card::after{top:-7px;right:-7px;border-width:0 0 1px 1px;transform:rotate(180deg);}
+
+  /* ── 헤더 ── */
+  header.card{padding-top:52px;text-align:left;}
+  .series{
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:12px;font-weight:500;letter-spacing:.35em;
+    color:var(--muted);text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .series b{color:var(--red);font-weight:700;}
+  h1{
+    font-size:clamp(28px,6vw,38px);
+    font-weight:700;line-height:1.5;letter-spacing:-.01em;
+    margin-bottom:14px;
+  }
+  h1 .stroke{position:relative;white-space:nowrap;}
+  h1 .stroke::after{
+    content:"";position:absolute;left:-2%;right:-2%;top:54%;
+    height:2px;background:var(--red);transform:rotate(-1.2deg);
+  }
+  h1 .over{
+    font-family:'Nanum Pen Script',cursive;
+    font-size:.62em;color:var(--red);
+    display:inline-block;transform:translateY(-.55em) rotate(-1deg);
+    margin-left:.25em;white-space:nowrap;
+  }
+  .subtitle{
+    font-family:'Noto Sans KR',sans-serif;font-weight:300;
+    font-size:15px;color:var(--muted);line-height:1.9;
+  }
+
+  /* ── 장면 카드 ── */
+  .scene p{margin-bottom:1.1em;}
+  .scene p:last-child{margin-bottom:0;}
+  .said{
+    display:block;margin:1.2em 0;padding-left:18px;
+    border-left:2px solid var(--rule);
+    color:var(--muted);font-style:normal;
+  }
+  .turn{color:var(--red);font-weight:700;}
+
+  /* ── 교정 카드 ── */
+  .proof{counter-increment:proofnum;}
+  .proof .num{
+    position:absolute;top:-14px;left:26px;
+    background:var(--card);padding:0 10px;
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:12px;letter-spacing:.3em;color:var(--muted);
+  }
+  .draft{
+    font-size:19px;font-weight:700;line-height:1.8;
+    margin-bottom:6px;
+  }
+  .draft .cut{
+    position:relative;color:var(--muted);font-weight:400;
+  }
+  .draft .cut::after{
+    content:"";position:absolute;left:-1%;right:-1%;top:52%;
+    height:2px;background:var(--red);transform:rotate(-1deg);
+  }
+  .fix{
+    font-family:'Nanum Pen Script',cursive;
+    font-size:22px;color:var(--red);line-height:1.6;
+    margin-bottom:18px;display:block;transform:rotate(-.4deg);
+  }
+  .gloss{
+    font-family:'Noto Sans KR',sans-serif;font-weight:300;
+    font-size:15px;line-height:1.95;color:var(--ink);
+    padding-top:16px;border-top:1px dashed var(--rule);
+  }
+  .gloss .tag{
+    font-size:11px;font-weight:500;letter-spacing:.3em;
+    color:var(--muted);display:block;margin-bottom:6px;
+  }
+
+  /* ── 체크 카드 ── */
+  .check{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .check::before,.check::after{border-color:var(--paper);}
+  .check .tag{
+    font-family:'Noto Sans KR',sans-serif;font-size:11px;
+    letter-spacing:.35em;color:#b8ae99;display:block;margin-bottom:16px;
+  }
+  .check p{
+    font-size:20px;font-weight:700;line-height:1.9;
+  }
+  .check p em{font-style:normal;color:#e8b7ae;}
+
+  /* ── 닫는 카드 + 서명란(시그니처) ── */
+  .close p{margin-bottom:1.1em;}
+  .close p:last-of-type{margin-bottom:0;}
+  .signline{
+    margin-top:34px;padding-top:22px;
+    border-top:1px solid var(--rule);
+    display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+  }
+  .signline .label{
+    font-family:'Noto Sans KR',sans-serif;font-size:12px;
+    letter-spacing:.25em;color:var(--muted);
+  }
+  .signline .line{
+    flex:1;border-bottom:1px solid var(--ink);
+    height:34px;position:relative;
+  }
+  .signline .line span{
+    position:absolute;right:4px;bottom:2px;
+    font-family:'Nanum Pen Script',cursive;
+    font-size:24px;color:var(--red);transform:rotate(-2deg);
+  }
+  .question{
+    margin-top:26px;font-size:18px;font-weight:700;line-height:1.9;
+  }
+  .question b{color:var(--red);}
+
+  footer{
+    text-align:center;
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:12px;letter-spacing:.3em;color:var(--muted);
+    padding-top:8px;
+  }
+
+  /* ── 스크롤 애니메이션: 기본은 보임, JS 성공 시에만 적용 ── */
+  .reveal{opacity:1;transform:none;}
+  html.anim .reveal{
+    opacity:0;transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  html.anim .reveal.on{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    html.anim .reveal{opacity:1;transform:none;transition:none;}
+  }
+
+  /* ── 인쇄 최적화 ── */
+  @media print{
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    body{background:#fff;background-image:none;font-size:13px;}
+    .wrap{max-width:100%;padding:0;}
+    .card{break-inside:avoid;page-break-inside:avoid;margin-bottom:20px;box-shadow:none;}
+    html.anim .reveal{opacity:1 !important;transform:none !important;}
+  }
+  @page{margin:18mm 14mm;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 헤더 -->
+  <header class="card reveal">
+    <div class="series">편집학 <b>다섯 번째</b> 교정지</div>
+    <h1>거울의 편집학<br>
+      — <span class="stroke">기계가 나를 배제한다</span><span class="over">배제는 내가 한다</span>
+    </h1>
+    <p class="subtitle">초고는 기계와 함께 쓸 수 있다.<br>그러나 발행에는 언제나 인간의 서명이 필요하다.</p>
+  </header>
+
+  <!-- 장면 -->
+  <section class="card scene reveal">
+    <p>새벽이었다. 나는 서랍을 열었다.</p>
+    <p>어떤 관계가 침묵하던 일주일. 마음의 요동을 기계 앞에 전부 쏟아냈다. 원망의 초고, 이별의 초고, 통보의 초고. 서랍은 아무것도 되묻지 않고 다 받아 적었다.</p>
+    <p>그리고 정작 사람에게 보낸 것은, 편집을 거친 한 줄이었다.</p>
+    <span class="said">— 그 한 줄은, 여기에도 옮겨 적지 않기로 한다. 편집이란 무엇을 발행하지 않을지 정하는 일이기도 하니까.</span>
+    <p>초고는 기계가 받았고, 발행본은 사람이 받았다. 며칠 뒤 침묵의 이유가 밝혀졌을 때, 나는 발행하지 않은 초고들 앞에서 안도했다. 그런데 그 안도의 끝에서 <span class="turn">이상한 질문 하나</span>가 고개를 들었다.</p>
+    <p>나는 지금, 무엇에 의존하고 있는 걸까.</p>
+  </section>
+
+  <!-- 교정 ① -->
+  <section class="card proof reveal">
+    <span class="num">교정 一</span>
+    <p class="draft"><span class="cut">우리는 점점 AI에 의존하게 될 것이다</span></p>
+    <span class="fix">→ 의존의 방향이 이상하다. 이 거울은 내가 붓는 맥락 없이는 아무것도 비추지 못한다</span>
+    <div class="gloss">
+      <span class="tag">한 줄 풀이</span>
+      밤마다 서랍에 쌓인 것은 기계의 생각이 아니라 나의 문장이었다. 거울이 깊어진 게 아니라, 비추는 사람이 깊어진 것이다. 그렇다면 다시 묻게 된다 — 누가 누구에게 의존하고 있는가.
+    </div>
+  </section>
+
+  <!-- 교정 ② -->
+  <section class="card proof reveal">
+    <span class="num">교정 二</span>
+    <p class="draft"><span class="cut">AI는 자아가 없다니, 안심이다</span></p>
+    <span class="fix">→ 안심시키는 문장일수록 과신하면 안 된다. 경계선은 자아의 유무가 아니라, 편집권의 소재다</span>
+    <div class="gloss">
+      <span class="tag">한 줄 풀이</span>
+      어느 학자는 말한다. 기계는 자아를 가질 수 없다고. 그 말이 맞는지 나는 알지 못한다. 다만 아는 것은 하나 — 안심하는 순간, 사람은 검토를 멈춘다. 위로가 되는 단언은 대개 검토를 면제해 주는 대가로 위로가 된다.
+    </div>
+  </section>
+
+  <!-- 교정 ③ -->
+  <section class="card proof reveal">
+    <span class="num">교정 三</span>
+    <p class="draft"><span class="cut">기계가 언젠가 나를 통과하고, 나를 배제할 것이다</span></p>
+    <span class="fix">→ 나를 배제하는 것은 기계가 아니다. 편집을 멈춘 나다</span>
+    <div class="gloss">
+      <span class="tag">한 줄 풀이</span>
+      위험은 기계가 자아를 갖는 순간이 아니라, 사람이 기계의 초고를 그대로 발행하기 시작하는 순간에 온다. 그때 나를 지우는 손은 기계의 것이 아니다. 펜을 내려놓은, 나의 손이다.
+    </div>
+  </section>
+
+  <!-- 장면 둘 -->
+  <section class="card scene reveal">
+    <p>초고를 그대로 발행해 버린 사람을 나는 안다. 거부감이 이는 마음을 초고 그대로 쏟아 놓고는, 관계가 상할까 마음 졸이던 후배. 지켜보던 나는 화가 났지만, 한마디만 건넸다.</p>
+    <span class="said">— 선 넘으시네.</span>
+    <p>떨리는 목소리로 전화가 걸려 왔을 때, 한 문장을 더 건넸다.</p>
+    <span class="said">— 그래도 손은 놓지 못해요.</span>
+    <p>진실과 관계를 둘 다 살리는 데 필요한 건 긴 해명이 아니라, <span class="turn">편집</span>이었다.</p>
+  </section>
+
+  <!-- 체크 -->
+  <section class="card check reveal">
+    <span class="tag">나의 체크체크</span>
+    <p>"지금 나는 <em>편집</em>하고 있는가,<br>아니면 발행 버튼만 누르고 있는가."</p>
+  </section>
+
+  <!-- 닫는 문장 + 서명란 -->
+  <section class="card close reveal">
+    <p>초고는 기계와 함께 쓸 수 있다. 밤의 요동도, 부치지 않을 편지도, 서랍은 다 받아 준다.</p>
+    <p>그러나 발행에는 언제나 인간의 서명이 필요하다. 편집자의 자리를 지키는 한, 어떤 거울도 나를 통과하지 못한다.</p>
+    <div class="signline">
+      <span class="label">발행인 서명</span>
+      <div class="line"><span>사람</span></div>
+    </div>
+    <p class="question">당신은 오늘, 무엇을 <b>편집 없이</b> 그대로 발행했는가.</p>
+  </section>
+
+  <footer>야간비행 · 편집학 시리즈</footer>
+
+</div>
+
+<script>
+  document.documentElement.classList.add('anim');
+  try{
+    var els=document.querySelectorAll('.reveal');
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}
+      });
+    },{threshold:0.12});
+    els.forEach(function(el){io.observe(el);});
+  }catch(err){
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('on');});
+  }
+  /* 안전장치: 2.5초 후 전부 표시 (카카오톡 등 JS 제한 뷰어 대비) */
+  setTimeout(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('on');});
+  },2500);
+</script>
+</body>
+</html>

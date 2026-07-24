@@ -281,7 +281,7 @@
   .option.dimmed{opacity:.45;}
   .vs{
     text-align:center;
-    font-size:13px;font-weight:900;
+    font-size:15.5px;font-weight:900;
     color:var(--gold-soft);letter-spacing:.25em;text-indent:.25em;
   }
 
@@ -290,7 +290,7 @@
     transition:max-height .5s ease, opacity .5s ease, margin .5s ease;
     margin-top:0;
   }
-  .vote-result.show{max-height:360px;opacity:1;margin-top:22px;}
+  .vote-result.show{max-height:640px;opacity:1;margin-top:22px;}
   .result-box{
     background:rgba(250,248,242,.08);
     border:1px solid rgba(227,200,126,.35);
@@ -308,19 +308,19 @@
   }
   .result-box .msg b{color:var(--gold-soft);font-weight:900;}
   .result-actions{
-    display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap;
+    display:flex;flex-direction:column;gap:10px;margin-top:18px;
   }
   .btn{
     font-family:inherit;
-    font-size:13px;font-weight:900;
-    border-radius:999px;padding:10px 20px;
+    font-size:15.5px;font-weight:900;
+    border-radius:999px;padding:14px 22px;width:100%;
     cursor:pointer;border:none;
     -webkit-tap-highlight-color:transparent;
     transition:transform .12s ease, opacity .15s ease;
   }
   .btn:active{transform:scale(.96);}
   .btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
-  .btn-copy{background:var(--gold);color:var(--green-deep);}
+  .btn-copy{background:var(--gold);color:var(--green-deep);box-shadow:0 8px 18px rgba(0,0,0,.28);}
   .btn-again{background:transparent;color:#9db3a4;border:1.4px solid #4a6a58;}
 
   /* ── 푸터 ── */
@@ -470,7 +470,7 @@
   </section>
 
   <section class="footer">
-    <div class="sched">완독 7.24(금) · <b>북토크 7.28(화) 20:00</b> · 밀려도 괜찮습니다</div>
+    <div class="sched">완독 7.24(금) · <b>북토크 7.28(화) 20:00</b></div>
     <div class="credit">함께읽기 ON · 『말하지 않고 말하기』 중에서 · 그런데 잠깐 — 오늘 하루, 하이파이브 한 번 하셨나요?</div>
   </section>
 </div>

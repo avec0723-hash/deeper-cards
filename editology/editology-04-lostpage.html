@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>낙장의 편집학 — 잃어버린 페이지는 돌아온다</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4efe4;      /* 바랜 원고지 */
+    --card:#fffdf6;       /* 카드 지면 */
+    --ink:#2a251c;        /* 본문 먹색 */
+    --red:#a72f26;        /* 교정 빨간펜 */
+    --muted:#8b8272;      /* 낮은 목소리 */
+    --rule:#d9cfba;       /* 가는 괘선 */
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Gowun Batang',serif;
+    line-height:2.05;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width:680px;
+    margin:0 auto;
+    padding:56px 20px 72px;
+  }
+
+  /* ── 카드 공통 ── */
+  .card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--rule);
+    padding:44px 34px 40px;
+    margin-bottom:34px;
+    break-inside:avoid;
+  }
+  /* 재단선(크롭 마크) */
+  .card::before,.card::after{
+    content:"";
+    position:absolute;
+    width:14px;height:14px;
+    border-color:var(--muted);
+    border-style:solid;
+    opacity:.55;
+  }
+  .card::before{top:-7px;left:-7px;border-width:0 0 1px 1px;transform:rotate(90deg);}
+  .card::after{bottom:-7px;right:-7px;border-width:1px 1px 0 0;transform:rotate(90deg);}
+
+  /* ── 스탬프(꼭지 라벨) ── */
+  .stamp{
+    display:inline-block;
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:11.5px;
+    font-weight:500;
+    letter-spacing:.22em;
+    color:var(--red);
+    border:1px solid var(--red);
+    padding:4px 12px 3px;
+    margin-bottom:22px;
+  }
+
+  h2{
+    font-size:clamp(20px,4.6vw,25px);
+    font-weight:700;
+    line-height:1.75;
+    margin-bottom:6px;
+    word-break:keep-all;
+  }
+  .sub{
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:11px;
+    letter-spacing:.3em;
+    color:var(--muted);
+    margin-bottom:26px;
+  }
+
+  p{
+    font-size:clamp(15.5px,3.4vw,17px);
+    margin-bottom:20px;
+    word-break:keep-all;
+  }
+  p:last-child{margin-bottom:0;}
+
+  .red{color:var(--red);}
+  em{font-style:normal;color:var(--muted);}
+
+  /* 단독 한 줄 문장 */
+  .line{
+    font-size:clamp(16.5px,3.6vw,18px);
+    text-align:center;
+    margin:30px 0;
+  }
+
+  /* ── 히어로 ── */
+  .hero{
+    text-align:center;
+    padding:74px 30px 66px;
+  }
+  .hero .series{
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:12px;
+    letter-spacing:.42em;
+    color:var(--muted);
+    margin-bottom:26px;
+  }
+  .hero h1{
+    font-size:clamp(30px,7.4vw,42px);
+    font-weight:700;
+    letter-spacing:.04em;
+    line-height:1.5;
+    margin-bottom:16px;
+  }
+  .hero .tagline{
+    font-size:clamp(15px,3.4vw,17px);
+    color:var(--red);
+    margin-bottom:34px;
+  }
+  .hero .whisper{
+    font-size:14px;
+    color:var(--muted);
+  }
+
+  /* ── 낙장 글리프: 빠진 페이지 ── */
+  .missing-page{
+    width:82px;height:106px;
+    margin:8px auto 30px;
+    border:1.5px dashed var(--red);
+    position:relative;
+    opacity:.85;
+  }
+  .missing-page span{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:11px;
+    letter-spacing:.2em;
+    color:var(--red);
+  }
+
+  /* ── 정의 블록 ── */
+  .define{
+    border-left:3px solid var(--red);
+    padding:6px 0 6px 20px;
+    margin:0 0 24px;
+  }
+  .define .word{
+    font-size:clamp(19px,4.2vw,22px);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .define .mean{
+    font-size:15px;
+    color:var(--muted);
+    line-height:1.9;
+  }
+
+  /* ── 장면 박스 ── */
+  .scene{
+    background:var(--paper);
+    border:1px solid var(--rule);
+    padding:26px 24px;
+    margin:24px 0;
+  }
+  .scene p{font-size:clamp(15px,3.3vw,16.5px);}
+
+  /* ── 전제(creed) ── */
+  .creed{
+    font-size:clamp(16px,3.4vw,18px);
+    line-height:2.3;
+    border-left:3px solid var(--red);
+    padding-left:20px;
+    margin:6px 0 24px;
+    break-inside:avoid;
+  }
+
+  /* ── 닫는 인용 ── */
+  .quote-card{
+    text-align:center;
+    padding:64px 30px;
+  }
+  blockquote{
+    font-size:clamp(18px,4.4vw,23px);
+    font-weight:700;
+    line-height:2.15;
+    margin-bottom:26px;
+    word-break:keep-all;
+  }
+  .who{
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:12px;
+    letter-spacing:.26em;
+    color:var(--muted);
+  }
+
+  /* ── 푸터 ── */
+  .footer{
+    text-align:center;
+    padding-top:14px;
+  }
+  .proof-note{
+    font-size:14px;
+    color:var(--muted);
+    line-height:2.1;
+    margin-bottom:14px;
+  }
+  .sig{
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:13px;
+    letter-spacing:.24em;
+    color:var(--ink);
+  }
+
+  /* ── 스크롤 리빌: 기본은 전부 보임, JS 정상 동작 시에만 애니메이션 ── */
+  .reveal{opacity:1;transform:none;}
+  html.anim .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .8s ease,transform .8s ease;
+  }
+  html.anim .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    html.anim .reveal{opacity:1;transform:none;transition:none;}
+  }
+
+  /* ── 인쇄 최적화 ── */
+  @media print{
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    body{background:#fff;}
+    .wrap{max-width:100%;padding:0;}
+    .card{break-inside:avoid;page-break-inside:avoid;margin-bottom:22px;box-shadow:none;}
+    html.anim .reveal{opacity:1 !important;transform:none !important;}
+  }
+  @page{margin:18mm 15mm;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 히어로 -->
+  <section class="card hero reveal">
+    <div class="series">편집학 · 제4편</div>
+    <h1>落張의 編輯學</h1>
+    <p class="tagline">잃어버린 페이지는 돌아온다</p>
+    <p class="whisper">어떤 페이지는, 빠진 줄도 모른 채 넘어간다.</p>
+  </section>
+
+  <!-- 전제: 낙장이란 무엇인가 -->
+  <section class="card reveal">
+    <span class="stamp">전제 · 낙장이란 무엇인가</span>
+    <h2>편집자도 자기 원고의<br>낙장을 다 알지 못한다</h2>
+    <div class="sub">THE MISSING PAGE</div>
+
+    <div class="missing-page"><span>落 張</span></div>
+
+    <div class="define">
+      <div class="word">낙장 落張</div>
+      <div class="mean">제본 과정에서 빠져 버린 페이지. 책은 완성된 얼굴로 나가지만, 어딘가 한 장이 비어 있다.</div>
+    </div>
+
+    <p>
+      낙장불입이라 배웠다. 한번 빠진 패는 되돌리지 못한다고.
+      화투판의 규칙은 단호해서, 나는 그것이 삶의 규칙인 줄 알았다.
+    </p>
+    <p>
+      그런데 편집자에게는 더 난처한 진실이 있다.
+      <span class="red">우리는 자기 원고에서 어떤 페이지가 빠졌는지조차 다 알지 못한다.</span>
+      어떤 상실은 통보 없이 일어나고, 원고는 빈자리를 품은 채 다음 장으로 넘어간다.
+    </p>
+  </section>
+
+  <!-- 장면 하나 -->
+  <section class="card reveal">
+    <span class="stamp">장면 하나 · 바람</span>
+    <h2>알고 잃은 것</h2>
+    <div class="sub">SCENE 01</div>
+
+    <div class="scene">
+      <p>
+        산 지 하루 된 아이의 체육복 상의가 사라졌다.
+        빨랫줄에서, 바람이 가져갔다.
+      </p>
+      <p>
+        찾아야 했지만 나에게는 시간이 없었다.
+        나는 서울로 떠났다. 빈자리를 안 채로.
+      </p>
+      <p>
+        돌아와 보니 옷걸이에 걸려 있었다.
+        집을 살펴 주던 형부가, 말없이 찾아 걸어 둔 것이다.
+      </p>
+    </div>
+
+    <p class="line">이것은 알고 잃은 페이지였다.</p>
+  </section>
+
+  <!-- 장면 둘 -->
+  <section class="card reveal">
+    <span class="stamp">장면 둘 · 테라스</span>
+    <h2>모르고 잃은 것</h2>
+    <div class="sub">SCENE 02</div>
+
+    <div class="scene">
+      <p>
+        아이 방에 에어컨을 다는 날이었다.
+        실외기가 잘 앉았는지 내려다보다가, 일 층 테라스에 떨어져 있는 것을 보았다.
+      </p>
+      <p>
+        교복 상의였다.
+        <em>왜 안 보이지,</em> 하고 지나쳤던 옷.
+      </p>
+    </div>
+
+    <p class="line">나는 그것을 잃어버린 줄도 몰랐다.</p>
+    <p>
+      빠진 줄도 모르고 넘긴 페이지가, 거기 있었다.
+      바람에 실려 나갔다가, 우연의 손에 들려 돌아온.
+    </p>
+  </section>
+
+  <!-- 문맥 -->
+  <section class="card reveal">
+    <span class="stamp">문맥 · 내가 있던 페이지</span>
+    <h2>같은 문장도<br>어느 문단에 도착하느냐에 따라<br>다르게 읽힌다</h2>
+    <div class="sub">WHERE THE SENTENCE LANDS</div>
+
+    <p>
+      그 무렵 나는 잃은 것들을 세고 있었다.
+    </p>
+    <p>
+      만약 그 교복이 평온한 페이지에 도착했다면,
+      <em>다행이네</em> 한 줄로 끝났을 것이다.
+      그러나 그것은 잃은 것의 목록을 적어 내려가던 페이지 한가운데에 도착했다.
+    </p>
+    <p>
+      사건은 원고에 도착하는 순간, 앞뒤 페이지의 편집을 받는다.
+      그래서 그 옷은 되찾은 물건이 아니라
+      <span class="red">장부를 뒤집는 문장</span>이 되었다.
+    </p>
+  </section>
+
+  <!-- 해부 -->
+  <section class="card reveal">
+    <span class="stamp">해부 · 기쁨의 환율</span>
+    <h2>왜 이렇게 기쁜가</h2>
+    <div class="sub">THE EXCHANGE RATE OF JOY</div>
+
+    <p>
+      지갑을 잃었다가 되찾은 기분이 있다.
+      잃음의 고통은 얻음의 기쁨보다 크다고 심리학은 말한다.
+      그러니 되찾음은 이중의 사건이다 —
+      고통이 해제되는 동시에, 얻음이 도착하는.
+    </p>
+    <p>
+      그런데 교복은 이 설명 밖에 있다.
+      잃은 줄도 몰랐으니, 해제될 고통이 애초에 없었다.
+      그런데 왜 이렇게 기쁜가.
+    </p>
+    <p>
+      두 번 모두, 내가 찾은 것이 아니었다.
+      한 번은 형부의 손이, 한 번은 순전한 우연이 찾아 주었다.
+      그 순간 도착한 것은 옷 두 벌이 아니라 소식 한 장이었다.
+    </p>
+    <p class="line">
+      <span class="red">내가 지키지 못하는 동안에도,<br>지켜지고 있는 것들이 있다.</span>
+    </p>
+    <p>
+      기쁨의 환율은 사건의 크기가 아니라 방향이 정한다.
+      되찾은 체육복 한 벌은 체육복 한 벌의 값이 아니라,
+      <em>잃은 것이 최종 판본이 아니라는</em> 증거 한 장의 값으로 들어온다.
+    </p>
+  </section>
+
+  <!-- 반전 -->
+  <section class="card reveal">
+    <span class="stamp">반전 · 돌아온 문장의 일</span>
+    <h2>돌아온 문장은<br>문단을 다시 편집한다</h2>
+    <div class="sub">THE RETURNED SENTENCE EDITS BACK</div>
+
+    <p>
+      페이지가 문장을 편집했지만, 도착한 문장도 가만히 있지 않았다.
+      그 한 문장이 들어오자, 앞의 어두운 단락들이 다르게 읽히기 시작했다.
+      무겁든 가볍든 마음을 짓누르던 것들이, 그 자리에서 상쇄되어 날아갔다.
+    </p>
+    <p>
+      잃은 것의 목록을 적던 손이 멈춘다.
+      그리고 눈이 옮겨 간다 —
+      빠진 장이 아니라, 아직 제본되어 있는 페이지들로.
+    </p>
+    <p class="line">
+      <span class="red">낙장을 세다가, 남아 있는 책을 본다.</span>
+    </p>
+  </section>
+
+  <!-- 바탕 -->
+  <section class="card reveal">
+    <span class="stamp">바탕 · 네 번째 문장</span>
+    <h2>이 원고의 편집자는<br>나 혼자가 아니다</h2>
+    <div class="sub">THE PREMISE BENEATH</div>
+
+    <p class="creed">
+      좋은 편집자는 재료를 왜곡하지 않는다.<br>
+      초고를 함부로 발행하지 않는다.<br>
+      원본 확인을 거르지 않는다.<br>
+      그리고 — 되돌아온 페이지를 알아본다.
+    </p>
+    <p>
+      앞의 세 문장은 전부 내 손에 관한 것이었다.
+      네 번째 문장은 다르다.
+      <span class="red">이 원고에는 나 말고도 편집자가 있다.</span>
+      잃어버린 페이지를 말없이 되돌려 놓는 손들이 있다.
+    </p>
+    <p>
+      그러니 네 번째 편집학은 기술이 아니라 시력이다.
+      돌아온 페이지가 옷걸이에, 테라스에, 조용히 놓여 있을 때 —
+      그것을 알아보는 눈.
+    </p>
+  </section>
+
+  <!-- 닫는 인용 -->
+  <section class="card quote-card reveal">
+    <blockquote>
+      낙장불입이라 배웠다.<br>
+      그러나 삶은 가끔, 빠진 페이지를 돌려준다.<br>
+      <span class="red">그때는 세던 것을 멈추고,<br>남아 있는 책을 읽자.</span>
+    </blockquote>
+    <div class="who">落張의 編輯學 — 잃어버린 페이지는 돌아온다</div>
+  </section>
+
+  <!-- 푸터 -->
+  <div class="footer reveal">
+    <p class="proof-note">
+      이 원고 역시 초고입니다.<br>
+      살아가며 함께 퇴고할 것입니다.
+    </p>
+    <p class="sig">— 야간비행</p>
+  </div>
+
+</div>
+
+<script>
+  // 애니메이션은 JS가 정상 동작할 때만 활성화 (기본 상태: 모두 보임)
+  document.documentElement.classList.add('anim');
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // 안전장치: 2.5초 후 무조건 전체 표시 (카카오톡 인앱 등 대비)
+  setTimeout(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }, 2500);
+</script>
+</body>
+</html>

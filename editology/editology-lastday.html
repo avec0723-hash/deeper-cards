@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko" class="anim">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>교정지 일곱 — 오늘이 마지막입니다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Pen+Script&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f1e8;--paper-line:#e5e0d0;--ink:#2b2723;--ink-soft:#5a5248;
+    --red:#c0392b;--red-soft:#d95f4c;--blue:#2c5f8a;--grid:#d9d3c2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      repeating-linear-gradient(180deg, transparent, transparent 37px, var(--paper-line) 37px, var(--paper-line) 38px),
+      var(--paper);
+    color:var(--ink);font-family:'Gowun Batang', serif;line-height:1.95;
+    padding:48px 18px 80px;-webkit-font-smoothing:antialiased;
+  }
+  .sheet{
+    max-width:760px;margin:0 auto;
+    background:linear-gradient(180deg,#fbf9f2,#f4f1e8);
+    border:1px solid #ddd6c4;box-shadow:0 22px 50px -28px rgba(60,50,30,.55);
+    padding:56px 52px 64px;position:relative;
+  }
+  .masthead{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:2.5px solid var(--ink);padding-bottom:14px;margin-bottom:6px;
+  }
+  .masthead .label{font-family:'Nanum Myeongjo',serif;font-weight:800;letter-spacing:.28em;font-size:.72rem;color:var(--ink-soft);}
+  .masthead .no{font-family:'Nanum Pen Script',cursive;font-size:2.2rem;color:var(--red);line-height:1;transform:rotate(-4deg);}
+  .stamp{
+    position:absolute;top:34px;right:40px;border:2.5px solid var(--red);color:var(--red);
+    font-family:'Nanum Myeongjo',serif;font-weight:800;padding:5px 12px;font-size:.72rem;
+    letter-spacing:.22em;transform:rotate(8deg);opacity:.82;border-radius:3px;
+  }
+  h1.title{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:2rem;line-height:1.4;margin:30px 0 6px;letter-spacing:-.01em;}
+  .subtitle{font-family:'Nanum Pen Script',cursive;font-size:1.5rem;color:var(--blue);margin-bottom:34px;transform:rotate(-1deg);}
+  .lead{font-size:1.06rem;margin:18px 0;}
+
+  .reveal{opacity:1;transform:none;}
+  html.anim .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease, transform .7s ease;}
+  html.anim .reveal.in{opacity:1;transform:none;}
+
+  .draft{position:relative;background:#fcfaf3;border:1px dashed #cfc8b4;padding:24px 26px 22px;margin:26px 0;}
+  .draft .tag{position:absolute;top:-12px;left:18px;background:var(--paper);padding:0 10px;font-family:'Nanum Myeongjo',serif;font-size:.72rem;font-weight:700;letter-spacing:.2em;color:var(--ink-soft);}
+  .strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:#8a8375;}
+  .caret{color:var(--red);font-family:'Nanum Pen Script',cursive;font-size:1.15em;}
+  .hand{font-family:'Nanum Pen Script',cursive;color:var(--red);font-size:1.32rem;line-height:1.7;display:block;margin:10px 0 2px;padding-left:12px;border-left:3px solid var(--red-soft);}
+  .hand.blue{color:var(--blue);border-left-color:var(--blue);}
+
+  /* 질 vs 양 대비 */
+  .facing{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--ink);margin:30px 0;}
+  .facing > div{padding:20px 22px;}
+  .facing .l{border-right:1.5px dashed #b9b19c;background:#faf7ef;}
+  .facing h4{font-family:'Nanum Myeongjo',serif;font-size:.74rem;letter-spacing:.2em;margin:0 0 10px;color:var(--ink-soft);font-weight:800;}
+  .facing p{margin:0;font-size:.98rem;line-height:1.8;}
+  .facing .big{font-family:'Nanum Pen Script',cursive;font-size:1.7rem;display:block;margin-bottom:6px;}
+  .facing .l .big{color:var(--blue);}
+  .facing .r .big{color:var(--red);}
+
+  .marks{margin:36px 0 8px;}
+  .mark{display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-bottom:1px dotted #cfc8b4;}
+  .mark:last-child{border-bottom:none;}
+  .mark .num{flex:none;width:44px;height:44px;border-radius:50%;border:2.5px solid var(--red);color:var(--red);font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:1.3rem;display:flex;align-items:center;justify-content:center;transform:rotate(-5deg);}
+  .mark .body h3{font-family:'Nanum Myeongjo',serif;font-weight:700;font-size:1.12rem;margin:2px 0 6px;color:var(--ink);}
+  .mark .body p{margin:0;font-size:1.02rem;color:var(--ink-soft);}
+  .mark .body em{color:var(--red);font-style:normal;font-weight:700;}
+
+  .pull{font-family:'Nanum Myeongjo',serif;font-weight:700;font-size:1.22rem;color:var(--ink);text-align:center;margin:34px 0;line-height:1.7;}
+  .pull .u{border-bottom:3px solid var(--red-soft);padding-bottom:2px;}
+
+  .final{border:2.5px solid var(--ink);background:#fbf8ef;padding:30px 30px 26px;margin:38px 0 10px;position:relative;}
+  .final::before{content:"最終校正";position:absolute;top:-14px;left:24px;background:var(--ink);color:var(--paper);font-family:'Nanum Myeongjo',serif;font-weight:700;font-size:.72rem;letter-spacing:.2em;padding:3px 12px;}
+  .final p{font-family:'Nanum Myeongjo',serif;font-size:1.16rem;line-height:1.85;margin:6px 0;}
+  .final .accent{color:var(--red);font-weight:800;}
+
+  .queries{margin:34px 0 10px;}
+  .queries .q{display:flex;gap:14px;align-items:baseline;margin:14px 0;font-family:'Gowun Batang',serif;font-size:1.03rem;}
+  .queries .q .chk{flex:none;width:22px;height:22px;border:2px solid var(--red);display:inline-flex;align-items:center;justify-content:center;color:var(--red);font-family:'Nanum Pen Script',cursive;font-size:1.2rem;transform:rotate(-6deg);}
+
+  .sign{margin-top:46px;border-top:2px solid var(--ink);padding-top:18px;display:flex;justify-content:space-between;align-items:flex-end;}
+  .sign .meta{font-family:'Nanum Myeongjo',serif;font-size:.76rem;color:var(--ink-soft);letter-spacing:.1em;}
+  .sign .name{font-family:'Nanum Pen Script',cursive;font-size:2rem;color:var(--blue);transform:rotate(-3deg);}
+
+  @media (max-width:620px){
+    .sheet{padding:40px 24px 48px;}
+    h1.title{font-size:1.55rem;}
+    .facing{grid-template-columns:1fr;}
+    .facing .l{border-right:none;border-bottom:1.5px dashed #b9b19c;}
+    .stamp{top:20px;right:20px;}
+  }
+  @media print{
+    @page{margin:14mm;}
+    body{background:#fff;padding:0;}
+    .sheet{box-shadow:none;border:none;max-width:100%;padding:0;}
+    .reveal{opacity:1 !important;transform:none !important;}
+    .draft,.mark,.facing,.final,.queries,.pull,.sign{break-inside:avoid;page-break-inside:avoid;}
+    h1.title,.marks h3{break-after:avoid;}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="stamp">校 正</div>
+  <div class="masthead">
+    <span class="label">편집학 시리즈 · 교정지</span>
+    <span class="no">No.7</span>
+  </div>
+
+  <h1 class="title reveal">오늘이 마지막입니다</h1>
+  <div class="subtitle reveal">— 시절인연을 다시 교정하다</div>
+
+  <p class="lead reveal">벗들의 모임에서 던바의 150이 화두로 올랐다. 누군가는 송별회에서 떠나는 이에게 말했다고 한다. "오늘이 우리의 마지막 날입니다. 다시 만날 일 없으니까요." 그 말이 한 벗에게는 아프게 닿았고, 옆의 동료는 150에 동의하며 응수했다. 미련 갖지 말고, 최선을 다할 관계에만 집중하자고. 시절인연으로 담고 흐르듯 살자는 뜻이었을 것이다. 시절인연 — 관계로 힘들어하는 벗을 위로할 때, 내가 오래 건네온 말이다. 그런데 그날은 그 말이 내 안에서 자꾸 되뇌어졌다.</p>
+
+  <!-- 초고: 벗들의 문장 -->
+  <div class="draft reveal">
+    <span class="tag">初稿 · 내가 오래 건네온 위로</span>
+    <p><span class="strike">시절인연이야. 미련 갖지 마. 인간이 감당할 관계는 정해져 있으니, 흐르듯 놓아도 돼. 상처받지 않아도 돼.</span> <span class="caret">↩ 다시 읽음</span></p>
+    <span class="hand">놓아주라 건넨 말이, 끊어내라는 말로 굳지는 않았나.</span>
+    <span class="hand blue">'150'은 놓아버려도 된다는 허가증이 아니었는데.</span>
+  </div>
+
+  <p class="lead reveal">던바의 숫자는 본래 "네가 능동적으로 유지할 수 있는 관계의 상한은 이 정도"라는 <b>용량</b>의 서술이다. 그런데 내가 건넨 위로는 그것을 슬며시 "그러니 놓아도 된다"는 <b>면허</b>로 옮겨 적곤 했다. 이 둘은 다르다. 용량에 한계가 있다는 사실이, 흔들리는 벗에게 마지막을 서두르라 재촉할 근거가 되지는 않는다. 위로가 때로 서둘러 덮는 손이 되지는 않았는지, 그날은 그것이 마음에 걸렸다.</p>
+
+  <!-- 질 vs 양: 김정운 함께 보기 끌어오기 -->
+  <div class="facing reveal">
+    <div class="l">
+      <h4>함께 보기 · 김정운</h4>
+      <span class="big">질(質)</span>
+      <p>같은 것을 함께 보며 <b>서로 보고 있음을 아는</b> 한순간. 지금이고, 몸의 사건이다. 나의 그리움도 여기서 올라왔다.</p>
+    </div>
+    <div class="r">
+      <h4>던바의 150 · 관계 관리</h4>
+      <span class="big">양(量)</span>
+      <p>그 관계를 <b>몇 개나 유지하는가</b>. 시간에 걸친 정원(定員) 관리. 내 위로도 곧잘 이쪽으로 기울곤 했다.</p>
+    </div>
+  </div>
+
+  <p class="pull reveal">질(質)의 물음에,<br><span class="u">양(量)의 답이 돌아온 자리였다.</span></p>
+
+  <!-- 一二三 교정 -->
+  <div class="marks">
+    <p class="lead reveal" style="margin-bottom:4px;">그러니 내 문장의 세 대목에, 다시 눈이 간다.</p>
+    <div class="mark reveal">
+      <div class="num">一</div>
+      <div class="body">
+        <h3>같은 말인데 다르게 닿는다</h3>
+        <p>촬영이 끝나면 언제 봤냐는 듯 놓는 배우의 쿨함은 <em>자기 안에 품은 태도</em>에 가깝다. 아무에게도 겨누지 않는다. 그런데 같은 '놓음'이라도, 상대의 면전에 놓일 때는 다르게 닿기도 한다. 나는 위로랍시고, 어느 쪽의 말을 건네고 있었던 걸까.</p>
+      </div>
+    </div>
+    <div class="mark reveal">
+      <div class="num">二</div>
+      <div class="body">
+        <h3>배웅은 함께 보기의 완성일 수도 있다</h3>
+        <p>배웅의 자리에서 함께 보기란, 둘이 나눈 것을 나란히 바라보며 <em>서로가 그것을 품고 있음을 아는</em> 일이 아닐까. "이제 놓아도 돼"라는 내 위로는, 혹시 그 마지막 함께 보기까지 서둘러 접게 한 건 아니었을까.</p>
+      </div>
+    </div>
+    <div class="mark reveal">
+      <div class="num">三</div>
+      <div class="body">
+        <h3>쓸쓸함을 결함으로 두지 않기</h3>
+        <p>미련 갖지 말자는 말은 상실을 <em>미리 재우는</em> 방식인지도 모른다. 나는 잘 재우지 못했다. 평온도 있고 쓸쓸함도 있다고, 그대로 두었다. 느끼면서 남아 있는 것 — 그것이 달관에 못 미친 자리라고는, 이제 생각하지 않는다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 반전: 최종 교정 -->
+  <div class="final reveal">
+    <p>여기서 한 번 더, 천천히 되읽는다.</p>
+    <p>함께 본 한순간은, 그 관계를 더는 '유지'하지 않게 된 뒤에도 사라질까. <span class="accent">사라지지 않는다.</span> 던바의 150이 양의 상한이라면, 함께 보기가 남긴 것은 그 셈 <b>바깥</b>에 있다. 세어지지 않으니, 정원에서 밀려날 일도 없다.</p>
+    <p>그러니 지금의 이 멈춤을 다시 읽어본다. 남편을 돌보는 강제된, 그러나 자발적인 멈춤. 많은 관계에서 잊힌 자리. 그것을 <span class="accent">150을 잃은 시간</span>으로만 세지 않기로 한다. 어쩌면 <span class="accent">가장 깊은 함께 보기 하나를 매일 사는 시간</span>인지도.</p>
+    <p>시절인연은 흐르듯 놓는 지혜다. 그 말을 거두지는 않겠다. 다만 흐르듯 놓는 일과 서둘러 끊어내는 일이 같지 않다는 것만은, 이제 곁에 적어둔다. 적어도 나는, 그 둘을 같은 말로 부르지 않으려 한다.</p>
+  </div>
+
+  <!-- 열린 물음 -->
+  <div class="queries">
+    <p class="lead reveal" style="margin-bottom:6px;">검토 질문 · 독자에게</p>
+    <div class="q reveal"><span class="chk">✓</span><span>당신이 놓은 관계는, 흐르듯 흘려보낸 것인가 — 아니면 면전에서 끊어낸 것인가.</span></div>
+    <div class="q reveal"><span class="chk">✓</span><span>함께 본 한순간은, 그 사람이 당신의 150에서 사라진 뒤에도 어디에 남아 있는가.</span></div>
+    <div class="q reveal"><span class="chk">✓</span><span>느끼면서 남아 있는 것과, 재우고 흘려보내는 것 — 나는 지금 어느 쪽에 서 있는가.</span></div>
+  </div>
+
+  <div class="sign">
+    <div class="meta">편집학 시리즈 일곱 번째 교정지<br>김정운 '함께 보기' · 던바의 150 곁읽기</div>
+    <div class="name">야간비행</div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    try{
+      var els = document.querySelectorAll('.reveal');
+      if('IntersectionObserver' in window){
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+        }, {threshold:0.12});
+        els.forEach(function(el){ io.observe(el); });
+      } else { els.forEach(function(el){ el.classList.add('in'); }); }
+    }catch(err){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    }
+    setTimeout(function(){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    },2500);
+  })();
+</script>
+</body>
+</html>

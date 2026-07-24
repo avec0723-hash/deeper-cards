@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko" class="anim">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포식자 이후 — 흔들림과 숙성</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f3ec;--card:#fffdf8;--ink:#2c2925;--ink-soft:#645c50;--ink-faint:#8c8478;
+    --line:#e6dfce;--accent:#7a5c3e;--accent-soft:#a98b68;--quote:#3d5a6c;--seed:#8a5a3c;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'Gowun Batang',serif;line-height:1.95;
+    padding:56px 18px 96px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;}
+
+  /* 헤더 */
+  header.masthead{text-align:center;margin-bottom:8px;}
+  .kicker{font-family:'Nanum Myeongjo',serif;font-weight:700;letter-spacing:.3em;font-size:.72rem;color:var(--accent-soft);margin-bottom:20px;}
+  h1.title{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:2.3rem;line-height:1.35;margin:0 0 10px;letter-spacing:-.01em;}
+  .meta{font-size:.82rem;color:var(--ink-faint);margin-bottom:6px;}
+  .source{font-family:'Nanum Pen Script',cursive;font-size:1.35rem;color:var(--quote);}
+  .rule{width:54px;height:2px;background:var(--accent);margin:30px auto 46px;opacity:.55;}
+
+  /* 출발 인용 */
+  .origin{
+    background:linear-gradient(180deg,#fbf6ec,#f7f0e2);
+    border:1px solid var(--line);border-radius:14px;
+    padding:26px 30px;margin:0 0 20px;position:relative;
+  }
+  .origin .tag{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:.72rem;letter-spacing:.2em;color:var(--accent);margin-bottom:12px;}
+  .origin p{margin:0;font-size:1.02rem;color:var(--ink-soft);line-height:1.85;}
+
+  /* 섹션 */
+  section{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:34px 36px 30px;margin:26px 0;
+    box-shadow:0 14px 34px -26px rgba(80,60,30,.4);
+  }
+  .snum{font-family:'Nanum Pen Script',cursive;font-size:2rem;color:var(--accent-soft);line-height:1;display:block;margin-bottom:2px;transform:rotate(-4deg);}
+  h2{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:1.42rem;margin:0 0 18px;letter-spacing:-.01em;}
+  p{margin:14px 0;font-size:1.04rem;}
+  strong{color:var(--accent);font-weight:700;}
+
+  ul,ol{margin:14px 0;padding-left:0;list-style:none;}
+  li{position:relative;padding-left:26px;margin:10px 0;font-size:1.02rem;line-height:1.8;}
+  ul li::before{content:"—";position:absolute;left:0;color:var(--accent-soft);}
+  ol{counter-reset:it;}
+  ol li{padding-left:34px;}
+  ol li::before{counter-increment:it;content:counter(it);position:absolute;left:0;top:2px;width:22px;height:22px;border:1.5px solid var(--accent-soft);border-radius:50%;color:var(--accent);font-family:'Nanum Myeongjo',serif;font-size:.82rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+
+  /* 콜아웃 */
+  .callout{border-radius:12px;padding:20px 24px;margin:20px 0;border-left:4px solid;}
+  .callout .ct{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:.78rem;letter-spacing:.14em;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .callout p{margin:6px 0;}
+  .c-note{background:#f4f1e6;border-color:var(--accent-soft);}
+  .c-note .ct{color:var(--accent);}
+  .c-quote{background:#eef2f2;border-color:var(--quote);}
+  .c-quote .ct{color:var(--quote);}
+  .c-quote p{font-family:'Nanum Myeongjo',serif;font-size:1.06rem;line-height:1.85;color:#33454f;}
+  .c-key{background:#f7efe0;border-color:var(--seed);}
+  .c-key .ct{color:var(--seed);}
+  .c-key p{font-weight:700;color:#5c3d26;}
+  .c-q{background:#f1eef4;border-color:#7a6a8c;}
+  .c-q .ct{color:#6a5a80;}
+  .c-q p{font-style:italic;color:#4a4256;}
+
+  em.term{font-style:normal;border-bottom:1.5px dotted var(--accent-soft);color:var(--accent);}
+
+  /* 비교 표 */
+  table.cmp{width:100%;border-collapse:collapse;margin:18px 0;font-size:.98rem;}
+  table.cmp th,table.cmp td{border:1px solid var(--line);padding:11px 14px;text-align:left;vertical-align:top;line-height:1.7;}
+  table.cmp thead th{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:.82rem;letter-spacing:.06em;background:#f4efe4;}
+  table.cmp thead th:nth-child(2){color:var(--quote);}
+  table.cmp thead th:nth-child(3){color:var(--seed);}
+  table.cmp td:first-child{font-family:'Nanum Myeongjo',serif;font-weight:700;color:var(--ink-soft);width:96px;background:#faf7ef;}
+
+  /* 씨앗 */
+  .seeds{background:linear-gradient(180deg,#faf3e6,#f5ead6);border:1.5px solid var(--seed);border-radius:16px;padding:30px 34px;margin:32px 0;}
+  .seeds h2{color:var(--seed);text-align:center;margin-bottom:8px;}
+  .seeds .cap{text-align:center;font-family:'Nanum Pen Script',cursive;font-size:1.3rem;color:var(--accent-soft);margin-bottom:18px;}
+  .seeds ul li{font-family:'Nanum Myeongjo',serif;font-size:1.08rem;color:#5c3d26;margin:14px 0;line-height:1.7;}
+  .seeds ul li::before{content:"✦";color:var(--seed);}
+
+  /* 갈래 */
+  .branches{margin:26px 0 0;font-size:.98rem;color:var(--ink-soft);}
+  .branches .bt{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:.82rem;letter-spacing:.14em;color:var(--ink-faint);margin-bottom:12px;}
+  .branches li::before{content:"○";color:var(--accent-soft);}
+
+  footer{text-align:center;margin-top:50px;font-family:'Nanum Pen Script',cursive;font-size:1.7rem;color:var(--quote);}
+
+  /* 등장 애니메이션 */
+  .reveal{opacity:1;transform:none;}
+  html.anim .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+  html.anim .reveal.in{opacity:1;transform:none;}
+
+  @media (max-width:600px){
+    body{padding:40px 14px 70px;}
+    section{padding:26px 22px 22px;}
+    h1.title{font-size:1.72rem;}
+    h2{font-size:1.24rem;}
+  }
+  @media print{
+    @page{margin:15mm;}
+    body{background:#fff;padding:0;}
+    .wrap{max-width:100%;}
+    section,.origin,.seeds,.callout{box-shadow:none;break-inside:avoid;page-break-inside:avoid;}
+    section{border:1px solid #ddd;}
+    .reveal{opacity:1 !important;transform:none !important;}
+    h1.title,h2{break-after:avoid;}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead reveal">
+    <div class="kicker">되새김의 기록</div>
+    <h1 class="title">포식자 이후<br>— 흔들림과 숙성</h1>
+    <div class="meta">2026. 7. 19</div>
+    <div class="source">김정운 『말하지 않고 말하기』 곁에서</div>
+  </header>
+  <div class="rule reveal"></div>
+
+  <div class="origin reveal">
+    <div class="tag">출발점 · 포식적 관객</div>
+    <p>도덕적 분노로 위장한 콘텐츠는 '좋아요'·리트윗·댓글을 더 받고 팬덤까지 형성된다. 이 경험이 생산자의 도파민 보상 회로를 자극해 갈수록 더 강한 분노를 표하게 만든다. 더 큰 문제는, 성찰 없는 이 행위에 금전적 보상까지 뒤따르는데 그것을 숨기며 정치적·도덕적 '정의'로 포장한다는 것.</p>
+  </div>
+
+  <section class="reveal">
+    <span class="snum">一</span>
+    <h2>나는 포식적 관객인가</h2>
+    <p>한쪽으로 편중된 나 역시 포식적 관객은 아닐까 — 하는 자기 의심에서 대화가 시작됐다.</p>
+    <div class="callout c-note">
+      <div class="ct">◆ 핵심 구분</div>
+      <p>김정운이 그린 포식적 관객은 <strong>'편향을 가진 사람'이 아니다.</strong> 세 조건으로 정의된다 — ① 성찰이 없다 ② 분노가 도파민 회로를 타고 갈수록 세진다 ③ 사익을 정의로 포장하면서 그것을 <strong>숨긴다.</strong></p>
+    </div>
+    <ul>
+      <li>"나는 포식적 관객이 아닌가"라는 질문 자체가 <strong>첫 번째 조건(성찰 없음)을 정면으로 위반</strong>한다.</li>
+      <li>포식자는 이 질문을 하지 않는다 — 못 해서가 아니라, 그 질문이 도파민을 끊어버리기 때문에.</li>
+      <li>갈림길은 <em class="term">편향의 유무</em>가 아니라 <strong>편향과 나 사이에 틈을 낼 수 있는가</strong>이다.</li>
+      <li>편향은 인간의 조건, 성찰은 인간의 선택.</li>
+    </ul>
+  </section>
+
+  <section class="reveal">
+    <span class="snum">二</span>
+    <h2>정의란 무엇인가 — 사익의 포장인가</h2>
+    <div class="callout c-q">
+      <div class="ct">? 물음</div>
+      <p>진리든 정의든, 결국 사익적 관점에서 자신에게 유리한 걸 정의로 규정하는 게 아닐까?</p>
+    </div>
+    <p>오래된 의심이다. 플라톤 『국가』의 <strong>트라시마코스</strong>: "정의란 강자의 이익이다." <strong>니체</strong>의 도덕 계보학: '선' 뒤에 놓인 힘과 원한. 값진 해부 도구다.</p>
+    <p>그러나 하나의 균열 — 정의가 <em class="term">오직</em> 사익의 포장일 뿐이라면, 지금 느끼는 이 불편함이 설명되지 않는다. 사익을 정의라 부르는 게 순수 본능이라면 그 본능은 스스로를 불편해하지 않는다. 자신의 편중을 아파한다는 것은, 사익으로 환원되지 않는 <strong>저울</strong>이 내 안에 있다는 뜻이다.</p>
+    <div class="callout c-key">
+      <div class="ct">✦ 열어둔 착지 (단정하지 않기)</div>
+      <p>"정의는 사익의 포장이다"를 결론으로 두지 않는다. 그것도 또 하나의 단정이므로. 대신 — 정의는 완성된 소유물이 아니라, 내 사익을 계속 의심하는 그 <strong>운동 자체</strong>에 가깝지 않을까. 손에 쥐면 포장이 되고, 계속 되물으면 살아 있는 것.</p>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <span class="snum">三</span>
+    <h2>어떻게 나를 돌보고 숙성시킬까</h2>
+    <div class="callout c-quote">
+      <div class="ct">❝ 프랭클 · 로고테라피</div>
+      <p>자극과 반응 사이에는 공간이 있고, 그 공간에 인간의 자유가 있다. 포식적 관객은 그 공간을 0.2초로 붕괴시킨 존재 — 숙성이란 그 공간을 넓히는 일.</p>
+    </div>
+    <p>함께 굴려볼 세 물음 (처방이 아니라):</p>
+    <ol>
+      <li><strong>속도를 늦추기</strong> — 분노가 올라올 때 "이게 옳은가"보다 먼저 "이 분노가 지금 나에게 무엇을 보상하는가"를 본다.</li>
+      <li><strong>비대칭 뒤집기</strong> — 내 편의 가장 약한 주장과 반대편의 가장 강한 주장을 나란히 둔다. 편향은 늘 내 편의 최선과 상대편의 최악을 비교하니까.</li>
+      <li><strong>여지를 남기기</strong> — 신영복의 '더불어숲': 나무 하나가 숲을 판정하지 않는다. 편중된 나를 지우려 애쓰기보다 다른 나무의 그늘을 옆에 들이기.</li>
+    </ol>
+  </section>
+
+  <section class="reveal">
+    <span class="snum">四</span>
+    <h2>분노의 성분표 읽기</h2>
+    <div class="callout c-note">
+      <div class="ct">◆ "분노가 나에게 무엇을 보상하는가"의 뜻</div>
+      <p>분노는 순수하게 옳음에서만 오지 않는다. 대개 무언가를 <strong>되돌려준다</strong> — "나는 저 사람과 다르다"는 안도, 옳은 편에 섰다는 확인과 같은 편의 '좋아요', 무력감 대신 뭔가 하고 있다는 감각.</p>
+      <p>분노를 없애는 기술이 아니라, 분노의 <strong>성분표를 읽는</strong> 일. 옳음이 8할·보상이 2할인 분노와 그 반대인 분노는 다르다.</p>
+    </div>
+    <ul>
+      <li>"편한 길을 택하는 걸 포기 못 한다"는 실패의 고백이 아니라 정확한 자기 관찰. 자기에게 불리한 길만 걷는 사람은 성인이 아니라 아픈 사람.</li>
+      <li>문제는 편한 길을 택하는 것 자체가 아니라, 택하고 나서 그걸 정의라 우기느냐, <strong>"이건 내가 편한 쪽이었다"고 인정하느냐.</strong> 인정이 포장을 벗기는 일.</li>
+      <li>소통을 망치는 건 애매한 도덕이 아니라 <strong>애매하면서 확신하는</strong> 도덕. 자기 도덕의 애매함을 아는 사람은 상대에게 여백을 남긴다.</li>
+    </ul>
+  </section>
+
+  <section class="reveal">
+    <span class="snum">五</span>
+    <h2>흔들림과 숙성 — 오늘의 문장</h2>
+    <div class="callout c-quote">
+      <div class="ct">❝ 오늘 와닿은 문장</div>
+      <p>여물어간다는 건 흔들림이 멈추는 게 아니다. 익은 벼가 고개를 숙이는 건 흔들리지 않아서가 아니라 무게가 생겨 흔들림의 진폭이 달라지는 것. 안 흔들리는 건 여문 게 아니라 굳은 것.</p>
+    </div>
+    <ul>
+      <li>확신에 굳어버린 포식자들은 흔들리지 않는다. 그들은 여물지 않았다 — 딱딱해졌을 뿐.</li>
+      <li>프랭클이 수용소에서 본 것: 끝까지 인간으로 남은 이는 흔들림이 없던 사람이 아니라, 흔들리면서도 자극과 반응 사이의 틈을 놓지 않은 사람.</li>
+      <li><strong>숙성 = 흔들림이 멎는 것이 아니라, 흔들림을 부끄러워하지 않게 되는 것.</strong></li>
+      <li>「교정지 07 · 오늘이 마지막입니다」의 "느끼면서 남아 있는 것" — 같은 자리.</li>
+    </ul>
+  </section>
+
+  <section class="reveal">
+    <span class="snum">六</span>
+    <h2>흔들림으로 또 흔들리는 관계</h2>
+    <div class="callout c-note">
+      <div class="ct">◆ 구분</div>
+      <p>나 혼자의 흔들림은 되새김질이 된다(곱씹고 여문다). 관계의 흔들림은 잘 안 된다 — 상대의 흔들림은 <strong>내가 소화할 수 없는 것</strong>(그 사람의 위장에서 일어나는 일)이므로. 관계의 괴로움 상당수는 소화할 수 없는 걸 소화하려다 체하는 데서 온다.</p>
+    </div>
+    <ol>
+      <li><strong>내 흔들림은 내가 책임지되, 상대의 흔들림까지 잠재우려 하지 않기.</strong> 상대의 몫을 떠안는 건 그 사람이 여물 권리를 빼앗는 일.</li>
+      <li><strong>신호로 읽되 판정으로 읽지 않기.</strong> "누가 잘못했다"로 굳히지 말고 "지금 우리 사이에 어긋난 진동이 있구나"로 둔다.</li>
+      <li><strong>모든 흔들리는 관계를 다 붙들지 않아도 된다.</strong> 되새김질이 되는 흔들림(자양분)과 계속 체하는 흔들림(마모)을 몸이 먼저 안다. 후자라면 흐르듯 놓기.</li>
+      <li><strong>흔들림의 원인을 나에게서 다 찾으려 하지 않기.</strong> 관계는 두 진동이 겹친 자리. 어떤 흔들림은 그저 지금 주파수가 안 맞는 것 — 누구의 잘못도 아니다.</li>
+    </ol>
+  </section>
+
+  <section class="reveal">
+    <span class="snum">七</span>
+    <h2>착한 사람 콤플렉스인가</h2>
+    <div class="callout c-key">
+      <div class="ct">✦ 두 개의 시선</div>
+      <p><strong>남에게 착해 보이려는 것</strong> — 시선이 밖을 향한다. 인정·평판·갈등 회피. 콤플렉스(자기 감시, 졸아듦).</p>
+      <p><strong>자기 기준에 정직하려는 것</strong> — 시선이 안을 향한다. 성찰(자유, 여묾).</p>
+    </div>
+    <p>착한 사람 콤플렉스는 대개 <em class="term">들키지 않으려고</em> 착하다. 그런데 자신의 어두운 성분표("나도 편한 길을 택한다, 내 도덕은 애매하다, 나도 포식적 관객 아닌가")를 스스로 펼쳐 보이는 건 착함이 아니라 <strong>정직을 지키는 일</strong> — 진짜 콤플렉스라면 이 대화 자체가 불가능하다.</p>
+    <div class="callout c-quote">
+      <div class="ct">❝ 프랭클식 물음</div>
+      <p>지금 이 배려는 의미에서 나오는가, 두려움에서 나오는가. "이 사람이 소중해서"면 의미, "미움받을까 봐"면 두려움. 의미에서 나온 친절은 할수록 나를 채우고, 두려움에서 나온 것은 할수록 나를 비운다. 다 벗어버릴 필요는 없다 — 두려움에서 나온 것만 골라 내려놓으면, 의미에서 나온 친절은 오히려 더 가볍고 진해진다.</p>
+    </div>
+    <p>신영복의 더불어숲: 나무는 남 위해 자기를 다 내주지 않는다. 뿌리를 단단히 내린 나무라야 옆에 그늘을 준다. "이 착함 벗어버리고 싶다"는 이기심이 아니라 뿌리가 보내는 신호일 수 있다 — 나도 좀 돌보자는.</p>
+  </section>
+
+  <section class="reveal">
+    <span class="snum">八</span>
+    <h2>자기감시와 성찰의 경계</h2>
+    <div class="callout c-q">
+      <div class="ct">? 물음</div>
+      <p>내 안에도 갈등 회피·자기감시가 있는 것 같은데, 그 경계를 뚜렷이 직시하기가 어렵다.</p>
+    </div>
+    <p>경계가 흐린 건 당연하다 — <strong>자기감시의 특기가 '성찰인 척하는 것'</strong>이므로. 둘 다 자기를 들여다보는 얼굴을 해서 안에서는 구분이 안 된다. 다만 네 가지 결이 다르다. 판정하지 말고 표시만 해두는 마음으로.</p>
+    <table class="cmp">
+      <thead><tr><th>결</th><th>성찰</th><th>자기감시</th></tr></thead>
+      <tbody>
+        <tr><td>몸의 온도</td><td>서늘하고 넓어짐, 여백이 열림</td><td>좁아지고 조여듦, 벽이 닫힘</td></tr>
+        <tr><td>방향</td><td>"내가 어떻게 했나"(내 행동)</td><td>"저 사람이 나를 어떻게 볼까"(타인 시선)</td></tr>
+        <tr><td>시제</td><td>끝이 있다 → 내려놓아짐</td><td>끝이 없다 → 밤새 반복 재생</td></tr>
+        <tr><td>결과</td><td>뭔가 하게 된다(사과·전환·놓음)</td><td>아무것도 안 하고 위축됨</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>회피가 올라올 때의 물음: 내가 지키려는 게 <strong>이 관계인가, 나에 대한 그 사람의 평가인가.</strong> 관계를 지키려는 회피는 배려일 수 있고, 평가를 지키려는 회피는 감시.</li>
+      <li>되새김질은 소화를 향하고, 감시는 계속 씹는 것 자체가 목적. → "이 생각이 나를 어디론가 데려가나, 제자리에서 맴돌게 하나."</li>
+    </ul>
+    <div class="callout c-key">
+      <div class="ct">✦ 가장 중요한 뒤집기</div>
+      <p><strong>이 경계를 뚜렷이 직시하려는 그 마음 자체가, 또 하나의 자기감시가 될 수 있다.</strong> "감시를 완벽히 분류해 다 도려내겠다"는 건 감시의 방식으로 감시를 없애려는 것 — 안 된다.</p>
+    </div>
+    <div class="callout c-quote">
+      <div class="ct">❝ 그래서</div>
+      <p>직시하려 애쓰기보다 알아차리고 이름만 붙여주기. 조여드는 느낌이 올 때 "아, 지금 감시가 왔네" 하고 인사하듯. 감시는 저항하면 세지고 알아차리면 힘이 빠진다 — 야단치는 손이 아니라 등을 쓸어주는 손으로. 다 여물면 선명해지는 게 아니라, 흐릿한 채로도 편안해지는 쪽으로 간다. 경계가 원래 흐린 것이라 받아들이는 것 — 어쩌면 직시보다 더 어른의 눈.</p>
+    </div>
+  </section>
+
+  <div class="seeds reveal">
+    <h2>오늘의 씨앗 문장</h2>
+    <div class="cap">되새김의 핵</div>
+    <ul>
+      <li>안 흔들리는 건 여문 게 아니라 굳은 것.</li>
+      <li>숙성이란 흔들림이 멎는 게 아니라, 흔들림을 부끄러워하지 않게 되는 것.</li>
+      <li>정의는 소유물이 아니라, 내 사익을 계속 의심하는 운동 그 자체.</li>
+      <li>기운다는 것이 문제가 아니라, 기운 채로 눈을 감느냐 뜨느냐.</li>
+      <li>감시는 저항하면 세지고, 알아차리면 힘이 빠진다.</li>
+      <li>다 여물면 선명해지는 게 아니라, 흐릿한 채로도 편안해지는 쪽으로.</li>
+    </ul>
+    <div class="branches">
+      <div class="bt">확장 가능한 갈래</div>
+      <ul>
+        <li>반전 에세이 — "표현의 자유가 가장 약한 사람을 포식하는 자유가 될 때, 그 자유는 누구의 것인가"</li>
+        <li>편집학 교정지 — "정의"라는 초고를 되읽기: 사익의 포장 vs 의심의 운동</li>
+        <li>공무원·교육자 대상 강의 세션과 연결</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer class="reveal">야간비행</footer>
+
+</div>
+
+<script>
+  (function(){
+    try{
+      var els=document.querySelectorAll('.reveal');
+      if('IntersectionObserver' in window){
+        var io=new IntersectionObserver(function(es){
+          es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+        },{threshold:0.1});
+        els.forEach(function(el){ io.observe(el); });
+      } else { els.forEach(function(el){ el.classList.add('in'); }); }
+    }catch(err){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    }
+    setTimeout(function(){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    },2500);
+  })();
+</script>
+</body>
+</html>

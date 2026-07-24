@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko" class="anim">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>교정지 여섯 — 150이라는 방어선</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Pen+Script&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f1e8;
+    --paper-line:#e5e0d0;
+    --ink:#2b2723;
+    --ink-soft:#5a5248;
+    --red:#c0392b;
+    --red-soft:#d95f4c;
+    --blue:#2c5f8a;
+    --grid:#d9d3c2;
+    --tape:#e8dfc4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      repeating-linear-gradient(180deg, transparent, transparent 37px, var(--paper-line) 37px, var(--paper-line) 38px),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Gowun Batang', serif;
+    line-height:1.95;
+    padding:48px 18px 80px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    background:linear-gradient(180deg,#fbf9f2,#f4f1e8);
+    border:1px solid #ddd6c4;
+    box-shadow:0 22px 50px -28px rgba(60,50,30,.55);
+    padding:56px 52px 64px;
+    position:relative;
+  }
+  /* 상단 교정 헤더 */
+  .masthead{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:2.5px solid var(--ink);
+    padding-bottom:14px;margin-bottom:6px;
+  }
+  .masthead .label{
+    font-family:'Nanum Myeongjo',serif;font-weight:800;
+    letter-spacing:.28em;font-size:.72rem;color:var(--ink-soft);
+  }
+  .masthead .no{
+    font-family:'Nanum Pen Script',cursive;
+    font-size:2.2rem;color:var(--red);line-height:1;transform:rotate(-4deg);
+  }
+  .stamp{
+    position:absolute;top:34px;right:40px;
+    border:2.5px solid var(--red);color:var(--red);
+    font-family:'Nanum Myeongjo',serif;font-weight:800;
+    padding:5px 12px;font-size:.72rem;letter-spacing:.22em;
+    transform:rotate(8deg);opacity:.82;border-radius:3px;
+  }
+  h1.title{
+    font-family:'Nanum Myeongjo',serif;font-weight:800;
+    font-size:2.05rem;line-height:1.4;margin:30px 0 6px;letter-spacing:-.01em;
+  }
+  .subtitle{
+    font-family:'Nanum Pen Script',cursive;
+    font-size:1.5rem;color:var(--blue);margin-bottom:34px;transform:rotate(-1deg);
+  }
+  .reveal{opacity:1;transform:none;}
+  html.anim .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease, transform .7s ease;}
+  html.anim .reveal.in{opacity:1;transform:none;}
+
+  /* 초고 블록 = 통념 */
+  .draft{
+    position:relative;
+    background:#fcfaf3;
+    border:1px dashed #cfc8b4;
+    padding:24px 26px 22px;
+    margin:26px 0;
+  }
+  .draft .tag{
+    position:absolute;top:-12px;left:18px;
+    background:var(--paper);padding:0 10px;
+    font-family:'Nanum Myeongjo',serif;font-size:.72rem;font-weight:700;
+    letter-spacing:.2em;color:var(--ink-soft);
+  }
+  .strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:#8a8375;}
+  .caret{color:var(--red);font-family:'Nanum Pen Script',cursive;font-size:1.15em;}
+  /* 손글씨 교정 삽입 */
+  .hand{
+    font-family:'Nanum Pen Script',cursive;
+    color:var(--red);font-size:1.32rem;line-height:1.7;
+    display:block;margin:10px 0 2px;padding-left:12px;
+    border-left:3px solid var(--red-soft);
+  }
+  .hand.blue{color:var(--blue);border-left-color:var(--blue);}
+
+  /* 교정 번호 一二三 */
+  .marks{margin:36px 0 8px;}
+  .mark{
+    display:flex;gap:18px;align-items:flex-start;
+    padding:18px 0;border-bottom:1px dotted #cfc8b4;
+  }
+  .mark:last-child{border-bottom:none;}
+  .mark .num{
+    flex:none;width:44px;height:44px;border-radius:50%;
+    border:2.5px solid var(--red);color:var(--red);
+    font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:1.3rem;
+    display:flex;align-items:center;justify-content:center;
+    transform:rotate(-5deg);
+  }
+  .mark .body h3{
+    font-family:'Nanum Myeongjo',serif;font-weight:700;
+    font-size:1.12rem;margin:2px 0 6px;color:var(--ink);
+  }
+  .mark .body p{margin:0;font-size:1.02rem;color:var(--ink-soft);}
+  .mark .body em{color:var(--red);font-style:normal;font-weight:700;}
+
+  /* 대비 두 칸 */
+  .facing{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border:1.5px solid var(--ink);margin:30px 0;
+  }
+  .facing > div{padding:20px 22px;}
+  .facing .l{border-right:1.5px dashed #b9b19c;background:#faf7ef;}
+  .facing h4{
+    font-family:'Nanum Myeongjo',serif;font-size:.74rem;letter-spacing:.2em;
+    margin:0 0 10px;color:var(--ink-soft);font-weight:800;
+  }
+  .facing p{margin:0;font-size:.98rem;line-height:1.8;}
+  .facing .big{
+    font-family:'Nanum Pen Script',cursive;font-size:1.7rem;
+    display:block;margin-bottom:6px;
+  }
+  .facing .l .big{color:var(--blue);}
+  .facing .r .big{color:var(--red);}
+
+  /* 던바 동심원 표 */
+  .rings{width:100%;border-collapse:collapse;margin:24px 0 6px;font-size:.96rem;}
+  .rings th,.rings td{border-bottom:1px solid #d9d3c2;padding:9px 12px;text-align:left;}
+  .rings th{font-family:'Nanum Myeongjo',serif;font-weight:800;color:var(--ink-soft);font-size:.8rem;letter-spacing:.08em;}
+  .rings td.n{font-family:'Nanum Pen Script',cursive;color:var(--red);font-size:1.3rem;width:78px;}
+  .rings tr.core td{background:#f7efe0;}
+
+  /* 최종 교정 = 반전 */
+  .final{
+    border:2.5px solid var(--ink);
+    background:#fbf8ef;
+    padding:30px 30px 26px;margin:38px 0 10px;position:relative;
+  }
+  .final::before{
+    content:"最終校正";position:absolute;top:-14px;left:24px;
+    background:var(--ink);color:var(--paper);
+    font-family:'Nanum Myeongjo',serif;font-weight:700;
+    font-size:.72rem;letter-spacing:.2em;padding:3px 12px;
+  }
+  .final p{font-family:'Nanum Myeongjo',serif;font-size:1.16rem;line-height:1.85;margin:6px 0;}
+  .final .accent{color:var(--red);font-weight:800;}
+
+  /* 검토 질문 */
+  .queries{margin:34px 0 10px;}
+  .queries .q{
+    display:flex;gap:14px;align-items:baseline;margin:14px 0;
+    font-family:'Gowun Batang',serif;font-size:1.03rem;
+  }
+  .queries .q .chk{
+    flex:none;width:22px;height:22px;border:2px solid var(--red);
+    display:inline-flex;align-items:center;justify-content:center;
+    color:var(--red);font-family:'Nanum Pen Script',cursive;font-size:1.2rem;
+    transform:rotate(-6deg);
+  }
+  /* 곁읽기 원전 인용 */
+  .margins{
+    margin:38px 0 6px;border-top:1px dashed #cfc8b4;padding-top:22px;
+  }
+  .margins .mtitle{
+    font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:.78rem;
+    letter-spacing:.2em;color:var(--ink-soft);margin-bottom:16px;
+  }
+  .cite{
+    border-left:3px solid #c9c1ac;padding:4px 0 4px 18px;margin:16px 0;
+  }
+  .cite .src{
+    font-family:'Nanum Myeongjo',serif;font-weight:700;font-size:.82rem;
+    color:var(--blue);margin-bottom:4px;display:block;
+  }
+  .cite p{margin:0;font-size:.98rem;color:var(--ink);line-height:1.75;}
+  .cite .note{font-size:.82rem;color:var(--ink-soft);margin-top:4px;display:block;}
+  /* 서명란 */
+  .sign{
+    margin-top:46px;border-top:2px solid var(--ink);padding-top:18px;
+    display:flex;justify-content:space-between;align-items:flex-end;
+  }
+  .sign .meta{font-family:'Nanum Myeongjo',serif;font-size:.76rem;color:var(--ink-soft);letter-spacing:.1em;}
+  .sign .name{font-family:'Nanum Pen Script',cursive;font-size:2rem;color:var(--blue);transform:rotate(-3deg);}
+  .lead{font-size:1.06rem;margin:18px 0;}
+  .pull{
+    font-family:'Nanum Myeongjo',serif;font-weight:700;font-size:1.24rem;
+    color:var(--ink);text-align:center;margin:34px 0;line-height:1.7;
+  }
+  .pull .u{border-bottom:3px solid var(--red-soft);padding-bottom:2px;}
+
+  @media (max-width:620px){
+    .sheet{padding:40px 24px 48px;}
+    h1.title{font-size:1.62rem;}
+    .facing{grid-template-columns:1fr;}
+    .facing .l{border-right:none;border-bottom:1.5px dashed #b9b19c;}
+    .stamp{top:20px;right:20px;}
+  }
+  /* 인쇄 최적화 */
+  @media print{
+    @page{margin:14mm;}
+    body{background:#fff;padding:0;}
+    .sheet{box-shadow:none;border:none;max-width:100%;padding:0;}
+    .reveal{opacity:1 !important;transform:none !important;}
+    .draft,.mark,.facing,.final,.rings,.queries,.pull,.sign{break-inside:avoid;page-break-inside:avoid;}
+    h1.title,.marks h3{break-after:avoid;}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="stamp">校 正</div>
+  <div class="masthead">
+    <span class="label">편집학 시리즈 · 교정지</span>
+    <span class="no">No.6</span>
+  </div>
+
+  <h1 class="title reveal">150이라는 방어선</h1>
+  <div class="subtitle reveal">— 던바의 숫자를 다시 교정하다</div>
+
+  <p class="lead reveal">로빈 던바는 인간이 안정적으로 유지할 수 있는 관계의 수를 약 150명으로 보았다. 김정운은 인간의 대화가 0.2초 안에 순서를 바꾼다고 했다. 두 사람은 서로 만난 적 없지만, 같은 자리에 깃발을 꽂았다. 그 깃발을 오늘 교정한다.</p>
+
+  <!-- 초고: 통념 -->
+  <div class="draft reveal">
+    <span class="tag">初稿 · 세상이 믿는 문장</span>
+    <p><span class="strike">인간이 진짜로 아는 사람은 150명이 한계다. 이 숫자가 인간관계의 본질이며, 그래서 우리는 그 안에서 살아야 한다.</span> <span class="caret">↩ 교정 요함</span></p>
+    <span class="hand">숫자는 한계이지, 본질이 아니다.</span>
+    <span class="hand blue">본질은 '함께 보는 일'에 있다. 세는 건 그다음.</span>
+  </div>
+
+  <p class="lead reveal">던바 이론의 진짜 핵심은 150이 아니라, <b>왜 인간이 언어를 갖게 되었는가</b>이다. 원숭이는 서로 털을 골라주며(grooming) 유대를 맺는다. 그러나 그것은 일대일이라 너무 비싸서 작은 무리밖에 묶지 못한다. 던바는 인간이 이 한계를 <b>말</b>로 넘었다고 보았다. 험담과 수다는 여럿을 동시에 '털 고르기' 하는 일이었다. 언어의 기원조차 정보 전달이 아니라 <b>유대</b>였다는 것 — 여기서 던바와 김정운은 같은 편에 선다.</p>
+
+  <table class="rings reveal">
+    <tr><th>층</th><th>사람 수</th><th>관계의 무게</th></tr>
+    <tr class="core"><td>핵심</td><td class="n">5</td><td>위기에 달려와 줄 사람</td></tr>
+    <tr><td>공감집단</td><td class="n">15</td><td>죽으면 진심으로 슬픈 사람</td></tr>
+    <tr><td>친밀권</td><td class="n">50</td><td>집에 부를 수 있는 친구</td></tr>
+    <tr><td>던바의 수</td><td class="n">150</td><td>맥락까지 아는 '진짜 아는 사이'</td></tr>
+    <tr><td>지인</td><td class="n">500</td><td>얼굴과 이름</td></tr>
+  </table>
+
+  <!-- 두 이론의 포개기 -->
+  <div class="facing reveal">
+    <div class="l">
+      <h4>함께 보기 · 김정운</h4>
+      <span class="big">질(質)</span>
+      <p>유대 <b>한 건</b>을 만드는 방식. 같은 것을 보며, 서로 보고 있음을 안다. 몸과 시선과 실시간 조율.</p>
+    </div>
+    <div class="r">
+      <h4>던바의 150 · 던바</h4>
+      <span class="big">양(量)</span>
+      <p>그 유대를 <b>몇 개</b>나 지킬 수 있는가. 뇌가 감당하는 관계의 천장. 안쪽일수록 유지비가 급증.</p>
+    </div>
+  </div>
+
+  <p class="pull reveal">두 이론을 포개면 한 문장이 남는다.<br>
+  <span class="u">인간의 연결은 몸으로 하고, 실시간으로 조율하며, 그래서 수가 정해져 있다.</span></p>
+
+  <!-- 교정 一二三 : 오늘의 아쉬움 -->
+  <div class="marks">
+    <p class="lead reveal" style="margin-bottom:4px;">그렇다면 오늘, 이 이론은 어디서 어긋나는가.</p>
+    <div class="mark reveal">
+      <div class="num">一</div>
+      <div class="body">
+        <h3>규모의 착시</h3>
+        <p>SNS는 팔로워 수천을 준다. 그러나 던바의 150도, 핵심 5도 <em>단 한 명도 늘지 않았다</em>. 우리는 '얼굴만 아는 층'을 부풀리며 정작 핵심을 비워낸다. 숫자는 커졌는데 관계는 얕아졌다.</p>
+      </div>
+    </div>
+    <div class="mark reveal">
+      <div class="num">二</div>
+      <div class="body">
+        <h3>함께 보기의 소멸</h3>
+        <p>함께 보기는 같은 공간, 마주친 시선, 실시간 조율을 요구한다. 그런데 우리는 <em>물리적으로는 같이, 주의(注意)는 따로</em> 있다. 각자 자기 화면을 본다. 던바의 '털 고르기'가 스크롤로 대체됐지만, 스크롤은 아무도 골라주지 못한다.</p>
+      </div>
+    </div>
+    <div class="mark reveal">
+      <div class="num">三</div>
+      <div class="body">
+        <h3>비용 없는 관계의 역설</h3>
+        <p>이제 AI는 호혜도, 위험도, 추적도 없는 '관계'를 비용 제로로 내민다. 던바의 논리대로라면 이것은 <em>비싸지만 진짜인 150</em>을 더 빠르게 비워낼 수 있다. 편하다는 것이 늘 이롭지는 않다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 반전: 최종 교정 -->
+  <div class="final reveal">
+    <p>그런데 여기서 한 번 더 교정한다.</p>
+    <p>던바의 150도, 김정운의 0.2초도 <span class="accent">흔들리는 숫자</span> 위에 '인간의 본질'을 세웠다. 실제로 2021년 한 연구팀은 150의 신뢰구간이 수십에서 수백까지 너무 넓어 사실상 의미가 없다고 반박했다.</p>
+    <p>질적 통찰 — <b>함께 보기</b>와 <b>털 고르기</b> — 은 튼튼하다. 그러나 그것을 굳이 <span class="accent">하나의 양적 상한</span>으로 못박는 순간, 방어선은 반증에 노출된다.</p>
+    <p>그러니 살릴 것과 내려놓을 것을 나눈다. <b>함께 보기는 살리고, 150이라는 방어선은 내려놓기.</b> 인간 유대의 특별함은 'AI가 못 하는 것'이 아니라, <span class="accent">우리가 소중히 여기기로 한 것</span>이다.</p>
+  </div>
+
+  <!-- 열린 물음 -->
+  <div class="queries">
+    <p class="lead reveal" style="margin-bottom:6px;">검토 질문 · 독자에게</p>
+    <div class="q reveal"><span class="chk">✓</span><span>당신의 핵심 5는 지금 몇 명인가. 그 자리를 무엇이 대신 채우고 있는가.</span></div>
+    <div class="q reveal"><span class="chk">✓</span><span>마지막으로 누군가와 '같은 것을 함께 본' 순간은 언제였는가.</span></div>
+    <div class="q reveal"><span class="chk">✓</span><span>인간의 특별함을 지키기 위해, 우리는 정말 숫자가 필요한가.</span></div>
+  </div>
+
+  <!-- 곁읽기 원전 -->
+  <div class="margins reveal">
+    <div class="mtitle">欄外 · 원전 곁읽기</div>
+
+    <div class="cite">
+      <span class="src">로빈 던바, 『그루밍, 가십, 그리고 언어의 진화』(1996)</span>
+      <p>던바의 핵심 가설: 원숭이는 털 고르기로 유대를 맺지만 무리가 커지면 그 방식은 한계에 부딪힌다. 인간은 그 자리를 '값싸고 효율적인 목소리 털 고르기' — 곧 <b>수다와 험담</b> — 로 대체했다. 언어는 정보 전달이 아니라 <b>여럿을 동시에 돌보기</b> 위해 태어났다는 것.</p>
+    </div>
+
+    <div class="cite">
+      <span class="src">같은 책 — 던바 스스로의 경고</span>
+      <p>던바는 이미 1996년에, <b>사이버공간·이메일·화상회의는 인간의 원초적인 대면 접촉 욕구를 채우지 못한다</b>고 적었다. '함께 보기의 소멸'을 저자 본인이 예견한 셈이다.</p>
+    </div>
+
+    <div class="cite">
+      <span class="src">린덴포스·바르텔·린드, 『던바의 수 해체하기』, Biology Letters(2021)</span>
+      <p>던바의 통계를 최신 방법으로 다시 돌리자 추정치의 95% 신뢰구간이 <b>약 2명에서 520명</b>까지 벌어졌다. 저자들의 결론: 이런 방식으로는 하나의 숫자를 특정하는 것 자체가 무의미하다.</p>
+      <span class="note">※ 던바는 "비판자들이 한 가지 도출 방식만 문제 삼을 뿐, 군대 단위·마을·기업 규모에서 30년간 반복 관찰된 150 패턴을 무시한다"고 재반박했다. 논쟁은 진행 중이다.</span>
+    </div>
+  </div>
+
+  <div class="sign">
+    <div class="meta">편집학 시리즈 여섯 번째 교정지<br>김정운 『말하지 않고 말하기』· 던바 『프렌즈』 곁읽기</div>
+    <div class="name">야간비행</div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    try{
+      var els = document.querySelectorAll('.reveal');
+      if('IntersectionObserver' in window){
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+        }, {threshold:0.12});
+        els.forEach(function(el){ io.observe(el); });
+      } else {
+        els.forEach(function(el){ el.classList.add('in'); });
+      }
+    }catch(err){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    }
+    // 안전 폴백: 2.5초 후 전부 노출
+    setTimeout(function(){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    },2500);
+  })();
+</script>
+</body>
+</html>

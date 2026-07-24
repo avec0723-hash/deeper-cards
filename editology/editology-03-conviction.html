@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>확신의 편집학 — 통했다는 착각</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F7F3;
+    --card:#FDFDFB;
+    --ink:#23231F;
+    --graphite:#6F6F66;
+    --proof:#C0392B;
+    --grid:#C9D6C9;
+    --grid-soft:#E4EBE4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans KR',sans-serif;
+    font-weight:300;
+    line-height:1.85;
+    letter-spacing:-0.01em;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+    background-image:
+      linear-gradient(var(--grid-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-soft) 1px, transparent 1px);
+    background-size:28px 28px;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:56px 20px 80px;}
+
+  .card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--grid);
+    padding:44px 40px;
+    margin-bottom:40px;
+    break-inside:avoid;
+  }
+  .card::before,.card::after,
+  .card .crop-b::before,.card .crop-b::after{
+    content:"";position:absolute;width:14px;height:14px;
+    border-color:var(--graphite);border-style:solid;
+  }
+  .card::before{top:-7px;left:-7px;border-width:0 0 1px 1px;transform:rotate(90deg);}
+  .card::after{top:-7px;right:-7px;border-width:0 0 1px 1px;}
+  .card .crop-b::before{bottom:-7px;left:-7px;border-width:1px 1px 0 0;transform:rotate(90deg);}
+  .card .crop-b::after{bottom:-7px;right:-7px;border-width:1px 0 0 1px;transform:rotate(90deg);}
+
+  .stamp{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;letter-spacing:0.18em;
+    color:var(--proof);
+    border:1px solid var(--proof);
+    padding:3px 12px;margin-bottom:22px;
+  }
+
+  h1,h2,h3{font-family:'Gowun Batang',serif;font-weight:700;color:var(--ink);}
+  h2{font-size:24px;margin-bottom:8px;line-height:1.5;}
+  .sub{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--graphite);letter-spacing:0.12em;margin-bottom:26px;}
+
+  p{margin-bottom:16px;font-size:16px;}
+  p:last-child{margin-bottom:0;}
+  em{font-style:normal;font-weight:500;color:var(--ink);}
+  .red{color:var(--proof);font-weight:500;}
+  .nb{white-space:nowrap;}
+
+  .strike{
+    text-decoration:line-through;
+    text-decoration-color:var(--proof);
+    text-decoration-thickness:2px;
+    color:var(--graphite);
+  }
+  .fix{
+    font-family:'Gowun Batang',serif;
+    color:var(--proof);font-weight:700;
+    white-space:nowrap;
+  }
+
+  .hero{padding:64px 40px 56px;text-align:left;}
+  .hero .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.22em;color:var(--graphite);margin-bottom:30px;}
+  .hero h1{font-size:clamp(26px,5.6vw,40px);line-height:1.6;margin-bottom:28px;}
+  .hero .thesis{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(17px,3.4vw,20px);
+    line-height:2.0;color:var(--ink);
+    border-left:3px solid var(--proof);
+    padding-left:20px;
+  }
+
+  .item{padding:22px 0;border-bottom:1px dashed var(--grid);break-inside:avoid;}
+  .item:last-of-type{border-bottom:none;padding-bottom:0;}
+  .item h3{font-size:17px;margin-bottom:8px;}
+  .item h3 .mark{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--proof);margin-right:10px;letter-spacing:0.1em;}
+  .item p{font-size:15px;color:#3d3d38;}
+
+  .wit{list-style:none;margin:8px 0 20px;}
+  .wit li{
+    padding:16px 0;
+    border-bottom:1px dashed var(--grid);
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(15px,3.2vw,17px);
+    line-height:1.9;
+    break-inside:avoid;
+  }
+  .wit li:last-child{border-bottom:none;}
+  .wit .arrow{font-family:'IBM Plex Mono',monospace;color:var(--graphite);font-size:13px;margin:0 6px;}
+  .wit .gloss{
+    display:block;
+    font-family:'Noto Sans KR',sans-serif;
+    font-weight:300;
+    font-size:14px;
+    color:var(--graphite);
+    margin-top:6px;
+    padding-left:14px;
+    border-left:2px solid var(--grid);
+  }
+
+  .creed{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(16px,3.2vw,18px);
+    line-height:2.3;
+    border-left:3px solid var(--proof);
+    padding-left:20px;
+    margin:6px 0 24px;
+    break-inside:avoid;
+  }
+
+  /* ── 어록(대화) ── */
+  .dialogue{
+    background:var(--paper);
+    border:1px solid var(--grid);
+    padding:26px 24px;
+    margin:6px 0 24px;
+    break-inside:avoid;
+  }
+  .dialogue .line{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(15px,3.2vw,17px);
+    line-height:2.0;
+    margin-bottom:10px;
+  }
+  .dialogue .line:last-child{margin-bottom:0;}
+  .dialogue .who{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:0.14em;
+    color:var(--graphite);
+    display:block;margin-bottom:2px;
+  }
+  .dialogue .child{color:var(--proof);font-weight:700;}
+
+  .quote-card{background:var(--ink);color:#EDEDE6;border:none;text-align:center;padding:60px 36px;}
+  .quote-card::before,.quote-card::after,
+  .quote-card .crop-b::before,.quote-card .crop-b::after{border-color:#EDEDE6;}
+  .quote-card blockquote{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(18px,4vw,23px);
+    line-height:2.0;font-weight:700;
+  }
+  .quote-card blockquote .red{color:#E8756A;}
+  .quote-card .who{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.2em;color:#9a9a90;margin-top:24px;}
+
+  .footer{text-align:center;padding-top:8px;}
+  .footer .proof-note{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--graphite);letter-spacing:0.14em;line-height:2.2;
+  }
+  .footer .sig{font-family:'Gowun Batang',serif;font-size:15px;margin-top:14px;color:var(--ink);}
+
+  .reveal{opacity:1;transform:none;}
+  html.anim .reveal{
+    opacity:0;transform:translateY(18px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  html.anim .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    html.anim .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+  }
+
+  @media print{
+    @page{margin:14mm;}
+    body{background:#fff;background-image:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .wrap{max-width:100%;padding:0;}
+    .card{break-inside:avoid;page-break-inside:avoid;margin-bottom:20px;box-shadow:none;}
+    .item,.wit li,.dialogue{break-inside:avoid;page-break-inside:avoid;}
+    html.anim .reveal{opacity:1 !important;transform:none !important;}
+    .quote-card{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 히어로 -->
+  <section class="card hero reveal">
+    <div class="crop-b"></div>
+    <div class="eyebrow">EDITOLOGY × 관계론 · 제3편 — 「편집되는 나, 편집하는 나」 續續</div>
+    <h1>
+      소통의 가장 위험한 순간은<br>
+      <span class="strike">통하지 않을 때</span>가 아니라<br>
+      <span class="fix">통했다고 믿을 때</span>다
+    </h1>
+    <p class="thesis">
+      "통했다", "알아들었다", "저 사람도 나와 같은 마음이다."<br>
+      정서적 느낌이 강할수록, 우리는 더 빨리 확신하고<br>
+      더 쉽게 <em>확인을 생략한다.</em>
+    </p>
+  </section>
+
+  <!-- 전제: 보키토의 교훈 -->
+  <section class="card reveal">
+    <div class="crop-b"></div>
+    <span class="stamp">전제 · 보키토의 교훈</span>
+    <h2>확신은 소통의 증거가 아니라,<br>확인을 건너뛰었다는 신호다</h2>
+    <div class="sub">THE BOKITO LESSON</div>
+    <p>
+      『말하지 않고 말하기』의 눈맞춤 이야기에는 네덜란드의 고릴라 보키토가 나온다.
+      한 관람객은 매번 찾아와 눈을 맞추고 미소를 나누며, 자신과 보키토가
+      정서적으로 통한다고 확신했다. 그러나 그 소통은 <em>그녀의 머릿속에만 존재했다.</em>
+      어느 날 우리를 뛰쳐나온 보키토가 향한 곳은, 하필 그녀였다.
+    </p>
+    <p>
+      우리는 생각보다 자주 상대를 읽는 게 아니라, 상대에게 <em>내 마음을 덧입힌다.</em>
+      그리고 정서적 느낌이 강할수록 그 덧입힘을 소통이라 부른다.
+      <span class="red">확신이 빨리 올수록, 확인은 더 필요하다.</span>
+    </p>
+  </section>
+
+  <!-- 제1부: 덧씌움의 세 얼굴 -->
+  <section class="card reveal">
+    <div class="crop-b"></div>
+    <span class="stamp">제1부 · 덧씌움의 세 얼굴</span>
+    <h2>나는 그를 읽은 게 아니라,<br>나를 그에게 입혔다</h2>
+    <div class="sub">THREE FACES OF PROJECTION</div>
+
+    <div class="item">
+      <h3><span class="mark">①</span>바람의 번역 — 부모와 아이</h3>
+      <p>"얘는 괜찮아. 말은 안 해도 잘 견디고 있어."
+      그러나 아이는 외롭거나 지쳐 있을 수 있다.
+      부모는 아이를 이해한 것이 아니라, '괜찮았으면 좋겠다'는
+      자기 바람을 아이에게 입힌 것일지 모른다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">②</span>세월의 생략 — 부부</h3>
+      <p>"당신도 내 마음 알잖아." 그러나 아내는 전혀 모르는 경우가 많다.
+      오래 같이 살았다는 이유로 소통의 확인을 생략해 버리는 것.
+      세월은 번역기가 아니다. 수신 확인 없는 발송은 도착이 아니다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">③</span>불안의 번역 — 친구</h3>
+      <p>연락 없는 친구에게 "나한테 서운한 게 있나 봐"라고 생각하지만,
+      그는 그저 바쁘거나 힘든 시기를 지나고 있을 수 있다.
+      나는 친구의 마음을 읽은 게 아니라,
+      내 불안을 친구의 마음으로 번역한 것이다.</p>
+    </div>
+  </section>
+
+  <!-- 간주: 유쾌한 정정 -->
+  <section class="card reveal">
+    <div class="crop-b"></div>
+    <span class="stamp">간주 · 유쾌한 정정</span>
+    <h2>확신이 들거든,<br>이렇게 고쳐 읽자</h2>
+    <div class="sub">A SPOONFUL OF WIT</div>
+    <ul class="wit">
+      <li>
+        쟤는 괜찮아 보여 <span class="arrow">─▶</span> <span class="strike">다행이다</span> <span class="fix">내 바람으로 그린 초상화다</span>
+        <span class="gloss">아이가 괜찮은 게 아니라, 괜찮았으면 하는 내가 있는 것일 수 있다. 초상화 말고 본인에게 묻자.</span>
+      </li>
+      <li>
+        말 안 해도 알지? <span class="arrow">─▶</span> <span class="strike">우리 사이니까</span> <span class="fix">수신 확인 없는 발송이다</span>
+        <span class="gloss">보냈다고 도착한 게 아니다. 오래된 사이일수록 '읽음' 표시를 직접 확인해야 한다.</span>
+      </li>
+      <li>
+        연락이 없네, 서운한가 봐 <span class="arrow">─▶</span> <span class="strike">눈치챘다</span> <span class="fix">내 불안을 그의 목소리로 더빙했다</span>
+        <span class="gloss">내가 들은 건 그의 마음이 아니라 내 마음의 메아리다. 원음은 전화 한 통이면 들을 수 있다.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 증언: 우리 집 이야기 -->
+  <section class="card reveal">
+    <div class="crop-b"></div>
+    <span class="stamp">증언 · 우리 집 이야기</span>
+    <h2>밝고 웃음 많던 집에서,<br>나는 아이를 잘못 편집했다</h2>
+    <div class="sub">A TESTIMONY — WITH PERMISSION</div>
+    <p>
+      아이는 어릴 때부터 세상과 유쾌하게 응답하는 아이였다.
+      초등 저학년 시절, 이런 대화를 남길 만큼.
+    </p>
+    <div class="dialogue">
+      <div class="line"><span class="who">선생님</span>"말 타다 떨어지면, 떨어진 곳은 네 땅이야."</div>
+      <div class="line"><span class="who">아이</span><span class="child">"저 질질 끌려갔으니까, 집도 지을 수 있겠네요."</span></div>
+    </div>
+    <p>
+      우리 집은 늘 밝고 웃음이 많았고, 나는 아이를
+      '자존감 높고 유쾌한 아이'라는 판본으로 저장해 두고 그 판본으로 위안을 삼았다.
+      그래서 몰랐다. 엄마 아빠가 재활을 위해 타지의 병원들을 도는 동안
+      아이가 혼자 지독히 어려운 터널을 지나고 있다는 것을 —
+      집이 밝았던 만큼 그 외로움의 격차가 더 컸다는 것을.
+    </p>
+    <p>
+      사라지고 싶다는 아이의 메모를 발견하고서야 알았다.
+      내가 품고 있던 것은 아이가 아니라, <em>내가 기억하고 싶은 아이</em>였다는 것을.
+      그날 이후 나는 판본을 덮고 원본에게 갔다. 아이와 함께 AI 전문가 과정을
+      들으러 장시간 서울을 오갔고, 아이의 눈은 다시 반짝이기 시작했다.
+      엄마는 뜻하지 않은 전화위복으로 막강한 협업자를 얻었다.
+    </p>
+    <p>
+      떨어진 자리마저 제 땅으로 만들던 그 낙법을, 나는 영원한 것으로 믿었다.
+      그러나 어릴 적 판본이 아무리 눈부셔도 지금의 원본을 대신할 수는 없다.
+      이 이야기를 여기에 싣기 전에 나는 아이에게 물었고, 아이는 허락했다.
+      <span class="red">확인은 이렇게 하는 것이라고, 이제는 안다.</span>
+    </p>
+  </section>
+
+  <!-- 제2부: 체크체크의 기술 -->
+  <section class="card reveal">
+    <div class="crop-b"></div>
+    <span class="stamp">제2부 · 체크체크의 기술</span>
+    <h2>내가 느낀 것인지,<br>그도 정말 그런 것인지</h2>
+    <div class="sub">THE ART OF CHECK-CHECK</div>
+
+    <div class="item">
+      <h3><span class="mark">①</span>느낌과 사실을 분리한다</h3>
+      <p>"통한 것 같다"는 느낌이고, "통했다"는 확인이 필요한 사실이다.
+      느낌이 강렬할수록 이 둘은 잘 붙는다.
+      떼어놓는 습관 — 그것이 체크의 시작이다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">②</span>질문은 의심이 아니라 존중이다</h3>
+      <p>"요즘 정말 어때?"라고 묻는 것은 상대를 못 믿어서가 아니라,
+      내 짐작으로 그를 대신 쓰지 않겠다는 예의다.
+      묻지 않는 사랑은 편하지만, 묻는 사랑이 정확하다.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">③</span>밝음을 안심의 증거로 쓰지 않는다</h3>
+      <p>웃음 많은 집이 외로움의 부재를 뜻하지 않는다.
+      밝은 사람일수록 어두움을 혼자 처리하는 데 능하다.
+      가장 잘 웃는 사람에게, 가장 먼저 물을 것.</p>
+    </div>
+
+    <div class="item">
+      <h3><span class="mark">④</span>업무에서도 일상에서도, 체크체크</h3>
+      <p>"전달했으니 알겠지"와 "말 안 해도 알겠지"는 같은 생략이다.
+      회의에서도 식탁에서도 마지막 확인 한 번이
+      잘못된 방향으로 오래 가는 것을 막는다.</p>
+    </div>
+  </section>
+
+  <!-- 바탕 -->
+  <section class="card reveal">
+    <div class="crop-b"></div>
+    <span class="stamp">바탕 · 사랑할수록 편집이 깊어진다</span>
+    <h2>가장 아끼는 사람일수록,<br>내가 견디기 좋은 판본으로 저장한다</h2>
+    <div class="sub">THE PREMISE BENEATH</div>
+    <p class="creed">
+      가까울수록 확신은 빨라지고,<br>
+      확신이 빠를수록 확인은 사라진다.<br>
+      그러나 사랑은 확인을 면제해 주는 것이 아니라,<br>
+      더 자주 확인할 이유가 되는 것이다.
+    </p>
+    <p>
+      내가 저장한 판본이 편안할수록 의심해 보자.
+      그 편안함은 상대가 준 것이 아니라 내가 만든 것일 수 있다.
+      <span class="red">판본을 덮고, 원본에게 가서 묻는 것.</span>
+      전편들의 결론이 여기서 완성된다 — 좋은 편집자는
+      재료를 왜곡하지 않으며, 초고를 함부로 발행하지 않으며,
+      그리고 원본 확인을 거르지 않는다.
+    </p>
+  </section>
+
+  <!-- 닫는 인용 -->
+  <section class="card quote-card reveal">
+    <div class="crop-b"></div>
+    <blockquote>
+      통했다는 확신이 드는 순간이,<br>
+      물어야 할 순간이다.<br>
+      <span class="red">판본을 덮고, 원본에게 가자.</span>
+    </blockquote>
+    <div class="who">確信의 編輯學 — 통했다는 착각</div>
+  </section>
+
+  <!-- 푸터 -->
+  <div class="footer reveal">
+    <p class="proof-note">
+      이 원고 역시 초고입니다.<br>
+      살아가며 함께 퇴고할 것입니다.
+    </p>
+    <p class="sig">— 야간비행</p>
+  </div>
+
+</div>
+
+<script>
+  // 애니메이션은 JS가 정상 동작할 때만 활성화 (기본 상태: 모두 보임)
+  document.documentElement.classList.add('anim');
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // 안전장치: 2.5초 후 무조건 전체 표시 (카카오톡 인앱 등 대비)
+  setTimeout(function(){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }, 2500);
+</script>
+</body>
+</html>
