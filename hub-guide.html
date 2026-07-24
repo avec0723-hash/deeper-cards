@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>야간비행 허브 만드는 법 — 후배에게 건네는 지도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  body {
+    font-family: 'Noto Sans KR', -apple-system, 'Malgun Gothic', sans-serif;
+    background: #FBF7EE; color: #24312B;
+    word-break: keep-all; line-height: 1.75;
+  }
+  .serif { font-family: 'Noto Serif KR', serif; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 22px; }
+
+  /* 머리 */
+  header { text-align: center; padding: 66px 20px 30px; }
+  .eyebrow { font-size: 11px; letter-spacing: 0.4em; color: #8A8271; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; }
+  h1 { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 34px; color: #1A4A35; line-height: 1.35; margin-bottom: 14px; }
+  .tagline { font-size: 15px; color: #6B6A5C; }
+  .gold-bar { width: 46px; height: 3px; background: #C9A94E; margin: 26px auto 0; border-radius: 2px; }
+
+  /* 딥그린 밴드 — 3분 요약 */
+  .band { background: linear-gradient(180deg, #0F2D1F 0%, #1A4A35 100%); padding: 42px 0; margin-top: 40px; }
+  .band .wrap { max-width: 700px; }
+  .band .lbl { font-size: 11.5px; letter-spacing: 0.3em; color: #E2C77B; margin-bottom: 14px; text-align: center; }
+  .band h2 { font-family: 'Noto Serif KR', serif; font-size: 22px; color: #F3ECD9; font-weight: 600; text-align: center; margin-bottom: 8px; }
+  .band p { font-size: 14.5px; color: #F3ECD9; opacity: 0.82; text-align: center; }
+  .band .oneline { margin-top: 22px; background: rgba(255,255,255,0.06); border: 1px solid rgba(226,199,123,0.28); border-radius: 12px; padding: 18px 22px; color: #F3ECD9; font-size: 14.5px; text-align: center; }
+  .band .oneline b { color: #E2C77B; font-weight: 600; }
+
+  /* 섹션 */
+  section { padding: 46px 0 6px; }
+  .kicker { font-size: 11.5px; letter-spacing: 0.24em; color: #A89B7E; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+  h2.sec { font-family: 'Noto Serif KR', serif; font-size: 25px; font-weight: 700; color: #1A4A35; margin-bottom: 6px; line-height: 1.4; }
+  .sec-lede { font-size: 15px; color: #6B6A5C; margin-bottom: 22px; }
+  p.body { font-size: 15px; color: #3B4741; margin-bottom: 14px; }
+  .divider { height: 1px; background: #EAE1CC; margin: 8px 0; }
+
+  /* 카드 */
+  .card { background: #FFFDF7; border: 1px solid #EDE5D0; border-radius: 14px; padding: 24px 26px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(26,74,53,0.05); }
+  .card h3 { font-family: 'Noto Serif KR', serif; font-size: 18px; color: #1A4A35; font-weight: 600; margin-bottom: 8px; }
+  .card p { font-size: 14.5px; color: #4A554E; margin-bottom: 8px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* 개념 3칸 */
+  .concept { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 6px; }
+  .concept .c { background: #FFFDF7; border: 1px solid #EDE5D0; border-radius: 14px; padding: 22px 20px; text-align: center; }
+  .concept .emo { font-size: 30px; display: block; margin-bottom: 10px; }
+  .concept .ct { font-family: 'Noto Serif KR', serif; font-size: 16.5px; color: #1A4A35; font-weight: 600; margin-bottom: 6px; }
+  .concept .cd { font-size: 13px; color: #6B6A5C; line-height: 1.65; }
+  @media (max-width: 620px) { .concept { grid-template-columns: 1fr; } }
+
+  /* 관계도 SVG */
+  .diagram { background: #FFFDF7; border: 1px solid #EDE5D0; border-radius: 16px; padding: 20px 16px 12px; margin: 6px 0 12px; box-shadow: 0 2px 10px rgba(26,74,53,0.06); }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram .cap { text-align: center; font-size: 12.5px; color: #A89B7E; padding: 6px 10px 4px; }
+
+  /* 폰용 관계도 — 세로로 쌓아 글씨가 커지게 */
+  .mdg { display: none; background: #FFFDF7; border: 1px solid #EDE5D0; border-radius: 16px; padding: 18px 15px; margin: 6px 0 12px; box-shadow: 0 2px 10px rgba(26,74,53,0.06); }
+  .mdg .panel { border-radius: 12px; padding: 16px 14px; }
+  .mdg .p-store { background: #F3EEDF; border: 1px solid #E2D8BE; }
+  .mdg .p-stage { background: linear-gradient(180deg, #0F2D1F 0%, #1A4A35 100%); border: 1px solid #2C4636; }
+  .mdg .ptitle { font-family: 'Noto Serif KR', serif; font-size: 15.5px; font-weight: 700; text-align: center; color: #1A4A35; }
+  .mdg .p-stage .ptitle { color: #F3ECD9; }
+  .mdg .psub { font-size: 11.5px; text-align: center; color: #8A8271; margin-bottom: 13px; line-height: 1.5; }
+  .mdg .p-stage .psub { color: #B7C9BC; }
+  .mdg .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mdg .chip { border-radius: 9px; padding: 11px 6px; text-align: center; font-size: 12.5px; font-weight: 600; background: #FFFDF7; border: 1px solid #E2D8BE; color: #1A4A35; }
+  .mdg .chip small { display: block; font-size: 10px; opacity: 0.6; font-weight: 400; margin-top: 2px; }
+  .mdg .p-stage .chip { background: rgba(255,255,255,0.06); border-color: #3A5647; color: #F3ECD9; }
+  .mdg .p-stage .chip.hi { border-color: #E2C77B; color: #E2C77B; background: rgba(226,199,123,0.14); }
+  .mdg .arrow { text-align: center; padding: 13px 0 12px; color: #A0764B; font-size: 12.5px; font-weight: 600; line-height: 1.5; }
+  .mdg .mapbox { background: #14261C; border: 1px solid #E2C77B; border-radius: 9px; padding: 11px 8px; text-align: center; color: #E2C77B; font-size: 12.5px; font-weight: 600; margin-bottom: 10px; }
+  .mdg .mapbox small { display: block; color: #9DB5A5; font-size: 10px; font-weight: 400; margin-top: 2px; }
+  .mdg .cap { text-align: center; font-size: 12px; color: #A89B7E; padding: 12px 4px 0; line-height: 1.6; }
+
+  @media (max-width: 620px) {
+    .diagram { display: none; }
+    .mdg { display: block; }
+  }
+
+  /* 표 */
+  .tbl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 8px; }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 13.5px; background: #FFFDF7; border-radius: 12px; overflow: hidden; }
+  th, td { text-align: left; padding: 13px 15px; border-bottom: 1px solid #EDE5D0; vertical-align: top; }
+  th { background: #F3EEDF; color: #1A4A35; font-weight: 600; font-size: 12.5px; letter-spacing: 0.02em; }
+  td code { background: #F2ECDB; color: #7A5A2E; padding: 2px 7px; border-radius: 5px; font-size: 12.5px; font-family: 'Consolas', 'Courier New', monospace; white-space: nowrap; }
+  td .flow { color: #A0764B; font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+
+  /* 단계 */
+  .step { display: flex; gap: 18px; margin-bottom: 16px; background: #FFFDF7; border: 1px solid #EDE5D0; border-radius: 14px; padding: 22px 24px; }
+  .step .num { flex: 0 0 44px; height: 44px; border-radius: 50%; background: linear-gradient(180deg, #1A4A35, #0F2D1F); color: #E2C77B; font-family: 'Noto Serif KR', serif; font-size: 20px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .step .body h3 { font-family: 'Noto Serif KR', serif; font-size: 18px; color: #1A4A35; font-weight: 600; margin-bottom: 6px; }
+  .step .body p { font-size: 14.5px; color: #4A554E; margin-bottom: 6px; }
+  .step .body p:last-child { margin-bottom: 0; }
+
+  /* 프롬프트 박스 */
+  .prompt { background: #14261C; border: 1px solid #2C4636; border-radius: 14px; padding: 20px 22px; margin-bottom: 18px; position: relative; }
+  .prompt .plabel { font-size: 11.5px; letter-spacing: 0.16em; color: #E2C77B; margin-bottom: 6px; font-weight: 600; }
+  .prompt .pwhen { font-size: 12.5px; color: #9DB5A5; margin-bottom: 12px; }
+  .prompt pre { white-space: pre-wrap; word-break: break-word; font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; line-height: 1.7; color: #EAF1EB; background: rgba(0,0,0,0.22); border-radius: 9px; padding: 15px 16px; }
+
+  .callout { background: #F4EFDF; border-left: 4px solid #C9A94E; border-radius: 8px; padding: 16px 20px; margin: 4px 0 16px; font-size: 14px; color: #5A5140; }
+  .callout b { color: #1A4A35; }
+
+  .tip { font-size: 13px; color: #8A8271; background: #F7F2E4; border-radius: 8px; padding: 10px 14px; margin-top: 8px; }
+  .tip b { color: #A0764B; }
+
+  /* Q&A */
+  .qa { background: #FFFDF7; border: 1px solid #EDE5D0; border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; }
+  .qa .q { font-family: 'Noto Serif KR', serif; font-weight: 600; color: #1A4A35; font-size: 15.5px; margin-bottom: 6px; }
+  .qa .a { font-size: 14px; color: #4A554E; }
+
+  footer { text-align: center; padding: 50px 20px 60px; margin-top: 40px; }
+  footer .line { width: 40px; height: 2px; background: #C9A94E; margin: 0 auto 20px; }
+  footer p { font-size: 13px; color: #A89B7E; }
+  footer .sig { font-family: 'Noto Serif KR', serif; color: #1A4A35; font-size: 15px; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">야간비행 × DEEPER UNBRANDING</div>
+  <h1>야간비행 허브 만드는 법<br>— 후배에게 건네는 지도</h1>
+  <p class="tagline">흩어진 자료를 한 곳에 모으고, 한눈에 펼쳐 보이는 나만의 무대 만들기</p>
+  <div class="gold-bar"></div>
+</header>
+
+<!-- 3분 요약 -->
+<div class="band">
+  <div class="wrap">
+    <div class="lbl">먼저, 3분 요약</div>
+    <h2>허브가 뭔가요?</h2>
+    <p>여러 곳에 흩어진 내 자료(글·기록·책모임 자료)를<br>한 화면에서 지도처럼 펼쳐 보이는 '나만의 홈페이지'예요.</p>
+    <div class="oneline">
+      옵시디언(메모 앱)은 <b>자료를 쌓는 창고</b>,<br>허브는 그 창고를 <b>손님에게 펼쳐 보이는 무대</b>입니다.<br>둘은 짝꿍이에요.
+    </div>
+  </div>
+</div>
+
+<!-- 핵심 관계도 -->
+<div class="wrap">
+<section>
+  <div class="kicker">한 장으로 보는 그림</div>
+  <h2 class="sec">옵시디언 ↔ 허브, 이렇게 이어져요</h2>
+  <p class="sec-lede">위(창고)에 쌓으면, 아래(무대)가 자동으로 읽어와 펼칩니다. 화살표가 자료가 흐르는 길이에요.</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 720 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="옵시디언 볼트에서 허브로 자료가 흐르는 관계도">
+      <!-- 위: 옵시디언 볼트 -->
+      <rect x="20" y="20" width="680" height="180" rx="16" fill="#F3EEDF" stroke="#E2D8BE"/>
+      <text x="360" y="50" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="19" font-weight="700" fill="#1A4A35">📁 옵시디언 볼트 &#8212; 내가 쓰는 곳 (창고)</text>
+      <text x="360" y="72" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#8A8271">매일 자료가 쌓이는 원본. 폴더 = C:\Deeper-era</text>
+
+      <!-- 볼트 안 폴더 칩 5개 -->
+      <g font-family="sans-serif" font-size="12.5" fill="#1A4A35" text-anchor="middle">
+        <rect x="42"  y="96" width="118" height="82" rx="10" fill="#FFFDF7" stroke="#E2D8BE"/>
+        <text x="101" y="126">📆</text><text x="101" y="148" font-weight="600">매일 기록</text><text x="101" y="166" font-size="10.5" fill="#8A8271">00-Daily</text>
+
+        <rect x="172" y="96" width="118" height="82" rx="10" fill="#FFFDF7" stroke="#E2D8BE"/>
+        <text x="231" y="126">🌱</text><text x="231" y="148" font-weight="600">씨앗 문장</text><text x="231" y="166" font-size="10.5" fill="#8A8271">01-Grammar</text>
+
+        <rect x="302" y="96" width="118" height="82" rx="10" fill="#FFFDF7" stroke="#E2D8BE"/>
+        <text x="361" y="126">🌌</text><text x="361" y="148" font-weight="600">주간 밤하늘</text><text x="361" y="166" font-size="10.5" fill="#8A8271">nightsky</text>
+
+        <rect x="432" y="96" width="118" height="82" rx="10" fill="#FFFDF7" stroke="#E2D8BE"/>
+        <text x="491" y="126">🧭</text><text x="491" y="148" font-weight="600">여정 기록</text><text x="491" y="166" font-size="10.5" fill="#8A8271">_여정기록.md</text>
+
+        <rect x="562" y="96" width="118" height="82" rx="10" fill="#FFFDF7" stroke="#E2D8BE"/>
+        <text x="621" y="126">📖</text><text x="621" y="148" font-weight="600">책모임 자료</text><text x="621" y="166" font-size="10.5" fill="#8A8271">reading</text>
+      </g>
+
+      <!-- 흐름 화살표 5개 -->
+      <g stroke="#C9A94E" stroke-width="2" fill="none" stroke-dasharray="3 4">
+        <path d="M101 200 L101 300"/>
+        <path d="M231 200 L231 300"/>
+        <path d="M361 200 L361 300"/>
+        <path d="M491 200 L491 300"/>
+        <path d="M621 200 L621 300"/>
+      </g>
+      <!-- 화살촉 -->
+      <g fill="#C9A94E">
+        <path d="M101 302 l-5 -9 l10 0 z"/>
+        <path d="M231 302 l-5 -9 l10 0 z"/>
+        <path d="M361 302 l-5 -9 l10 0 z"/>
+        <path d="M491 302 l-5 -9 l10 0 z"/>
+        <path d="M621 302 l-5 -9 l10 0 z"/>
+      </g>
+      <text x="360" y="255" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="14" font-weight="600" fill="#A0764B">허브가 자동으로 읽어옵니다  ↓</text>
+
+      <!-- 아래: 허브 -->
+      <rect x="20" y="308" width="680" height="230" rx="16" fill="url(#g)" stroke="#2C4636"/>
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0F2D1F"/><stop offset="1" stop-color="#1A4A35"/>
+        </linearGradient>
+      </defs>
+      <text x="360" y="340" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="19" font-weight="700" fill="#F3ECD9">🌟 허브 &#8212; 손님에게 펼쳐 보이는 곳 (무대)</text>
+      <text x="360" y="362" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#B7C9BC">클릭하는 지도 한 장 + 방(페이지) 여러 개 = 06-허브</text>
+
+      <!-- index 지도 -->
+      <rect x="250" y="378" width="220" height="46" rx="10" fill="#14261C" stroke="#E2C77B"/>
+      <text x="360" y="400" text-anchor="middle" font-size="13" font-weight="600" fill="#E2C77B" font-family="sans-serif">🧭 index.html &#8212; 북두칠성 지도</text>
+      <text x="360" y="416" text-anchor="middle" font-size="10.5" fill="#9DB5A5" font-family="sans-serif">여기서 각 방으로 들어갑니다</text>
+
+      <!-- 방 칩 5개 -->
+      <g font-family="sans-serif" font-size="11.5" fill="#F3ECD9" text-anchor="middle">
+        <rect x="42"  y="446" width="118" height="70" rx="10" fill="rgba(255,255,255,0.06)" stroke="#3A5647"/>
+        <text x="101" y="474">📆</text><text x="101" y="496" font-weight="600">데일리</text>
+
+        <rect x="172" y="446" width="118" height="70" rx="10" fill="rgba(255,255,255,0.06)" stroke="#3A5647"/>
+        <text x="231" y="474">🌱</text><text x="231" y="496" font-weight="600">씨앗방</text>
+
+        <rect x="302" y="446" width="118" height="70" rx="10" fill="rgba(255,255,255,0.06)" stroke="#3A5647"/>
+        <text x="361" y="474">🌌</text><text x="361" y="496" font-weight="600">밤하늘</text>
+
+        <rect x="432" y="446" width="118" height="70" rx="10" fill="rgba(255,255,255,0.06)" stroke="#3A5647"/>
+        <text x="491" y="474">🧭</text><text x="491" y="496" font-weight="600">여정</text>
+
+        <rect x="562" y="446" width="118" height="70" rx="10" fill="rgba(226,199,123,0.14)" stroke="#E2C77B"/>
+        <text x="621" y="474">📖</text><text x="621" y="496" font-weight="700" fill="#E2C77B">함께읽기</text>
+      </g>
+    </svg>
+    <div class="cap">↑ 오른쪽 끝 <b style="color:#A0764B">함께읽기</b> 방이 책모임 리더에게 가장 요긴한 방이에요.</div>
+  </div>
+
+  <!-- 폰에서 보이는 세로형 관계도 -->
+  <div class="mdg">
+    <div class="panel p-store">
+      <div class="ptitle">📁 옵시디언 볼트</div>
+      <div class="psub">내가 쓰는 곳 (창고)<br>매일 자료가 쌓이는 원본</div>
+      <div class="chips">
+        <div class="chip">📆 매일 기록<small>00-Daily</small></div>
+        <div class="chip">🌱 씨앗 문장<small>01-Grammar</small></div>
+        <div class="chip">🌌 주간 밤하늘<small>nightsky</small></div>
+        <div class="chip">🧭 여정 기록<small>_여정기록.md</small></div>
+        <div class="chip" style="grid-column:1 / -1;">📖 책모임 자료<small>reading</small></div>
+      </div>
+    </div>
+
+    <div class="arrow">▼ ▼ ▼<br>허브가 자동으로 읽어옵니다</div>
+
+    <div class="panel p-stage">
+      <div class="ptitle">🌟 허브</div>
+      <div class="psub">손님에게 펼쳐 보이는 곳 (무대)</div>
+      <div class="mapbox">🧭 index.html — 북두칠성 지도<small>여기서 각 방으로 들어갑니다</small></div>
+      <div class="chips">
+        <div class="chip">📆 데일리</div>
+        <div class="chip">🌱 씨앗방</div>
+        <div class="chip">🌌 밤하늘</div>
+        <div class="chip">🧭 여정</div>
+        <div class="chip hi" style="grid-column:1 / -1;">📖 함께읽기</div>
+      </div>
+    </div>
+
+    <div class="cap">↑ 맨 아래 <b style="color:#A0764B">함께읽기</b> 방이<br>책모임 리더에게 가장 요긴한 방이에요.</div>
+  </div>
+
+  <div class="callout">
+    <b>핵심 한 줄:</b> 나는 옵시디언에 편하게 <b>쓰기만</b> 하면 됩니다. 허브는 그걸 읽어서 예쁘게 <b>보여주는</b> 역할. 그래서 자료가 늘어도 무대가 알아서 채워져요.
+  </div>
+</section>
+</div>
+
+<!-- 옵시디언 3개념 -->
+<div class="wrap">
+<section>
+  <div class="kicker">옵시디언이 처음이라면</div>
+  <h2 class="sec">딱 3가지 개념만</h2>
+  <p class="sec-lede">옵시디언(Obsidian) = 메모를 폴더에 파일로 저장하는 무료 글쓰기 앱. 아래 3개만 알면 충분해요.</p>
+
+  <div class="concept">
+    <div class="c">
+      <span class="emo">🗄️</span>
+      <div class="ct">볼트 (Vault)</div>
+      <div class="cd">내 메모가 전부 담기는 <b>폴더 하나</b>. "여기가 내 서재" 라고 정해준 폴더예요. 야간비행님은 <code>C:\Deeper-era</code>.</div>
+    </div>
+    <div class="c">
+      <span class="emo">📄</span>
+      <div class="ct">노트 (.md 파일)</div>
+      <div class="cd">글 한 편이 파일 하나. 확장자가 <b>.md</b>(마크다운 &#8212; 그냥 글자 파일이에요). 워드처럼 무겁지 않아 가볍고 안 깨져요.</div>
+    </div>
+    <div class="c">
+      <span class="emo">🔗</span>
+      <div class="ct">링크 [[ ]]</div>
+      <div class="cd">글 속에서 <code>[[다른노트]]</code> 처럼 대괄호 두 개로 노트끼리 연결. 이 연결들이 모이면 <b>관계도(그래프)</b>가 됩니다.</div>
+    </div>
+  </div>
+
+  <div class="tip"><b>참고</b> &#8212; 옵시디언에는 원래 '그래프 뷰'라는 기능이 있어요. 노트들이 별처럼 뜨고 [[링크]]가 선으로 이어진 관계 그림을 보여줍니다. 허브는 그 관계를 <b>손님도 보기 좋게</b> 한 번 더 다듬어 무대에 올린 것이라고 이해하면 됩니다.</div>
+</section>
+</div>
+
+<!-- 클로드와 옵시디언 연결 -->
+<div class="wrap">
+<section>
+  <div class="kicker">가장 많이 묻는 것</div>
+  <h2 class="sec">클로드와 옵시디언, 어떻게 연결하나요?</h2>
+  <p class="sec-lede">결론부터: 별도의 '연결 장치'는 없어도 됩니다. 볼트는 그냥 폴더라서, 클로드가 그 폴더를 직접 읽어요.</p>
+
+  <div class="callout">
+    <b>핵심:</b> 옵시디언 볼트는 사실 <b>글자 파일이 든 폴더 하나</b>예요. 그래서 클로드 코드는 그 폴더를 곧바로 읽고 씁니다. <b>"이 폴더 읽어줘"라고 말하는 것, 그게 바로 연결</b>입니다.
+  </div>
+
+  <div class="tbl-scroll">
+  <table>
+    <tr><th>연결 방식</th><th>어떻게 하나</th><th>허브 만들기엔</th></tr>
+    <tr><td><b>① 폴더 직접 읽기</b><br>(클로드 코드)</td><td>볼트 <b>폴더 경로만</b> 알려주면 끝. 옵시디언 앱을 켜둘 필요도 없음</td><td class="flow">✅ 권장 · 지금 이 방식</td></tr>
+    <tr><td><b>② 옵시디언 MCP/플러그인</b></td><td>켜져 있는 옵시디언 앱과 실시간으로 대화(앱의 검색·태그 기능까지 사용)</td><td class="flow">선택 · 필수 아님</td></tr>
+  </table>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>후배는 이 한마디만 하면 됩니다</h3>
+    <p style="font-size:15px; color:#1A4A35;">"내 옵시디언 볼트는 <code>C:\내서재</code> 야. 이 폴더를 읽어줘."</p>
+    <p>이렇게 폴더 위치를 알려주는 순간 클로드가 그 안의 노트를 전부 훑어볼 수 있어요. 뒤에 나오는 <b>프롬프트 ①(볼트 진단)</b>이 작동하는 이유가 바로 이것입니다.</p>
+    <p class="tip" style="margin-top:12px"><b>더 쉬운 방법</b> &#8212; 데스크탑 클로드 코드를 <b>볼트 폴더에서 바로 열면</b>, 경로를 말할 필요도 없이 그 폴더가 기본 작업 폴더가 됩니다. (야간비행님은 이미 이렇게 쓰고 계세요.)</p>
+  </div>
+
+  <h3 style="font-family:'Noto Serif KR',serif; font-size:19px; color:#1A4A35; margin:30px 0 6px;">직접 연결하기 &#8212; 실제 클릭 4단계</h3>
+  <p class="sec-lede">처음 세팅하는 후배가 손에 잡히게 따라올 순서예요. 준비물: 옵시디언(무료) + 클로드 데스크탑 앱(Pro 이상) + 윈도우 10 / 맥 13 이상.</p>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="body">
+      <h3>옵시디언 설치 → 볼트 만들기</h3>
+      <p><code>obsidian.md</code> 에서 내려받아 설치해요.</p>
+      <p>앱을 열고 <b>'Create new vault'</b>로 볼트 이름을 짓습니다(예: <i>내서재</i>). 저장 위치는 <b>'문서(Documents)' 폴더</b>를 고르면 찾기 쉬워요. 이 폴더가 앞으로 '창고'가 됩니다.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="body">
+      <h3>클로드 데스크탑 앱 설치 → Code 탭 열기</h3>
+      <p><code>claude.ai/download</code> 에서 내려받아 설치하고, Pro 이상 계정으로 로그인해요.</p>
+      <p>앱 위쪽의 <b>Code 탭</b>을 클릭. 모델은 <b>Opus 4.8 이상</b>으로 맞추면 결과가 가장 좋습니다.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="body">
+      <h3>볼트 폴더 연결 &#8212; 바로 여기가 '연결'!</h3>
+      <p>Code 탭에서 작업 환경을 <b>Local(내 컴퓨터)</b> 로 둡니다.</p>
+      <p><b>'Select folder'</b>(폴더 선택)를 눌러, 1단계에서 만든 <b>볼트 폴더를 그대로 선택</b>해요.</p>
+      <p style="color:#1A4A35;">이 순간 클로드와 옵시디언이 <b>같은 폴더</b>를 보게 됩니다. 연결 끝 &#8212; 따로 플러그인 설치도, 복사도 필요 없어요.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="body">
+      <h3>연결됐는지 확인</h3>
+      <p>채팅창에 이렇게 물어보세요: <b>"이 폴더 뭐야? 안에 뭐가 있어?"</b></p>
+      <p>클로드가 볼트 안 노트를 읽어 대답하면 <b>연결 성공</b>입니다. 이제 앞의 프롬프트들을 그대로 쓰면 돼요.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>이게 전부예요.</b> 위 4단계면 클로드가 볼트를 읽을 준비가 끝납니다. 특별한 플러그인도, 추가 설치도 필요 없어요 &#8212; 이제 앞의 프롬프트로 허브를 지으면 됩니다.
+  </div>
+</section>
+</div>
+
+<!-- 실제 경로 지도 -->
+<div class="wrap">
+<section>
+  <div class="kicker">나부터 알기 &#183; 경로 지도</div>
+  <h2 class="sec">야간비행의 실제 폴더 경로</h2>
+  <p class="sec-lede">볼트 최상위(<code>C:\Deeper-era</code>) 아래에 이런 폴더들이 있어요. '어디에 쌓이면 허브의 어느 방으로 흐르는지'를 한 표로 정리했습니다.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <tr><th>볼트 폴더 (창고)</th><th>여기에 담기는 것</th><th>흐르는 방향 → 허브의 방</th></tr>
+    <tr><td><code>00-Daily\</code></td><td>매일 대화·데일리노트·모닝페이지·밤하늘 원본</td><td class="flow">→ 데일리 / 밤하늘</td></tr>
+    <tr><td><code>01-Grammar\Insights\</code></td><td>씨앗 문장(한 줄짜리 생각들)</td><td class="flow">→ 씨앗방 (seeds.html, 자동 수집)</td></tr>
+    <tr><td><code>01-Grammar\Raw-Text\</code></td><td>원천 원고·기억·인용 원본</td><td class="flow">→ (재료 창고, 무대엔 직접 안 나옴)</td></tr>
+    <tr><td><code>02-Logic\ · 03-Rhetoric\</code></td><td>논리 여정·발행한 글</td><td class="flow">→ 여정 / 쓴 글</td></tr>
+    <tr><td><code>06-허브\</code></td><td>펼쳐 보이는 HTML 페이지 전부</td><td class="flow">= 무대 자체</td></tr>
+    <tr><td><code>06-허브\reading\</code></td><td>북토크 안내·읽기 안내 1~3주 (책모임!)</td><td class="flow">→ 함께읽기 (reading.html)</td></tr>
+  </table>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>허브(06-허브) 안은 이렇게 생겼어요</h3>
+    <p><code>index.html</code> &#8212; 첫 화면. 북두칠성 지도(별 7개 = 방 7개)에서 원하는 방을 클릭.</p>
+    <p><code>seeds.html</code> · <code>nightsky.html</code> · <code>journey.html</code> · <code>reading.html</code> · <code>writings.html</code> · <code>oasis.html</code> &#8212; 각각 방 한 개.</p>
+    <p><code>board\</code> &#8212; 자료실(안내문·가이드 모음). 책모임이라면 여기에 발제문·자료를 쌓으면 좋아요.</p>
+    <p class="tip" style="margin-top:12px"><b>왜 HTML이냐면</b> &#8212; HTML은 인터넷 브라우저(크롬 등)가 바로 여는 '웹페이지 파일'이에요. 더블클릭만 하면 열리고, 나중에 인터넷에 올려 링크로 공유하기도 쉬워서 '펼쳐 보이는 무대'에 딱 맞아요.</p>
+  </div>
+</section>
+</div>
+
+<!-- 후배용 4단계 -->
+<div class="wrap">
+<section>
+  <div class="kicker">후배에게 &#183; 따라하기</div>
+  <h2 class="sec">책모임 리더를 위한 4단계</h2>
+  <p class="sec-lede">여러 관심사와 책모임 자료를 통합·정리·전시하고 싶은 후배에게 그대로 건네는 순서예요.</p>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="body">
+      <h3>창고(볼트) 만들기 &#8212; 폴더부터</h3>
+      <p>옵시디언을 설치하고( obsidian.md 에서 무료 ), 'Create new vault'로 폴더 하나를 정합니다. 예: <code>C:\내서재</code>.</p>
+      <p>그 안에 폴더 몇 개만: <code>매일기록</code> · <code>생각씨앗</code> · <code>책모임</code> · <code>허브</code>. 처음엔 이 정도로 충분해요. 많이 만들 필요 없습니다.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="body">
+      <h3>자료 모으기 &#8212; 편하게 쌓기만</h3>
+      <p>책모임 발제문, 밑줄 친 문장, 모임 후기, 관심사 메모를 각 폴더에 노트로 저장. 형식은 신경 쓰지 말고 <b>내용부터</b>.</p>
+      <p>연결하고 싶은 곳엔 <code>[[책제목]]</code> 처럼 링크를 걸어두면, 나중에 관계도가 저절로 생깁니다.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="body">
+      <h3>무대(허브) 짓기 &#8212; AI에게 부탁</h3>
+      <p>여기가 핵심. HTML을 직접 코딩할 필요 없어요. 클로드 코드에게 <b>아래 프롬프트를 복사해</b> 부탁하면 페이지를 만들어 줍니다.</p>
+      <p>먼저 <code>허브\index.html</code>(첫 화면 지도) 하나, 그다음 <code>책모임.html</code> 방 하나 &#8212; 이렇게 하나씩 늘려가면 됩니다.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">4</div>
+    <div class="body">
+      <h3>펼쳐 보이기 &#8212; 열고, 나누기</h3>
+      <p>만들어진 <code>index.html</code>을 더블클릭하면 브라우저에서 바로 열려요. 이게 내 허브예요.</p>
+      <p>모임원과 나누고 싶으면 무료 배포 서비스(Netlify 등)에 올려 <b>링크 하나로 공유</b>. 이 단계도 AI에게 "이 폴더를 인터넷에 올려서 링크 만들어줘" 하고 부탁하면 됩니다.</p>
+      <p class="tip"><b>공개 주의</b> &#8212; 개인 일기·모임원 실명·사적 메시지가 담긴 방은 배포 전에 꼭 빼거나 비공개로. 공개할 방만 골라 올리세요.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- 프롬프트 모음 -->
+<div class="wrap">
+<section>
+  <div class="kicker">그대로 복사해 쓰는</div>
+  <h2 class="sec">프롬프트 모음</h2>
+  <p class="sec-lede">클로드 코드에게 그대로 붙여넣으면 됩니다. <b>[대괄호] 안은 본인 상황으로 바꿔</b> 쓰세요.</p>
+
+  <div class="prompt">
+    <div class="plabel">① 볼트 진단 &#8212; 내 자료부터 파악</div>
+    <div class="pwhen">언제: 이미 옵시디언에 자료가 좀 있을 때. AI가 구조를 먼저 이해하게 함.</div>
+    <pre>내 옵시디언 볼트는 [C:\내서재] 폴더야.
+안을 훑어보고 (1) 어떤 폴더·주제가 있는지 (2) 자료가 많은 곳과
+비어 있는 곳 (3) 노트끼리 연결(링크)이 얼마나 되어 있는지를
+초보자가 알기 쉽게 표로 정리해줘. 기존 파일은 절대 고치지 말고
+읽기만 해.</pre>
+    <p style="font-size:12.5px; color:#9DB5A5; margin-top:11px; line-height:1.65;"><b style="color:#E2C77B;">연결했다면 경로는 생략</b> &#8212; 3단계에서 Select folder로 볼트를 연결했다면, 클로드가 이미 그 폴더를 보고 있어요. 첫 줄을 빼고 <b>"이 볼트를 훑어보고&#8230;"</b> 로 시작하면 됩니다. (경로를 다시 알려줄 필요 없음)</p>
+  </div>
+
+  <div class="prompt">
+    <div class="plabel">② 허브 첫 화면(지도) 만들기</div>
+    <div class="pwhen">언제: 무대의 표지이자 각 방으로 가는 입구를 만들 때.</div>
+    <pre>내 볼트 자료를 한눈에 보여주는 허브 첫 화면을 HTML 한 장으로
+만들어줘. 파일 위치는 [C:\내서재\허브\index.html].
+- 맨 위에 제목 "[모임이름] 서재"와 한 줄 소개
+- 아래에 방(페이지)으로 가는 카드 버튼: 책모임 · 생각씨앗 · 관심사
+- 색은 [따뜻한 크림색 배경 + 짙은 초록 + 금색 포인트]로
+- 코드는 몰라도 되니, 더블클릭하면 브라우저에서 바로 열리게
+  한 파일 안에 다 담아줘(인터넷 없이도 열리게).
+만들기 전에 어떤 방을 넣을지 먼저 나한테 물어봐 줘.</pre>
+  </div>
+
+  <div class="prompt">
+    <div class="plabel">③ 책모임 방 만들기 &#8212; 자료 자동 정리</div>
+    <div class="pwhen">언제: 책모임 자료를 한 방에 모아 보여줄 때. (리더에게 가장 중요)</div>
+    <pre>[C:\내서재\책모임] 폴더의 노트들을 읽어서, 책모임 방 페이지
+[허브\책모임.html]를 만들어줘.
+- 책별로 카드 하나씩: 책 제목 · 모임 날짜 · 발제 요약 · 밑줄 문장
+- 최신 모임이 위로 오게 정렬
+- 카드 클릭하면 그 책 상세로 펼쳐지게
+- 폴더에 노트가 늘면 다시 실행만 해도 갱신되게 만들어줘
+첫 화면(index.html)에서 이 방으로 넘어가는 링크도 연결해줘.</pre>
+  </div>
+
+  <div class="prompt">
+    <div class="plabel">④ 관계도(그래프) 페이지 만들기</div>
+    <div class="pwhen">언제: 책·주제·사람이 어떻게 얽혀 있는지 그림으로 보이고 싶을 때.</div>
+    <pre>내 볼트 노트들의 [[링크]] 연결을 읽어서, 어떤 주제·책·사람이
+서로 이어져 있는지 보여주는 관계도 페이지를 HTML로 만들어줘.
+- 점(노트) + 선(연결)으로 된 별자리 같은 그림
+- 점에 마우스를 올리면 노트 제목이 뜨고, 클릭하면 그 방으로
+- 연결이 많은 핵심 주제는 더 크고 밝게
+초보자용으로 그림 아래에 "이 관계도 읽는 법"도 두세 줄 써줘.</pre>
+  </div>
+
+  <div class="prompt">
+    <div class="plabel">⑤ 인터넷에 올려 링크로 공유</div>
+    <div class="pwhen">언제: 완성된 허브를 모임원과 나눌 때.</div>
+    <pre>[C:\내서재\허브] 폴더를 인터넷에 올려서 링크 하나로 공유할 수
+있게 해줘(무료 배포). 올리기 전에, 개인적이라 빼야 할 방이
+있는지 먼저 목록으로 보여주고 나한테 확인받아줘.
+다 되면 접속 주소를 알려줘.</pre>
+    <div class="tip" style="margin-top:12px"><b>먼저 확인받게 한 이유</b> &#8212; 배포는 되돌리기 어려운 '외부 공개'예요. 개인 자료가 섞이지 않았는지 사람이 한 번 눈으로 보고 넘어가는 안전장치입니다.</div>
+  </div>
+</section>
+</div>
+
+<!-- Q&A -->
+<div class="wrap">
+<section>
+  <div class="kicker">자주 막히는 곳</div>
+  <h2 class="sec">후배가 물어볼 만한 것들</h2>
+
+  <div class="qa">
+    <div class="q">Q. 코딩(HTML)을 배워야 하나요?</div>
+    <div class="a">아니요. 위 프롬프트처럼 AI에게 말로 부탁하면 됩니다. 후배가 할 일은 <b>자료를 옵시디언에 쌓는 것</b>과 <b>어떻게 보이면 좋을지 말로 설명하는 것</b>뿐이에요.</div>
+  </div>
+  <div class="qa">
+    <div class="q">Q. 옵시디언 없이도 되나요?</div>
+    <div class="a">가능은 하지만 권하지 않아요. 옵시디언은 자료가 흩어지지 않게 한 폴더에 모아주고, [[링크]]로 관계도까지 만들어줘서 '통합 관리'라는 목적에 가장 잘 맞습니다. 무료이기도 하고요.</div>
+  </div>
+  <div class="qa">
+    <div class="q">Q. 자료가 늘면 허브를 매번 다시 만들어야 하나요?</div>
+    <div class="a">③번처럼 '폴더를 읽어 자동 정리'로 만들어두면, 노트를 추가한 뒤 AI에게 "다시 갱신해줘" 한마디면 됩니다. 무대가 창고를 다시 읽어 채워줘요.</div>
+  </div>
+  <div class="qa">
+    <div class="q">Q. 어디서부터 시작하면 좋을까요?</div>
+    <div class="a">가장 자료가 많은 것 하나(대개 책모임)부터. 방 한 개를 먼저 완성해 성취감을 느끼고, 그다음 관심사 방을 하나씩 늘리세요. 처음부터 방 7개를 다 만들려 하지 않는 게 요령입니다.</div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="line"></div>
+  <div class="sig serif">밤에 날아야 보이는 것들이 있습니다.</div>
+  <p>야간비행 × DEEPER UNBRANDING &#183; 후배에게 건네는 허브 지도</p>
+  <p style="margin-top:6px; font-size:12px;">저장 위치: 바탕화면 &#183; 이 파일은 더블클릭하면 브라우저에서 열립니다</p>
+</footer>
+
+</body>
+</html>
