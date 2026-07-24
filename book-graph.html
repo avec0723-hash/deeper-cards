@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>책모임 별자리 — 관계도가 뭔지 보여주는 예시</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { max-width:100%; overflow-x:hidden; }
+  body { font-family:'Noto Sans KR',-apple-system,'Malgun Gothic',sans-serif; background:#0F2D1F; color:#F3ECD9; word-break:keep-all; line-height:1.7; }
+  .wrap { max-width:960px; margin:0 auto; padding:0 18px; }
+  header { text-align:center; padding:44px 18px 12px; }
+  .eyebrow { font-size:11px; letter-spacing:0.34em; color:#E2C77B; margin-bottom:14px; }
+  h1 { font-family:'Noto Serif KR',serif; font-size:28px; font-weight:700; color:#F7F1E1; margin-bottom:12px; line-height:1.4; }
+  .sub { font-size:14.5px; color:#B7C9BC; }
+  .badge { display:inline-block; margin-top:16px; background:rgba(226,199,123,0.13); border:1px solid #E2C77B; color:#E2C77B; font-size:12.5px; padding:7px 16px; border-radius:20px; }
+  .board { position:relative; margin:16px 0 8px; border-radius:16px; overflow:hidden; border:1px solid #2C4636; background:radial-gradient(ellipse at 50% 40%, #143726 0%, #0C2318 100%); }
+  canvas { display:block; width:100%; touch-action:none; }
+  #tip { position:absolute; pointer-events:none; background:#14261C; border:1px solid #E2C77B; color:#F7F1E1; font-size:12.5px; padding:6px 11px; border-radius:8px; opacity:0; transform:translate(-50%,-150%); white-space:nowrap; transition:opacity .1s; }
+  .legend { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; padding:10px 0 2px; font-size:12.5px; color:#B7C9BC; }
+  .legend span { display:inline-flex; align-items:center; gap:7px; }
+  .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+  .btns { text-align:center; margin:12px 0 0; }
+  .btns button { background:rgba(226,199,123,0.12); border:1px solid #E2C77B; color:#E2C77B; font-family:inherit; font-size:12.5px; padding:8px 16px; border-radius:20px; cursor:pointer; margin:0 4px; }
+  .btns button:hover { background:rgba(226,199,123,0.22); }
+  .howto { background:rgba(255,255,255,0.04); border:1px solid #2C4636; border-radius:14px; padding:22px 24px; margin:20px 0 16px; }
+  .howto h2 { font-family:'Noto Serif KR',serif; font-size:17px; color:#E2C77B; margin-bottom:12px; }
+  .howto ul { list-style:none; }
+  .howto li { font-size:14px; color:#DCE9DE; padding:6px 0 6px 21px; position:relative; }
+  .howto li::before { content:'★'; position:absolute; left:0; color:#C9A94E; font-size:11px; top:9px; }
+  .make { background:linear-gradient(180deg,#14261C,#0C2318); border:1px solid #E2C77B; border-radius:14px; padding:22px 24px; margin-bottom:40px; }
+  .make h2 { font-family:'Noto Serif KR',serif; font-size:17px; color:#E2C77B; margin-bottom:8px; }
+  .make p { font-size:13.5px; color:#DCE9DE; margin-bottom:12px; }
+  .make pre { white-space:pre-wrap; word-break:break-word; font-family:'Consolas','Courier New',monospace; font-size:12.5px; line-height:1.7; color:#EAF1EB; background:rgba(0,0,0,0.3); border-radius:9px; padding:15px 16px; }
+  footer { text-align:center; padding:0 20px 40px; font-size:12px; color:#6E8A78; }
+  @media (max-width:620px){ h1{font-size:23px;} .howto,.make{padding:18px 17px;} }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">관계도 예시</div>
+  <h1>책모임 별자리</h1>
+  <p class="sub">읽은 책과 주제가 어떻게 이어져 있는지<br>한 화면으로 보는 지도</p>
+  <div class="badge">✦ 예시 데이터로 만든 견본입니다</div>
+</header>
+
+<div class="wrap">
+  <div class="board">
+    <canvas id="cv"></canvas>
+    <div id="tip"></div>
+  </div>
+  <div class="legend">
+    <span><i class="dot" style="background:#E2C77B;"></i> 책</span>
+    <span><i class="dot" style="background:#6F9E82;"></i> 주제</span>
+    <span><i class="dot" style="background:#CBDDD0;"></i> 모임 회차</span>
+    <span style="color:#8FA898;">· 점이 클수록 여러 곳과 이어진 것</span>
+  </div>
+  <div class="btns">
+    <button onclick="restart()">✦ 다시 흔들기</button>
+    <button onclick="clearSel()">선택 풀기</button>
+  </div>
+
+  <div class="howto">
+    <h2>이 관계도 읽는 법</h2>
+    <ul>
+      <li><b>금빛 별은 책</b>, <b>초록 별은 주제</b>, <b>흰 별은 모임 회차</b>예요. 선은 "이 책이 이 주제를 다룬다", "이 회차에 이 책을 읽었다"는 뜻입니다.</li>
+      <li>여러 책이 <b>같은 주제로 모이는 자리</b>를 보세요 — 「성장」「관계」「일상」처럼 크게 자란 초록 별이, 우리 모임이 사실 계속 붙들고 있던 질문이에요. 아무도 정하지 않았는데 저절로 드러납니다.</li>
+      <li>별에 <b>마우스를 올리면</b> 이름이 뜨고, <b>클릭하면</b> 이어진 이웃만 환해집니다. 손으로 <b>끌어</b> 옮길 수도 있어요.</li>
+      <li>다음에 <b>무슨 책을 고를지</b> 정할 때 요긴합니다 — 아직 별이 적은 주제 쪽으로 가면 모임의 지도가 넓어져요.</li>
+    </ul>
+  </div>
+
+  <div class="make">
+    <h2>내 자료로 만들려면</h2>
+    <p>이 그림은 손으로 그린 게 아니라, 노트에 걸어둔 <b style="color:#E2C77B">[[링크]]</b>를 읽어서 자동으로 그린 거예요. 내 옵시디언 볼트를 연결한 뒤 아래를 그대로 붙여넣으면 됩니다.</p>
+    <pre>내 볼트 노트들의 [[링크]] 연결을 읽어서, 어떤 주제·책·사람이
+서로 이어져 있는지 보여주는 관계도 페이지를 HTML로 만들어줘.
+- 점(노트) + 선(연결)으로 된 별자리 같은 그림
+- 점에 마우스를 올리면 노트 제목이 뜨고, 클릭하면 그 방으로
+- 연결이 많은 핵심 주제는 더 크고 밝게
+초보자용으로 그림 아래에 "이 관계도 읽는 법"도 두세 줄 써줘.</pre>
+  </div>
+</div>
+
+<footer>야간비행 × DEEPER UNBRANDING</footer>
+
+<script>
+const DATA = {"N":[{"l":"1984","d":4,"t":"book"},{"l":"권력","d":3,"t":"theme"},{"l":"자유","d":4,"t":"theme"},{"l":"언어","d":1,"t":"theme"},{"l":"데미안","d":4,"t":"book"},{"l":"성장","d":5,"t":"theme"},{"l":"정체성","d":4,"t":"theme"},{"l":"고독","d":4,"t":"theme"},{"l":"연금술사","d":4,"t":"book"},{"l":"용기","d":3,"t":"theme"},{"l":"의미","d":3,"t":"theme"},{"l":"호밀밭의 파수꾼","d":4,"t":"book"},{"l":"소외","d":4,"t":"theme"},{"l":"어린 왕자","d":4,"t":"book"},{"l":"관계","d":5,"t":"theme"},{"l":"기억","d":3,"t":"theme"},{"l":"아몬드","d":4,"t":"book"},{"l":"미움받을 용기","d":4,"t":"book"},{"l":"모모","d":4,"t":"book"},{"l":"일상","d":5,"t":"theme"},{"l":"페스트","d":4,"t":"book"},{"l":"책임","d":2,"t":"theme"},{"l":"82년생 김지영","d":4,"t":"book"},{"l":"여성","d":1,"t":"theme"},{"l":"엄마를 부탁해","d":4,"t":"book"},{"l":"가족","d":2,"t":"theme"},{"l":"파친코","d":4,"t":"book"},{"l":"역사","d":4,"t":"theme"},{"l":"사피엔스","d":4,"t":"book"},{"l":"이야기","d":2,"t":"theme"},{"l":"과학","d":4,"t":"theme"},{"l":"총, 균, 쇠","d":4,"t":"book"},{"l":"역사의 쓸모","d":4,"t":"book"},{"l":"동물농장","d":4,"t":"book"},{"l":"죽음의 수용소에서","d":4,"t":"book"},{"l":"고통","d":2,"t":"theme"},{"l":"인간 실격","d":4,"t":"book"},{"l":"월든","d":4,"t":"book"},{"l":"자연","d":3,"t":"theme"},{"l":"단순함","d":1,"t":"theme"},{"l":"침묵의 봄","d":4,"t":"book"},{"l":"노인과 바다","d":4,"t":"book"},{"l":"코스모스","d":4,"t":"book"},{"l":"우주","d":1,"t":"theme"},{"l":"경외","d":1,"t":"theme"},{"l":"몰입","d":4,"t":"book"},{"l":"일","d":2,"t":"theme"},{"l":"집중","d":1,"t":"theme"},{"l":"변화","d":2,"t":"theme"},{"l":"아주 작은 습관의 힘","d":4,"t":"book"},{"l":"1월 모임","d":2,"t":"meet"},{"l":"2월 모임","d":2,"t":"meet"},{"l":"3월 모임","d":2,"t":"meet"},{"l":"4월 모임","d":2,"t":"meet"},{"l":"5월 모임","d":2,"t":"meet"},{"l":"6월 모임","d":2,"t":"meet"},{"l":"7월 모임","d":2,"t":"meet"},{"l":"8월 모임","d":2,"t":"meet"},{"l":"9월 모임","d":2,"t":"meet"},{"l":"10월 모임","d":2,"t":"meet"},{"l":"11월 모임","d":2,"t":"meet"},{"l":"12월 모임","d":2,"t":"meet"}],"L":[{"s":0,"t":1},{"s":0,"t":2},{"s":0,"t":3},{"s":4,"t":5},{"s":4,"t":6},{"s":7,"t":4},{"s":5,"t":8},{"s":8,"t":9},{"s":8,"t":10},{"s":5,"t":11},{"s":12,"t":11},{"s":6,"t":11},{"s":5,"t":13},{"s":14,"t":13},{"s":15,"t":13},{"s":5,"t":16},{"s":12,"t":16},{"s":14,"t":16},{"s":14,"t":17},{"s":17,"t":2},{"s":17,"t":9},{"s":14,"t":18},{"s":18,"t":19},{"s":15,"t":18},{"s":14,"t":20},{"s":21,"t":20},{"s":7,"t":20},{"s":22,"t":23},{"s":22,"t":19},{"s":22,"t":12},{"s":25,"t":24},{"s":15,"t":24},{"s":24,"t":19},{"s":25,"t":26},{"s":27,"t":26},{"s":6,"t":26},{"s":28,"t":27},{"s":28,"t":29},{"s":30,"t":28},{"s":27,"t":31},{"s":30,"t":31},{"s":1,"t":31},{"s":27,"t":32},{"s":32,"t":10},{"s":32,"t":19},{"s":1,"t":33},{"s":33,"t":29},{"s":33,"t":2},{"s":10,"t":34},{"s":35,"t":34},{"s":2,"t":34},{"s":12,"t":36},{"s":35,"t":36},{"s":36,"t":6},{"s":37,"t":38},{"s":7,"t":37},{"s":39,"t":37},{"s":38,"t":40},{"s":30,"t":40},{"s":21,"t":40},{"s":41,"t":38},{"s":41,"t":9},{"s":7,"t":41},{"s":30,"t":42},{"s":43,"t":42},{"s":44,"t":42},{"s":45,"t":46},{"s":45,"t":47},{"s":45,"t":48},{"s":49,"t":46},{"s":48,"t":49},{"s":49,"t":19},{"s":50,"t":4},{"s":50,"t":8},{"s":51,"t":11},{"s":51,"t":13},{"s":52,"t":16},{"s":52,"t":22},{"s":53,"t":17},{"s":53,"t":18},{"s":54,"t":20},{"s":54,"t":34},{"s":55,"t":24},{"s":55,"t":26},{"s":56,"t":28},{"s":56,"t":31},{"s":57,"t":32},{"s":57,"t":36},{"s":0,"t":58},{"s":58,"t":33},{"s":59,"t":37},{"s":59,"t":40},{"s":60,"t":41},{"s":60,"t":42},{"s":61,"t":45},{"s":61,"t":49}],"stats":{"books":24,"themes":26,"meets":12,"nodes":62,"edges":96}};
+const cv=document.getElementById('cv'), ctx=cv.getContext('2d'), tip=document.getElementById('tip');
+let W,H,DPR;
+function fit(){ DPR=window.devicePixelRatio||1; const cw=cv.parentElement.clientWidth; const ch=Math.max(430,Math.min(600,Math.round(cw*0.7))); cv.style.height=ch+'px'; cv.width=cw*DPR; cv.height=ch*DPR; W=cw; H=ch; ctx.setTransform(DPR,0,0,DPR,0,0); }
+const COL={ book:[226,199,123], theme:[111,158,130], meet:[203,221,208] };
+let nodes=[],links=[],sel=null,neighbors=new Set(),alpha=1,hover=null,drag=null,dragMoved=false;
+function init(){
+  const maxD=Math.max(1,...DATA.N.map(n=>n.d));
+  nodes=DATA.N.map((n,i)=>{ const a=(i/DATA.N.length)*Math.PI*2, r=50+Math.random()*Math.min(W,H)*0.3;
+    return { l:n.l, d:n.d, t:n.t, maxD, x:W/2+Math.cos(a)*r, y:H/2+Math.sin(a)*r, vx:0, vy:0, r:4+8*Math.sqrt(n.d/maxD) }; });
+  links=DATA.L.map(e=>({a:nodes[e.s],b:nodes[e.t]}));
+}
+function computeNeighbors(){ neighbors=new Set(); if(!sel)return; links.forEach(e=>{ if(e.a===sel)neighbors.add(e.b); if(e.b===sel)neighbors.add(e.a); }); }
+function tick(){
+  const REP=1000,SPR=0.022,L0=62,CEN=0.013;
+  for(let i=0;i<nodes.length;i++){ const p=nodes[i];
+    for(let j=i+1;j<nodes.length;j++){ const q=nodes[j]; let dx=p.x-q.x,dy=p.y-q.y,d2=dx*dx+dy*dy; if(d2<0.01){d2=0.01;dx=Math.random();}
+      const d=Math.sqrt(d2),f=REP/d2,fx=f*dx/d,fy=f*dy/d; p.vx+=fx;p.vy+=fy;q.vx-=fx;q.vy-=fy; } }
+  links.forEach(e=>{ let dx=e.b.x-e.a.x,dy=e.b.y-e.a.y; const d=Math.sqrt(dx*dx+dy*dy)||0.01,f=SPR*(d-L0),fx=f*dx/d,fy=f*dy/d;
+    e.a.vx+=fx;e.a.vy+=fy;e.b.vx-=fx;e.b.vy-=fy; });
+  nodes.forEach(p=>{ p.vx+=(W/2-p.x)*CEN; p.vy+=(H/2-p.y)*CEN; if(p===drag)return;
+    p.vx*=0.82;p.vy*=0.82; p.x+=p.vx*alpha*0.6; p.y+=p.vy*alpha*0.6;
+    p.x=Math.max(p.r+4,Math.min(W-p.r-4,p.x)); p.y=Math.max(p.r+4,Math.min(H-p.r-4,p.y)); });
+  if(alpha>0.03) alpha*=0.994;
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  links.forEach(e=>{ const on=sel&&(e.a===sel||e.b===sel);
+    ctx.strokeStyle= on?'rgba(226,199,123,0.6)':(sel?'rgba(120,150,130,0.06)':'rgba(150,180,160,0.15)');
+    ctx.lineWidth= on?1.5:0.75; ctx.beginPath(); ctx.moveTo(e.a.x,e.a.y); ctx.lineTo(e.b.x,e.b.y); ctx.stroke(); });
+  nodes.forEach(p=>{ const dim=sel&&p!==sel&&!neighbors.has(p); const c=COL[p.t];
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle='rgba('+c[0]+','+c[1]+','+c[2]+','+(dim?0.15:1)+')';
+    ctx.shadowColor='rgba('+c[0]+','+c[1]+','+c[2]+',0.7)'; ctx.shadowBlur=(!dim&&p.d/p.maxD>0.5)?11:0;
+    ctx.fill(); ctx.shadowBlur=0; });
+  ctx.font='12px Noto Sans KR, sans-serif'; ctx.textAlign='center';
+  nodes.forEach(p=>{ const big=p.t==='book'||p.d/p.maxD>0.5;
+    const show= hover===p||p===sel||(sel&&neighbors.has(p))||(!sel&&big); if(!show)return;
+    const dim=sel&&p!==sel&&!neighbors.has(p);
+    ctx.fillStyle=(hover===p||p===sel)?'#F7F1E1':(dim?'rgba(200,210,200,0.22)':'rgba(232,238,228,0.82)');
+    ctx.fillText(p.l.length>12?p.l.slice(0,11)+'…':p.l, p.x, p.y-p.r-6); });
+}
+function loop(){ tick(); draw(); requestAnimationFrame(loop); }
+function nodeAt(mx,my){ let best=null,bd=1e9; for(const p of nodes){ const dx=p.x-mx,dy=p.y-my,d=dx*dx+dy*dy,rr=(p.r+8)*(p.r+8); if(d<rr&&d<bd){bd=d;best=p;} } return best; }
+function pos(ev){ const rc=cv.getBoundingClientRect(); const t=ev.touches?ev.touches[0]:ev; return {x:t.clientX-rc.left,y:t.clientY-rc.top}; }
+const KO={book:'책',theme:'주제',meet:'모임'};
+cv.addEventListener('mousemove',ev=>{ const m=pos(ev);
+  if(drag){ drag.x=m.x;drag.y=m.y;drag.vx=0;drag.vy=0;dragMoved=true;alpha=Math.max(alpha,0.4);tip.style.opacity=0;return; }
+  hover=nodeAt(m.x,m.y);
+  if(hover){ tip.textContent=hover.l+'  ·  '+KO[hover.t]+'  ·  연결 '+hover.d; tip.style.left=hover.x+'px'; tip.style.top=hover.y+'px'; tip.style.opacity=1; cv.style.cursor='pointer'; }
+  else { tip.style.opacity=0; cv.style.cursor='default'; } });
+cv.addEventListener('mousedown',ev=>{ drag=nodeAt(pos(ev).x,pos(ev).y); dragMoved=false; });
+window.addEventListener('mouseup',()=>{ if(drag&&!dragMoved){ sel=(sel===drag)?null:drag; computeNeighbors(); } drag=null; });
+cv.addEventListener('touchstart',ev=>{ const m=pos(ev); drag=nodeAt(m.x,m.y); dragMoved=false; if(drag)ev.preventDefault(); },{passive:false});
+cv.addEventListener('touchmove',ev=>{ if(!drag)return; const m=pos(ev); drag.x=m.x;drag.y=m.y;drag.vx=0;drag.vy=0;dragMoved=true;alpha=Math.max(alpha,0.4);ev.preventDefault(); },{passive:false});
+cv.addEventListener('touchend',()=>{ if(drag&&!dragMoved){ sel=(sel===drag)?null:drag; computeNeighbors(); } drag=null; });
+function restart(){ init(); sel=null; computeNeighbors(); alpha=1; }
+function clearSel(){ sel=null; computeNeighbors(); }
+window.restart=restart; window.clearSel=clearSel;
+window.addEventListener('resize',fit);
+fit(); init(); loop();
+</script>
+</body>
+</html>
